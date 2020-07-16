@@ -5,7 +5,7 @@ const app = express();
   res.send('Hello World!');
 });*/
 
-app.use(express.static('public'));
+app.use(express.static('dist'));
 
 app.listen(8000,() => {
   console.log('JWA listening on port 8000!');
