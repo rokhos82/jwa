@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const appApi = express();
 const sql = require('mssql');
@@ -23,11 +24,15 @@ let myLogger = function(req,res,next) {
 
 app.use(myLogger);
 
+app.use(cors());
+
 app.use(express.static('dist'));
 
 app.listen(8000,() => {
   console.log('JWA listening on port 8000!');
 });
+
+appApi.use(cors());
 
 appApi.get('/',(req,res) => {
   return res.send('Received a GET HTTP method')
@@ -39,14 +44,14 @@ appApi.get('/names',(req,res) => {
 
     let request = new sql.Request();
 
-    request.query('select top(100) * from Name;',function(err,recordset) {
+    request.query('select top(1000) FileNumber,LastName,First,Middle,DOB from Name;',function(err,recordset) {
       if(err) console.log(err);
 
       var names = [];
 
       _.forEach(recordset,record => {
         let r = `Name: ${record.First} ${record.Middle} ${record.LastName}`;
-        console.log(r);
+        //console.log(r);
         names.push(r)
       });
 
@@ -63,6 +68,20 @@ appApi.get('/names/:filenumber',(req,res) => {
     let request = new sql.Request();
 
     request.query(`select * from Name where FileNumber = ${filenumber}`,function(err,recordset) {
+      if(err) console.log(err);
+      res.send(recordset);
+    });
+  });
+});
+
+appApi.get('/names/search/:keyword',(req,res) => {
+  let keyword = req.params.keyword;
+  sql.connect(config,function(err) {
+    if(err) console.log(err);
+
+    let request = new sql.Request();
+
+    request.query(`select FileNumber,LastName,First,Middle,DOB from Name where LastName like '%${keyword}%' or First like '%${keyword}%' or Middle like '%${keyword}%'`,function(err,recordset) {
       if(err) console.log(err);
       res.send(recordset);
     });

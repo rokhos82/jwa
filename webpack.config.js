@@ -14,7 +14,6 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'Justice Web App',
-      myPageHeader: 'Hello World!',
       template: './src/index.html'
     })
   ],
