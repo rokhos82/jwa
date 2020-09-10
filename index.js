@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express();
 const appApi = express();
 const sql = require('mssql');
@@ -12,6 +13,9 @@ const config = {
   database: 'CMIdb-test',
   driver: 'tedious'
 };
+
+let localCache = {};
+localCache.names = {};
 
 /*app.get('/',(req,res) => {
   res.send('Hello World!');
@@ -33,6 +37,7 @@ app.listen(8000,() => {
 });
 
 appApi.use(cors());
+appApi.use(bodyParser.json());
 
 appApi.get('/',(req,res) => {
   return res.send('Received a GET HTTP method')
@@ -62,16 +67,27 @@ appApi.get('/names',(req,res) => {
 
 appApi.get('/names/:filenumber',(req,res) => {
   let filenumber = req.params.filenumber;
-  sql.connect(config,function(err) {
-    if(err) console.log(err);
 
-    let request = new sql.Request();
-
-    request.query(`select * from Name where FileNumber = ${filenumber}`,function(err,recordset) {
+  if(_.has(localCache.names,filenumber)) {
+    // The cache exists.  Return the cached data.
+    console.log(`Cache exists, returning data for ${filenumber}`);
+    res.send([localCache.names[filenumber]]);
+  }
+  else {
+    // No cached value.  Query the database
+    sql.connect(config,function(err) {
       if(err) console.log(err);
-      res.send(recordset);
+
+      let request = new sql.Request();
+
+      request.query(`select * from Name where FileNumber = ${filenumber}`,function(err,recordset) {
+        if(err) console.log(err);
+        console.log(recordset);
+        localCache.names[filenumber] = recordset[0];
+        res.send(recordset);
+      });
     });
-  });
+  }
 });
 
 appApi.get('/names/search/:keyword',(req,res) => {
@@ -86,6 +102,48 @@ appApi.get('/names/search/:keyword',(req,res) => {
       res.send(recordset);
     });
   });
+});
+
+appApi.post('/names/search',(req,res) => {
+  console.log(req.body);
+  let params = req.body;
+  if(params.fileNumber) {
+    // Search by file number if it exists
+  }
+  else {
+    // Search by name fields
+
+    let sqlStr = `select FileNumber,LastName,First,Middle,DOB from Name where`;
+    sqlStr += _.isString(params.lastName) && params.lastName !== "" ? ` LastName like '${params.lastName}' and` : "";
+    sqlStr += _.isString(params.firstName) && params.firstName !== "" ? ` First like '${params.firstName}' and` : "";
+    sqlStr += _.isString(params.middleName) && params.middleName !== "" ? ` Middle like '${params.middleName}' and` : "";
+
+    //console.log(sqlStr);
+    //console.log(sqlStr.split(' ').pop());
+
+    // Trim off the trailing 'and' and and a ';'
+    sqlStr = sqlStr.slice(0,-4);
+    sqlStr += ";";
+
+    // Change any asterisks to per-cent signs
+    sqlStr = sqlStr.replace(/\*/g,'%');
+
+    // Log the search string for posterity
+    console.log(sqlStr);
+
+    // Query the database
+    sql.connect(config,function(err) {
+      if(err) console.log(err);
+
+      let request = new sql.Request();
+
+      request.query(sqlStr,function(err,recordset) {
+        if(err) console.log(err);
+        console.log('Query complete!');
+        res.send({set:recordset});
+      });
+    });
+  }
 });
 
 appApi.listen(8001,() => {
