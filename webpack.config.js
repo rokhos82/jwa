@@ -6,9 +6,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: {
-    app: './src/index.js',
-    print: './src/print.js',
-    another: './src/another-module.js'
+    jwa: ['./app/bootstrap/bootstrap.js'],
   },
   plugins: [
     new CleanWebpackPlugin(),

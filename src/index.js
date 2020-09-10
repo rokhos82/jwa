@@ -2,7 +2,6 @@ import _ from 'lodash';
 import './style.css';
 import angular from  'angular';
 import ngResource from 'angular-resource';
-import printMe from './print.js';
 
 (function() {
   let app = angular.module("jwa-main",['ngResource']);
