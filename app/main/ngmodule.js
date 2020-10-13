@@ -4,5 +4,6 @@
  */
 
  // External dependencies
-import * as angular from "angular";
+import angular from "angular";
 import uiRouter from "@uirouter/angularjs";
+import ngResource from 'angular-resource';
