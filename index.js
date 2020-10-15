@@ -146,6 +146,48 @@ appApi.post('/names/search',(req,res) => {
   }
 });
 
+appApi.post('/names/detail',(req,res) => {
+  console.log(req.body);
+  let params = req.body;
+  if(params.fileNumber) {
+    // Search by file number if it exists
+  }
+  else {
+    // Search by name fields
+
+    let sqlStr = `select FileNumber,LastName,First,Middle,DOB from Name where`;
+    sqlStr += _.isString(params.lastName) && params.lastName !== "" ? ` LastName like '${params.lastName}' and` : "";
+    sqlStr += _.isString(params.firstName) && params.firstName !== "" ? ` First like '${params.firstName}' and` : "";
+    sqlStr += _.isString(params.middleName) && params.middleName !== "" ? ` Middle like '${params.middleName}' and` : "";
+
+    //console.log(sqlStr);
+    //console.log(sqlStr.split(' ').pop());
+
+    // Trim off the trailing 'and' and and a ';'
+    sqlStr = sqlStr.slice(0,-4);
+    sqlStr += ";";
+
+    // Change any asterisks to per-cent signs
+    sqlStr = sqlStr.replace(/\*/g,'%');
+
+    // Log the search string for posterity
+    console.log(sqlStr);
+
+    // Query the database
+    sql.connect(config,function(err) {
+      if(err) console.log(err);
+
+      let request = new sql.Request();
+
+      request.query(sqlStr,function(err,recordset) {
+        if(err) console.log(err);
+        console.log('Query complete!');
+        res.send({set:recordset});
+      });
+    });
+  }
+});
+
 appApi.listen(8001,() => {
   console.log(`Listening on port 8001`);
 });

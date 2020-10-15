@@ -1,6 +1,10 @@
 import {name} from "./name.component.js";
+import {nameSearch} from "./nameSearch.component.js";
+import {nameDetail} from "./nameDetail.component.js";
 
-import {nameState,nameSearchState} from "./name.states.js";
+import {nameService} from "./name.service.js";
+
+import {nameState,nameSearchState,nameDetailState} from "./name.states.js";
 
 export const NAME_MODULE = angular.module("jwa-name",["ui.router","ngResource"]);
 
@@ -14,3 +18,7 @@ NAME_MODULE.config(["$uiRouterProvider",function($uiRouter) {
 }]);
 
 NAME_MODULE.component('name',name);
+NAME_MODULE.component('nameSearch',nameSearch);
+NAME_MODULE.component('nameDetail',nameDetail);
+
+NAME_MODULE.service('nameService',nameService);
