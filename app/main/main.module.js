@@ -1,8 +1,9 @@
 import {app} from "./app.component.js";
+import {welcome} from "./welcome.component.js";
 
-import {appState} from "./app.states.js";
+import {appState,welcomeState} from "./app.states.js";
 
-export const MAIN_MODULE = angular.module('jwa-main',["ui.router","ngResource"]);
+export const MAIN_MODULE = angular.module('jwa-main',["ui.router","ngResource","jwa-name"]);
 
 MAIN_MODULE.config(['$uiRouterProvider',function($uiRouter) {
   // Enable tracing of each TRANSITION... (check the javascript console)
@@ -13,6 +14,8 @@ MAIN_MODULE.config(['$uiRouterProvider',function($uiRouter) {
 
   const $stateRegistry = $uiRouter.stateRegistry;
   $stateRegistry.register(appState);
+  $stateRegistry.register(welcomeState);
 }]);
 
 MAIN_MODULE.component('app',app);
+MAIN_MODULE.component('welcome',welcome);

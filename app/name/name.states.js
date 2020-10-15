@@ -3,10 +3,19 @@
  */
 
 export const nameState = {
-  parent: '',
+  parent: 'app',
   name: 'name',
   url: '/name',
+  component: 'name',
   resolve: {},
-  views: {},
+  data: {}
+};
+
+export const nameSearchState = {
+  parent: 'name',
+  name: 'search',
+  url: '/name/search',
+  component: 'nameSearch'
+  resolve: {},
   data: {}
 };
