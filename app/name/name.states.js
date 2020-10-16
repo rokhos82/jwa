@@ -14,7 +14,7 @@ export const nameState = {
 export const nameSearchState = {
   parent: 'name',
   name: 'search',
-  url: '/name/search',
+  url: '/search',
   component: 'nameSearch',
   resolve: {},
   data: {}
@@ -23,11 +23,11 @@ export const nameSearchState = {
 export const nameDetailState = {
   parent: 'name',
   name: 'detail',
-  url: '/name/detail/{filenumber}',
+  url: '/{filenumber}',
   component: 'nameDetail',
   resolve: {
-    name: function(NameService,$transitions$) {
-      return NameService.getNameDetailByFilenumber($transitions$.params().filenumber);
+    filenumber: function($stateParams) {
+      return $stateParams.filenumber;
     }
   },
   data: {}

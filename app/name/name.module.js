@@ -15,6 +15,7 @@ NAME_MODULE.config(["$uiRouterProvider",function($uiRouter) {
   const $stateRegistry = $uiRouter.stateRegistry;
   $stateRegistry.register(nameState);
   $stateRegistry.register(nameSearchState);
+  $stateRegistry.register(nameDetailState);
 }]);
 
 NAME_MODULE.component('name',name);
