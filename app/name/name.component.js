@@ -13,28 +13,6 @@ class nameController {
     this.ui.lastName = "";
     this.ui.fileNumber = undefined;
   }
-
-  searchNameNumber() {
-    let name = $resource('http://localhost:8001/names/:fileNumber',{
-      fileNumber: this.fileNumber
-    });
-
-    name.query().$promise.then((n) => {
-      console.log(n[0]);
-    });
-  }
-
-  searchName() {
-    let searchApi = this.$resource('http://localhost:8001/names/search',{});
-
-    console.log(this.ui);
-
-    let searchPromise = searchApi.save({},this.ui).$promise;
-    searchPromise.then((res) => {
-      console.log(res.set);
-      this.names = res.set;
-    });
-  }
 }
 
 nameController.$inject = ['$scope','$resource','$state','$transitions'];
@@ -42,30 +20,9 @@ nameController.$inject = ['$scope','$resource','$state','$transitions'];
 export const name = {
   controller: nameController,
   template: `
-  <fieldset>
-    <legend>Name Record Search</legend>
-    <container class="jwa_form_line">
-      <label for="fileNumber">File Number:</label><input id="fileNumber" type="number" ng-model="$ctrl.ui.fileNumber" />
-    </container>
-    <container class="jwa_form_line">
-      <label for="lastName">Last Name</label><input id="lastName" ng-model="$ctrl.ui.lastName" type="text" />
-      <label for="firstName">First Name</label><input id="firstName" ng-model="$ctrl.ui.firstName" type="text" />
-      <label for="middleName">Middle Name</label><input id="middleName" ng-model="$ctrl.ui.middleName" type="text" />
-    </container>
-    <container class="jwa_form_line">
-      <button ng-click="$ctrl.searchName()">Search</button>
-      <button ng-click="">List All Names</button>
-    </container>
-  </fieldset>
-  <table>
-    <tr><th>File Number</th><th>First Name</th><th>Middle Name</th><th>Last Name</th><th>DOB</th></tr>
-    <tr ng-repeat="name in $ctrl.names">
-      <td><a ui-sref="detail({filenumber:name.FileNumber})">{{name.FileNumber}}</a></td>
-      <td>{{name.First}}</td>
-      <td>{{name.Middle}}</td>
-      <td>{{name.LastName}}</td>
-      <td>{{name.DOB}}</td>
-    </tr>
-  </table>
-  <ui-view></ui-view>`
+  <container class="jwa-master-names-grid">
+    <container class="jwa-master-names-search" ui-view="search"></container>
+    <container class="jwa-master-names-list" ui-view="list"></container>
+    <container class="jwa-master-names-detail" ui-view="detail"></container>
+  </container>`
 };

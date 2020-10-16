@@ -13,3 +13,31 @@
   margin: 5px;
   padding: 5px;
 }
+
+.jwa-master-names-grid {
+  margin: 10px;
+  display: grid;
+  grid-template-columns: 600px 900px;
+  grid-template-rows: 200px 1000px;
+}
+
+.jwa-master-names-search {
+  padding: 5px;
+  grid-column: 1 / span 2;
+  grid-row: 1;
+  /*background-color: #0000FF;*/
+}
+
+.jwa-master-names-list {
+  padding: 5px;
+  grid-column: 1;
+  grid-row: 2;
+  /*background-color: #00FF00;*/
+}
+
+.jwa-master-names-detail {
+  padding: 5px;
+  grid-column: 2;
+  grid-row: 2;
+  /*background-color: #FF0000;*/
+}

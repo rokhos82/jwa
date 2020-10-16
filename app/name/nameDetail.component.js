@@ -65,7 +65,7 @@ export const nameDetail = {
       <label for="OLN">OLN:</label><input readonly="readonly" type="text" id="OLN" ng-model="$ctrl.name.OLN" />
     </div>
     <div class="jwa_form_row">
-      <label for="caution">Caution</label><input readonly="readonly" type="text" id="caution" ng-model="$ctrl.name.Caution" />
+      <label for="caution">Caution:</label><input readonly="readonly" type="text" id="caution" ng-model="$ctrl.name.Caution" />
     </div>
   </fieldset>`
 };

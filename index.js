@@ -123,7 +123,7 @@ appApi.post('/names/search',(req,res) => {
 
     // Trim off the trailing 'and' and and a ';'
     sqlStr = sqlStr.slice(0,-4);
-    sqlStr += ";";
+    sqlStr += " order by LastName,First;";
 
     // Change any asterisks to per-cent signs
     sqlStr = sqlStr.replace(/\*/g,'%');
