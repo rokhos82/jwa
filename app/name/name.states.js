@@ -21,7 +21,7 @@ export const nameSearchState = {
 };
 
 export const nameDetailState = {
-  parent: 'name',
+  parent: 'search',
   name: 'detail',
   url: '/{filenumber}',
   views: {

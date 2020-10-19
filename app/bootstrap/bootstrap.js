@@ -3,6 +3,7 @@
  */
 
 import css from "../../src/style.css";
+import _ from 'lodash';
 
 import "../main/ngmodule.js";
 import "../main/main.module.js";

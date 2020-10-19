@@ -5,28 +5,6 @@ class nameSearchController {
     this.$resource = $resource;
     this.$scope = $scope;
   }
-
-  searchNameNumber() {
-    let name = $resource('http://localhost:8001/names/:fileNumber',{
-      fileNumber: this.fileNumber
-    });
-
-    name.query().$promise.then((n) => {
-      console.log(n[0]);
-    });
-  }
-
-  searchName() {
-    let searchApi = this.$resource('http://localhost:8001/names/search',{});
-
-    console.log(this.ui);
-
-    let searchPromise = searchApi.save({},this.ui).$promise;
-    searchPromise.then((res) => {
-      console.log(res.set);
-      this.names = res.set;
-    });
-  }
 }
 
 nameSearchController.$inject = ['$scope','$resource','$state','$transitions'];

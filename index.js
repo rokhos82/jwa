@@ -104,6 +104,21 @@ appApi.get('/names/search/:keyword',(req,res) => {
   });
 });
 
+appApi.post('/names/list',(req,res) => {
+  let query = `select top(1000) FileNumber,LastName,First,Middle,DOB from Name order by LastName,First,Middle;`;
+
+  sql.connect(config,function(err) {
+    if(err) console.log(err);
+
+    let request = new sql.Request();
+
+    request.query(query,(err,recordset) => {
+      if(err) console.log(err);
+      res.send({set:recordset});
+    });
+  });
+});
+
 appApi.post('/names/search',(req,res) => {
   console.log(req.body);
   let params = req.body;

@@ -10,13 +10,20 @@ export function nameService($resource) {
       return promise;
     },
     masterNamesSearch: function(terms) {
-      let searchApi = this.$resource('http://localhost:8001/names/search',{});
+      let searchApi = $resource('http://localhost:8001/names/search',{});
 
       console.log(this.ui);
 
       let searchPromise = searchApi.save({},terms).$promise;
 
       return searchPromise;
+    },
+    masterNamesTop1000: function() {
+      let list = $resource('http://localhost:8001/names/list/',{});
+
+      let listPromise = list.save().$promise;
+
+      return listPromise;
     }
   };
 

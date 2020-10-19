@@ -1,15 +1,30 @@
 class nameListController {
-  constructor($scope,$resource,$state,$transitions) {
+  constructor($scope,nameService,$state,$transitions) {
     this.$state = $state;
     this.$transitions = $transitions;
-    this.$resource = $resource;
+    this.nameService = nameService;
     this.$scope = $scope;
+  }
+
+  $onInit() {
+    console.log("Master Names List Load");
+    if(!_.isString(this.query) || this.query === "") {
+      this.nameService.masterNamesTop1000().then((recordset) => {
+        this.names = recordset.set;
+      });
+    }
+    else {
+      // Execute the query
+    }
   }
 }
 
-nameListController.$inject = ['$scope','$resource','$state','$transitions'];
+nameListController.$inject = ['$scope','nameService','$state','$transitions'];
 
 export const nameList = {
+  bindings: {
+    query: "<"
+  },
   controller: nameListController,
   template: `
   <fieldset>
