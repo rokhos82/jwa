@@ -18,9 +18,7 @@ export const app = {
   controller: appController,
   template: `
   <container>
-    <h1>{{$ctrl.greeting}}</h1>
-    <button ui-sref="welcome">Home</button>
-    <button ui-sref="name">Names</button>
+    <span class="jwa-app-title">{{$ctrl.greeting}}</span><button ui-sref="welcome">Home</button><button ui-sref="name">Names</button>
     <ui-view></ui-view>
   </container>`
 }

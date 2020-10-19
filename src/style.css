@@ -2,6 +2,11 @@
   color: red;
 }
 
+.jwa-app-title {
+  font-size: 20pt;
+  font-weight: bold;
+}
+
 .jwa_form_line {
   display: block;
   margin: 5px;
@@ -56,6 +61,11 @@
   grid-column: 1;
   grid-row: 2;
   /*background-color: #00FF00;*/
+}
+
+.jwa-master-names-list-scroll {
+  max-height: 600px;
+  overflow-y: scroll;
 }
 
 .jwa-master-names-detail {
