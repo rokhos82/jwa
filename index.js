@@ -105,12 +105,14 @@ appApi.get('/names/search/:keyword',(req,res) => {
 });
 
 appApi.post('/names/list',(req,res) => {
-  let query = `select top(1000) FileNumber,LastName,First,Middle,DOB from Name order by LastName,First,Middle;`;
+  let query = `select top(1000) FileNumber,LastName,First,Middle,convert(varchar,convert(date,[DOB]),20) as DOB from Name order by LastName,First,Middle;`;
 
   sql.connect(config,function(err) {
     if(err) console.log(err);
 
     let request = new sql.Request();
+
+    console.log(query);
 
     request.query(query,(err,recordset) => {
       if(err) console.log(err);
