@@ -78,3 +78,31 @@
 input:read-only {
   background-color: lightgray;
 }
+
+textarea:read-only {
+  background-color: lightgray;
+}
+
+textarea {
+  resize: none;
+}
+
+.jwa-textarea-full {
+  width: 100%;
+}
+
+.jwa-textarea-half {
+  width: 50%;
+}
+
+.jwa-textarea-quarter {
+  width: 25%;
+}
+
+.jwa-right-justify {
+  text-align: right;
+}
+
+.jwa-inline-block {
+  display: inline-block;
+}

@@ -62,10 +62,62 @@ export const nameDetail = {
     </div>
     <div class="jwa_form_row">
       <label class="jwa_form_label" for="DOB">DOB:</label><input readonly="readonly" type="text" id="DOB" ng-model="$ctrl.name.DOB" />
-      <label class="jwa_form_label" for="OLN">OLN:</label><input readonly="readonly" type="text" id="OLN" ng-model="$ctrl.name.OLN" />
+      <label class="jwa_form_label" for="OLN">OLN:</label><input readonly="readonly" type="text" id="OLN" ng-model="$ctrl.name.OLN" /><input class="jwa_form_small" readonly="readonly" type="text" id="OLNState" ng-model="$ctrl.name.OLNState" />
     </div>
     <div class="jwa_form_row">
       <label class="jwa_form_label" for="caution">Caution:</label><input readonly="readonly" type="text" id="caution" ng-model="$ctrl.name.Caution" />
     </div>
+    <div class="jwa_form_row">
+      <fieldset>
+        <legend>Other Info</legend>
+        <div class="jwa_form_row">
+          <label for="SSN">SSN:</label><input readonly="readonly" type="text" id="SSN" ng-model="$ctrl.name.SSN" />
+          <label for="altAddress">Alt. Address:</label><input readonly="readonly" type="text" id="altAddress" ng-model="$ctrl.name.AltAddress" />
+          <label for="altCity">Alt. City:</label><input class="jwa_form_small" readonly="readonly" type="text" id="altCity" ng-model="$ctrl.name.AltCity" />
+        </div>
+        <div class="jwa_form_row">
+          <label for="POB">POB:</label><input readonly="readonly" type="text" id="POB" ng-model="$ctrl.name.POB" />
+          <label for="localID">Local ID:</label><input readonly="readonly" type="text" id="localID" ng-model="$ctrl.name.LocalID" />
+        <div>
+        <div class="jwa_form_row">
+          <label for="SID">SID</label><input readonly="readonly" type="text" id="SID" ng-model="$ctrl.name.SID" />
+          <label for="FBI">FBI</label><input readonly="readonly" type="text" id="FBI" ng-model="$ctrl.name.FBI" />
+        <div>
+        <div class="jwa_form_row">
+          <label for="facialHair">Facial Hair:</label><input class="jwa_form_small" readonly="readonly" type="text" id="facialHair" ng-model="$ctrl.name.facialHair" />
+          <label for="email">eMail:</label><input readonly="readonly" type="text" id="email" ng-model="$ctrl.name.eMail" />
+        <div>
+        <div class="jwa_form_row">
+          <label for="noPub">No Pub:</label><input class="jwa_form_small" readonly="readonly" type="text" id="noPub" ng-model="$ctrl.name.NoPub" />
+          <label for="misc">Misc:</label><input readonly="readonly" type="text" id="misc" ng-model="$ctrl.name.NameMisc" />
+        <div>
+      </fieldset>
+    </div>
+    <div class="jwa_form_row">
+      <fieldset>
+        <legend>Next of Kin & Family Members</legend>
+        <div class="jwa_form_row">
+          <textarea class="jwa-textarea-full" rows="10" readonly ng-model="$ctrl.name.NextOfKin"></textarea>
+        <div>
+      </fieldset>
+    <div>
+    <div class="jwa_form_row">
+      <fieldset>
+        <legend>Prof/Work</legend>
+        <div class="jwa-inline-block">
+          <div class="jwa-right-justify">Court Serivce Officer...</div>
+          <div class="jwa-right-justify">Home Detention Officer...</div>
+          <div class="jwa-right-justify">Judge...</div>
+          <div class="jwa-right-justify">DOC/JCA..</div>
+          <div class="jwa-right-justify">Counseler...</div>
+          <div class="jwa-right-justify">Clergy...</div>
+          <div class="jwa-right-justify">Legal Guardian...</div>
+          <div class="jwa-right-justify">Doctor...</div>
+          <div class="jwa-right-justify">Attorney...</div>
+          <div class="jwa-right-justify">Insurance/Other...</div>
+        </div>
+        <textarea readonly class="jwa-inline-block" ng-model="$ctrl.name.Professionals" rows="10"></textarea>
+      </fieldset>
+    <div>
   </fieldset>`
 };
