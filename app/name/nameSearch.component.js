@@ -1,29 +1,33 @@
 class nameSearchController {
-  constructor($scope,$resource,$state,$transitions) {
+  constructor($scope,$state,$transitions) {
     this.$state = $state;
     this.$transitions = $transitions;
-    this.$resource = $resource;
     this.$scope = $scope;
+  }
+
+  search() {
+    console.log(`New Search`,this.ui);
+    this.onSearch({ui:this.ui});
   }
 }
 
-nameSearchController.$inject = ['$scope','$resource','$state','$transitions'];
+nameSearchController.$inject = ['$scope','$state','$transitions'];
 
 export const nameSearch = {
+  bindings: {
+    onSearch: "&"
+  },
   controller: nameSearchController,
   template: `
   <fieldset>
     <legend>Name Record Search</legend>
     <container class="jwa_form_line">
-      <label for="fileNumber">File Number:</label><input id="fileNumber" type="number" ng-model="$ctrl.ui.fileNumber" />
+      <label for="searchLastName">Last Name</label><input id="searchLastName" ng-model="$ctrl.ui.lastName" type="text" />
+      <label for="searchFirstName">First Name</label><input id="searchFirstName" ng-model="$ctrl.ui.firstName" type="text" />
+      <label for="searchMiddleName">Middle Name</label><input id="searchMiddleName" ng-model="$ctrl.ui.middleName" type="text" />
     </container>
     <container class="jwa_form_line">
-      <label for="lastName">Last Name</label><input id="lastName" ng-model="$ctrl.ui.lastName" type="text" />
-      <label for="firstName">First Name</label><input id="firstName" ng-model="$ctrl.ui.firstName" type="text" />
-      <label for="middleName">Middle Name</label><input id="middleName" ng-model="$ctrl.ui.middleName" type="text" />
-    </container>
-    <container class="jwa_form_line">
-      <button ng-click="$ctrl.searchName()">Search</button>
+      <button ng-click="$ctrl.search()">Search</button>
       <button ng-click="">List All Names</button>
     </container>
   </fieldset>`

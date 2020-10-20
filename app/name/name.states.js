@@ -6,11 +6,10 @@ export const nameState = {
   parent: 'app',
   name: 'name',
   url: '/name',
-  component: 'name',
-  redirectTo: "search"
+  component: 'name'
 };
 
-export const nameSearchState = {
+/*export const nameSearchState = {
   parent: 'name',
   name: 'search',
   url: '/search',
@@ -18,10 +17,10 @@ export const nameSearchState = {
     'search@name': 'nameSearch',
     'list@name': 'nameList'
   },
-};
+};//*/
 
 export const nameDetailState = {
-  parent: 'search',
+  parent: 'name',
   name: 'detail',
   url: '/{filenumber}',
   views: {

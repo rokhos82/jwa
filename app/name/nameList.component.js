@@ -7,14 +7,19 @@ class nameListController {
   }
 
   $onInit() {
-    console.log("Master Names List Load");
-    if(!_.isString(this.query) || this.query === "") {
-      this.nameService.masterNamesTop1000().then((recordset) => {
+    this.nameService.masterNamesTop1000().then((recordset) => {
+      this.names = recordset.set;
+    });
+  }
+
+  $onChanges(changeObj) {
+    let terms = changeObj.query.currentValue;
+    console.log(`New Query`,terms);
+
+    if(_.isObject(terms) && _.has(terms,'lastName')) {
+      this.nameService.masterNamesSearch(terms).then((recordset) => {
         this.names = recordset.set;
       });
-    }
-    else {
-      // Execute the query
     }
   }
 }

@@ -12,7 +12,7 @@ export function nameService($resource) {
     masterNamesSearch: function(terms) {
       let searchApi = $resource('http://localhost:8001/names/search',{});
 
-      console.log(this.ui);
+      console.log(terms);
 
       let searchPromise = searchApi.save({},terms).$promise;
 
