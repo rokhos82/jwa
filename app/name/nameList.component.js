@@ -7,8 +7,9 @@ class nameListController {
   }
 
   $onInit() {
-    this.nameService.masterNamesTop1000().then((recordset) => {
-      this.names = recordset.set;
+    this.nameService.masterNamesTop1000().then((result) => {
+      console.log(result);
+      this.names = result.recordset;
     });
   }
 
@@ -17,8 +18,9 @@ class nameListController {
     console.log(`New Query`,terms);
 
     if(_.isObject(terms) && _.has(terms,'lastName')) {
-      this.nameService.masterNamesSearch(terms).then((recordset) => {
-        this.names = recordset.set;
+      this.nameService.masterNamesSearch(terms).then((result) => {
+        console.log(result);
+        this.names = result.recordset;
       });
     }
   }

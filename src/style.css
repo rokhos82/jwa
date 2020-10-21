@@ -1,3 +1,7 @@
+body {
+  font-size: 12pt;
+}
+
 .hello {
   color: red;
 }
@@ -85,6 +89,7 @@ textarea:read-only {
 
 textarea {
   resize: none;
+  font-size: 11pt;
 }
 
 .jwa-textarea-full {

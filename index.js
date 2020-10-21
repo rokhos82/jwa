@@ -14,6 +14,13 @@ const config = {
   driver: 'tedious'
 };
 
+const pool = new sql.ConnectionPool(config);
+const poolConnect = pool.connect();
+
+pool.on('error',err => {
+  console.log(err);
+});
+
 let localCache = {};
 localCache.names = {};
 
@@ -44,10 +51,8 @@ appApi.get('/',(req,res) => {
 });
 
 appApi.get('/names',(req,res) => {
-  sql.connect(config,function(err) {
-    if(err) console.log(err);
-
-    let request = new sql.Request();
+  poolConnect.then((p) => {
+    let request = p.request();
 
     request.query('select top(1000) FileNumber,LastName,First,Middle,DOB from Name;',function(err,recordset) {
       if(err) console.log(err);
@@ -65,7 +70,7 @@ appApi.get('/names',(req,res) => {
   });
 });
 
-appApi.get('/names/:filenumber',(req,res) => {
+appApi.get('/names/:filenumber',async (req,res) => {
   let filenumber = req.params.filenumber;
 
   if(_.has(localCache.names,filenumber)) {
@@ -75,53 +80,44 @@ appApi.get('/names/:filenumber',(req,res) => {
   }
   else {
     // No cached value.  Query the database
-    sql.connect(config,function(err) {
+    await poolConnect;
+    let request = pool.request();
+
+    request.query(`select * from Name where FileNumber = ${filenumber}`,function(err,recordset) {
       if(err) console.log(err);
-
-      let request = new sql.Request();
-
-      request.query(`select * from Name where FileNumber = ${filenumber}`,function(err,recordset) {
-        if(err) console.log(err);
-        console.log(recordset);
-        localCache.names[filenumber] = recordset[0];
-        res.send(recordset);
-      });
+      console.log(recordset);
+      localCache.names[filenumber] = recordset[0];
+      res.send(recordset);
     });
   }
 });
 
-appApi.get('/names/search/:keyword',(req,res) => {
+appApi.get('/names/search/:keyword',async (req,res) => {
   let keyword = req.params.keyword;
-  sql.connect(config,function(err) {
+
+  await poolConnect;
+  let request = pool.request();
+
+  request.query(`select FileNumber,LastName,First,Middle,DOB from Name where LastName like '%${keyword}%' or First like '%${keyword}%' or Middle like '%${keyword}%'`,function(err,recordset) {
     if(err) console.log(err);
-
-    let request = new sql.Request();
-
-    request.query(`select FileNumber,LastName,First,Middle,DOB from Name where LastName like '%${keyword}%' or First like '%${keyword}%' or Middle like '%${keyword}%'`,function(err,recordset) {
-      if(err) console.log(err);
-      res.send(recordset);
-    });
+    res.send(recordset);
   });
 });
 
 appApi.post('/names/list',(req,res) => {
   let query = `select top(1000) FileNumber,LastName,First,Middle,convert(varchar,convert(date,[DOB]),20) as DOB from Name order by LastName,First,Middle;`;
 
-  sql.connect(config,function(err) {
-    if(err) console.log(err);
+  poolConnect.then((p) => {
+    let request = p.request();
 
-    let request = new sql.Request();
-
-    console.log(query);
-
-    request.query(query,(err,recordset) => {
-      if(err) console.log(err);
-      res.send({set:recordset});
+    request.query(query).then((recordset) => {
+      console.log(recordset);
+      res.send(recordset);
     });
   });
 });
 
-appApi.post('/names/search',(req,res) => {
+appApi.post('/names/search',async (req,res) => {
   console.log(req.body);
   let params = req.body;
   if(params.fileNumber) {
@@ -149,18 +145,34 @@ appApi.post('/names/search',(req,res) => {
     console.log(sqlStr);
 
     // Query the database
-    sql.connect(config,function(err) {
-      if(err) console.log(err);
+    poolConnect.then((p) => {
+      let request = p.request();
 
-      let request = new sql.Request();
-
-      request.query(sqlStr,function(err,recordset) {
-        if(err) console.log(err);
+      request.query(sqlStr).then(function(recordset) {
         console.log('Query complete!');
-        res.send({set:recordset});
+        res.send(recordset);
       });
     });
   }
+});
+
+appApi.post('/names/contacts',(req,res) => {
+  console.log('Querying Master Names Contacts');
+  console.log(req.body);
+  let params = req.body;
+
+  let query = `select * from vNameContacts where FileNumber=${params.filenumber}`;
+
+  poolConnect.then((p) => {
+    let request = p.request();
+
+    request.query(query).then((recordset) => {
+      console.log('Name Contact Query Complete');
+      res.send(recordset);
+    });
+  });
+
+  console.log(query);
 });
 
 appApi.listen(8001,() => {
