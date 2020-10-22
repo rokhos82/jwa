@@ -11,11 +11,12 @@ class nameDetailController {
 
     this.nameService.getNameDetailByFilenumber(this.filenumber).then((n) => {
       console.log(n);
-      //this.name = n[0];
+      this.name = n[0];
     });
 
     this.nameService.getNameContacts(this.filenumber).then((n) => {
       console.log(n);
+      this.nameContacts = n.recordset;
     });
   }
 }
@@ -70,6 +71,19 @@ export const nameDetail = {
     </div>
     <div class="jwa_form_row">
       <label class="jwa_form_label" for="caution">Caution:</label><input readonly="readonly" type="text" id="caution" ng-model="$ctrl.name.Caution" />
+    </div>
+    <div class="jwa_form_row">
+      <fieldset>
+        <legend>Contacts</legend>
+        <table class="jwa-master-names-table">
+          <thead>
+            <tr><td>Inc#</td><td>Cit/War</td><td>Date</td><td>Juv</td><td>Inv</td><td>Offense Desc.</td><td>Charge Desc.</td><td>Address</td><td>Participant</td><td>Status</td><td>Status Date</td><td>Bond Amount</td><td>Bond Type</td><td>ID</td><td>Comments</td></tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="contact in $ctrl.nameContacts"><td>{{contact.Incident}}</td><td>{{contact.Citation}}</td><td>{{contact.ContactDate | dateFilter}}</td><td>{{contact.Juvenile}}</td><td>{{contact.Involvement}}</td><td>{{contact.OffenseDesc}}</td><td></td><td>{{contact.Addr_Concat}}</td><td>{{contact.Participant}}</td><td>{{contact.ParticipantStatus}}</td><td></td><td></td><td></td><td>{{contact.ID}}</td><td>{{contact.Comments}}</td></tr>
+          </tbody>
+        </table>
+      </fieldset>
     </div>
     <div class="jwa_form_row">
       <fieldset>
@@ -155,7 +169,7 @@ export const nameDetail = {
             <label for="reliability">Reliability:</label><input class="jwa_form_small" readonly="readonly" type="text" id="reliability" ng-model="$ctrl.name.IntelReliability" /><label for="intelContent">Content:</label><input class="jwa_form_small" readonly="readonly" type="text" id="intelContent" ng-model="$ctrl.name.IntelContent" /><label for="intelViolence">Violence Potential:</label><input class="jwa_form_small" readonly="readonly" type="text" id="intelViolence" ng-model="$ctrl.name.IntelViolence" />
           </div>
           <div>
-            <label>M.O., Activities, Comments, Associates</label><textarea rows="4" cols="45" ng-model="$ctrl.name.Comments"></textarea>
+            <label>M.O., Activities, Comments, Associates</label><textarea rows="4" cols="45" ng-model="$ctrl.name.IntelComments"></textarea>
           </div>
         </div>
         <div class="jwa_form_row">
@@ -172,9 +186,9 @@ export const nameDetail = {
       </fieldset>
     </div>
     <div>
-      <<fieldset>
+      <fieldset>
         <legend>Associates</legend>
-        <table>
+        <table class="jwa-master-names-table">
           <thead>
             <tr><td>File#</td><td>Name</td><td>DOB</td><td>Inc#</td><td>Date</td><td>Inv</td><td>Offense Desc.</td><td>Location</td>
           </thead>

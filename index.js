@@ -24,6 +24,16 @@ pool.on('error',err => {
 let localCache = {};
 localCache.names = {};
 
+process.on('SIGINT',function() {
+  console.log('Exiting via SIGINT');
+  pool.close();
+  process.kill(0);
+});
+
+process.on('exit',function() {
+  console.log('Exiting via exit event');
+});
+
 /*app.get('/',(req,res) => {
   res.send('Hello World!');
 });//*/
@@ -83,11 +93,11 @@ appApi.get('/names/:filenumber',async (req,res) => {
     await poolConnect;
     let request = pool.request();
 
-    request.query(`select * from Name where FileNumber = ${filenumber}`,function(err,recordset) {
+    request.query(`select * from Name where FileNumber = ${filenumber}`,function(err,result) {
       if(err) console.log(err);
-      console.log(recordset);
-      localCache.names[filenumber] = recordset[0];
-      res.send(recordset);
+      console.log(result);
+      localCache.names[filenumber] = result.recordset[0];
+      res.send(result.recordset);
     });
   }
 });

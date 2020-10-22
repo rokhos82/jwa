@@ -5,6 +5,8 @@ import {nameDetail} from "./nameDetail.component.js";
 
 import {nameService} from "./name.service.js";
 
+import {dateFilter} from "./name.filters.js";
+
 import {nameState,nameDetailState} from "./name.states.js";
 
 export const NAME_MODULE = angular.module("jwa-name",["ui.router","ngResource"]);
@@ -25,3 +27,5 @@ NAME_MODULE.component('nameDetail',nameDetail);
 NAME_MODULE.component('nameList',nameList);
 
 NAME_MODULE.service('nameService',nameService);
+
+NAME_MODULE.filter('dateFilter',dateFilter);

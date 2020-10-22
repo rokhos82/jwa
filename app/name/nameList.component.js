@@ -44,7 +44,7 @@ export const nameList = {
           <td>{{name.First}}</td>
           <td>{{name.Middle}}</td>
           <td>{{name.LastName}}</td>
-          <td>{{name.DOB}}</td>
+          <td>{{name.DOB | dateFilter}}</td>
         </tr>
       </table>
     </div>
