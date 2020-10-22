@@ -1,0 +1,26 @@
+<fieldset>
+  <legend>Contacts</legend>
+  <table class="jwa-master-names-table">
+    <thead>
+      <tr>
+        <td>Inc#</td>
+        <td>Cit/War</td>
+        <td>Date</td>
+        <td>Juv</td>
+        <td>Inv</td>
+        <td>Offense Desc.</td>
+        <td>Charge Desc.</td>
+        <td>Address</td>
+        <td>Participant</td>
+        <td>Status</td>
+        <td>Status Date</td>
+        <td>Bond Amount</td>
+        <td>Bond Type</td>
+        <td>ID</td>
+        <td>Comments</td></tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="contact in $ctrl.contacts"><td>{{contact.Incident}}</td><td>{{contact.Citation}}</td><td>{{contact.ContactDate | dateFilter}}</td><td>{{contact.Juvenile}}</td><td>{{contact.Involvement}}</td><td>{{contact.OffenseDesc}}</td><td></td><td>{{contact.Addr_Concat}}</td><td>{{contact.Participant}}</td><td>{{contact.ParticipantStatus}}</td><td></td><td></td><td></td><td>{{contact.ID}}</td><td>{{contact.Comments}}</td></tr>
+    </tbody>
+  </table>
+</fieldset>
