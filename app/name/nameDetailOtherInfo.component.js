@@ -1,9 +1,15 @@
-function otherInfoController() {}
+class otherInfoController {
+  constructor($scope) {
+    this.$scope = $scope;
+  }
+}
 
 otherInfoController.$inject = ["$scope"];
 
 export const nameDetailOtherInfo = {
-  bindings: {},
+  bindings: {
+    name: "<"
+  },
   controller: otherInfoController,
-  template: ``
+  template: require('./nameDetailOtherInfo.component.html')
 };

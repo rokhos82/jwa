@@ -1,4 +1,8 @@
-function contactController() {}
+class contactController {
+  constructor($scope) {
+    this.$scope = $scope;
+  }
+}
 
 contactController.$inject = ["$scope"];
 

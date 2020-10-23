@@ -3,6 +3,9 @@ import {nameSearch} from "./nameSearch.component.js";
 import {nameList} from "./nameList.component.js";
 import {nameDetail} from "./nameDetail.component.js";
 import {nameDetailContacts} from "./nameDetailContacts.component.js";
+import {nameDetailOtherInfo} from "./nameDetailOtherInfo.component.js";
+import {nameDetailWork} from "./nameDetailWork.component.js";
+import {nameDetailKin} from "./nameDetailKin.component.js";
 
 import {nameService} from "./name.service.js";
 
@@ -26,6 +29,9 @@ NAME_MODULE.component('name',name);
 NAME_MODULE.component('nameSearch',nameSearch);
 NAME_MODULE.component('nameDetail',nameDetail);
 NAME_MODULE.component('nameDetailContacts',nameDetailContacts);
+NAME_MODULE.component('nameDetailOtherInfo',nameDetailOtherInfo);
+NAME_MODULE.component('nameDetailKin',nameDetailKin);
+NAME_MODULE.component('nameDetailWork',nameDetailWork);
 NAME_MODULE.component('nameList',nameList);
 
 NAME_MODULE.service('nameService',nameService);
