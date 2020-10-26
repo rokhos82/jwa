@@ -1,0 +1,19 @@
+<fieldset>
+  <legend>Intel</legend>
+  <div class="jwa_form_row">
+    <div>
+      <label for="WSINOCN">WSIN OCN:</label><input class="jwa_form_small" readonly="readonly" type="text" id="WSINOCN" ng-model="$ctrl.name.IntelWSINOCN" /><label for="WSINDOC">WSIN DOC#</label><input class="jwa_form_small" readonly="readonly" type="text" id="WSINDOC" ng-model="$ctrl.name.IntelWSINDoc" /><label for="informant">Informant?</label><input class="jwa_form_small" readonly="readonly" type="text" id="informant" ng-model="$ctrl.name.IntelInformant" />
+    </div>
+    <div>
+      <label for="reliability">Reliability:</label><input class="jwa_form_small" readonly="readonly" type="text" id="reliability" ng-model="$ctrl.name.IntelReliability" /><label for="intelContent">Content:</label><input class="jwa_form_small" readonly="readonly" type="text" id="intelContent" ng-model="$ctrl.name.IntelContent" /><label for="intelViolence">Violence Potential:</label><input class="jwa_form_small" readonly="readonly" type="text" id="intelViolence" ng-model="$ctrl.name.IntelViolence" />
+    </div>
+    <div>
+      <label>M.O., Activities, Comments, Associates</label><textarea rows="4" cols="45" ng-model="$ctrl.name.IntelComments"></textarea>
+    </div>
+  </div>
+  <div class="jwa_form_row">
+    <span><strong>Criminal Gang Affiliation</strong></span>
+    <label for="intelGangName">Name/Chapter:</label><input readonly="readonly" type="text" id="intelGangName" ng-model="$ctrl.name.IntelGangName" />
+    <label for="intelGangLocation">Location:</label><input readonly="readonly" type="text" id="intelGangLocation" ng-model="$ctrl.name.IntelGangLocation" />
+  </div>
+</fieldset>
