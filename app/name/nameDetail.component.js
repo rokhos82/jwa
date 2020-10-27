@@ -18,6 +18,9 @@ class nameDetailController {
       console.log(n);
       this.nameContacts = n.recordset;
     });
+
+    console.log(this.search);
+    this.searched = _.isObject(this.search);
   }
 }
 
@@ -25,7 +28,8 @@ nameDetailController.$inject = ['$scope','nameService','$state','$transitions'];
 
 export const nameDetail = {
   bindings: {
-    filenumber: '<'
+    filenumber: '<',
+    search: '<'
   },
   controller: nameDetailController,
   template: require('./nameDetail.component.html')

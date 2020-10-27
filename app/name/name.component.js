@@ -28,7 +28,7 @@ nameController.$inject = ['$scope','$resource','$state','$transitions'];
 export const name = {
   controller: nameController,
   template: `
-  <container class="jwa-master-names-grid">
+  <container>
     <ui-view name="search" ng-show="$ctrl.$state.includes('search')"></ui-view>
     <ui-view name="detail"></ui-view>
   </container>`

@@ -30,7 +30,14 @@ export const nameDetailState = {
   resolve: {
     filenumber: function($stateParams) {
       return $stateParams.filenumber;
+    },
+    search: function($stateParams) {
+      console.log($stateParams);
+      return $stateParams.search;
     }
+  },
+  params: {
+    search: null
   },
   data: {}
 };
