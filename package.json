@@ -12,6 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "@uirouter/angularjs": "^1.0.28",
+    "@uirouter/dsr": "^1.2.0",
+    "@uirouter/sticky-states": "^1.5.1",
     "angular": "^1.8.0",
     "angular-resource": "^1.8.0",
     "body-parser": "^1.19.0",

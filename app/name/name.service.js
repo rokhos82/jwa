@@ -1,3 +1,13 @@
+/**
+ *
+ */
+function setStateCache(key,value) {}
+
+/**
+ *
+ */
+function getStateCache(key,value) {}
+
 export function nameService($resource) {
   let _service = {
     getNameDetailByFilenumber: function(filenumber) {

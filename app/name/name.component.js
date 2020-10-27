@@ -29,8 +29,7 @@ export const name = {
   controller: nameController,
   template: `
   <container class="jwa-master-names-grid">
-    <container class="jwa-master-names-search"><name-search on-search="$ctrl.nameSearch(ui)"></name-search></container>
-    <container class="jwa-master-names-list"><name-list query="$ctrl.query"></name-list></container>
-    <container class="jwa-master-names-detail" ui-view="detail"></container>
+    <ui-view name="search" ng-show="$ctrl.$state.includes('search')"></ui-view>
+    <ui-view name="detail"></ui-view>
   </container>`
 };

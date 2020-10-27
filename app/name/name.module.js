@@ -17,17 +17,19 @@ import {nameService} from "./name.service.js";
 
 import {dateFilter} from "./name.filters.js";
 
-import {nameState,nameDetailState} from "./name.states.js";
+import {nameState,nameSearchState,nameDetailState} from "./name.states.js";
+import {StickyStatesPlugin} from "@uirouter/sticky-states";
 
 export const NAME_MODULE = angular.module("jwa-name",["ui.router","ngResource"]);
 
 NAME_MODULE.config(["$uiRouterProvider",function($uiRouter) {
   // Enable tracing of each TRANSITION... (check the javascript console)
   $uiRouter.trace.enable("TRANSITION");
+  $uiRouter.plugin(StickyStatesPlugin);
 
   const $stateRegistry = $uiRouter.stateRegistry;
   $stateRegistry.register(nameState);
-  //$stateRegistry.register(nameSearchState);
+  $stateRegistry.register(nameSearchState);
   $stateRegistry.register(nameDetailState);
 }]);
 

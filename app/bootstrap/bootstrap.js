@@ -8,3 +8,4 @@ import _ from 'lodash';
 import "../main/ngmodule.js";
 import "../main/main.module.js";
 import "../name/name.module.js";
+import "../global/support.module.js";

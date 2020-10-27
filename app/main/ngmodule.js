@@ -6,5 +6,6 @@
  // External dependencies
 import angular from "angular";
 import uiRouter from "@uirouter/angularjs";
+import {StickyStatesPlugin} from "@uirouter/sticky-states";
 import ngResource from 'angular-resource';
 //import ocLazyLoad from 'oclazyload';
