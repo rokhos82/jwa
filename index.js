@@ -185,6 +185,24 @@ appApi.post('/names/contacts',(req,res) => {
   console.log(query);
 });
 
+////////////////////////////////////////////////////////////////////////////////
+// Incident related handlers
+////////////////////////////////////////////////////////////////////////////////
+appApi.get('/incidents',(req,res) => {
+  poolConnect.then((p) => {
+    let request = p.request();
+
+    console.log("INCIDENT QUERY: Selecting top 1000 Incidents");
+
+    request.query('select top(1000) Incident,RptDate,RptTime,Offense,OffenseDesc,ID from Incident;',function(err,recordset) {
+      if(err) console.log(err);
+
+      res.send(recordset.recordset);
+      console.log("INCIDENT QUERY COMPLETE");
+    });
+  });
+});
+
 appApi.listen(8001,() => {
   console.log(`Listening on port 8001`);
 });

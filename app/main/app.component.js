@@ -16,9 +16,5 @@ appController.$inject = ['$scope','$resource','$state','$transitions'];
 
 export const app = {
   controller: appController,
-  template: `
-  <container>
-    <span class="jwa-app-title">{{$ctrl.greeting}}</span><button ui-sref="welcome">Home</button><button ui-sref="name">Names</button>
-    <ui-view></ui-view>
-  </container>`
+  template: require('./app.component.html')
 }

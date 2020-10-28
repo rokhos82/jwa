@@ -1,0 +1,12 @@
+<table>
+  <thead>
+    <tr>
+      <td></td><td>Incident</td><td>Rpt Date</td><td>Rpt Time</td><td>Offense</td><td>Offense Desc</td><td>ID</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="incident in $ctrl.incidents">
+      <td>{{$index}}</td><td>{{incident.Incident}}</td><td>{{incident.RptDate}}</td><td>{{incident.RptTime}}</td><td>{{incident.Offense}}</td><td>{{incident.OffenseDesc}}</td><td>{{incident.ID}}</td>
+    </tr>
+  </tbody>
+</table>
