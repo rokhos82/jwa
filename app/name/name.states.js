@@ -7,25 +7,25 @@ export const nameState = {
   name: 'name',
   url: '/name',
   component: 'name',
-  redirectTo: 'search'
+  redirectTo: 'nameSearch'
 };
 
 export const nameSearchState = {
   parent: 'name',
-  name: 'search',
+  name: 'nameSearch',
   url: '/search',
   views: {
-    'search@name':'nameSearch'
+    'nameSearch@name':'nameSearch'
   },
   sticky: true
 };
 
 export const nameDetailState = {
   parent: 'name',
-  name: 'detail',
+  name: 'nameDetail',
   url: '/{filenumber}',
   views: {
-    'detail@name': 'nameDetail'
+    'nameDetail@name': 'nameDetail'
   },
   resolve: {
     filenumber: function($stateParams) {

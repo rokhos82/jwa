@@ -23,6 +23,7 @@ pool.on('error',err => {
 
 let localCache = {};
 localCache.names = {};
+localCache.incidents = {};
 
 process.on('SIGINT',function() {
   console.log('Exiting via SIGINT');
@@ -192,15 +193,70 @@ appApi.get('/incidents',(req,res) => {
   poolConnect.then((p) => {
     let request = p.request();
 
-    console.log("INCIDENT QUERY: Selecting top 1000 Incidents");
+    console.log("INCIDENT QUERY: Selecting Incidents");
 
-    request.query('select top(1000) Incident,RptDate,RptTime,Offense,OffenseDesc,ID from Incident;',function(err,recordset) {
+    let queryString = `select Incident,RptDate,RptTime,Offense,OffenseDesc,ID from Incident order by RptDate,RptTime,BeginDate,BeginTime,EndDate,EndTime asc offset 0 rows fetch next 100 rows only; select count(*) as Count from Incident;`;
+
+    request.query(queryString,function(err,recordset) {
       if(err) console.log(err);
 
-      res.send(recordset.recordset);
+      console.log(recordset.recordsets);
+
+      res.send(recordset.recordsets);
       console.log("INCIDENT QUERY COMPLETE");
     });
   });
+});
+
+appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
+  let incidentnumber = decodeURIComponent(req.params.incidentnumber);
+  console.log(`Incident Number: ${incidentnumber}`);
+
+  if(_.has(localCache.incidents,incidentnumber)) {
+    // The cache exists.  Return the cached data.
+    console.log(`Cache exists, returning data for ${incidentnumber}`);
+    res.send([localCache.incidents[incidentnumber]]);
+  }
+  else {
+    // No cached value.  Query the database
+    await poolConnect;
+    let request = pool.request();
+
+    request.query(`select * from Incident where Incident = '${incidentnumber}'`,function(err,result) {
+      if(err) {
+        console.log(err);
+      }
+      else {
+        console.log(result);
+        localCache.incidents[incidentnumber] = result.recordset[0];
+        res.send(result.recordset);
+      }
+    });
+  }
+});
+
+/**
+ * This handler expects a POST request with two parameters.
+ * The first parameter is the offset into the select.
+ * The second parameter is the fetch size of the select.
+ * The third parameter are the search terms.
+ */
+appApi.post('/incidents/fetch',(req,res) => {
+  console.log('Fetching Incidents');
+  console.log(req.body);
+  let params = req.body;
+
+  let query = `select Incident,RptDate,RptTime,Offense,OffenseDesc,ID from Incident order by RptDate,RptTime,BeginDate,BeginTime,EndDate,EndTime asc offset ${params.offset} rows fetch next ${params.fetchSize} rows only; select count(*) as Count from Incident;`;
+
+  poolConnect.then((p) => {
+    let request = p.request();
+
+    request.query(query).then((recordset) => {
+      res.send(recordset);
+    });
+  });
+
+  console.log(query);
 });
 
 appApi.listen(8001,() => {
