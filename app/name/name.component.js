@@ -27,9 +27,5 @@ nameController.$inject = ['$scope','$resource','$state','$transitions'];
 
 export const name = {
   controller: nameController,
-  template: `
-  <container>
-    <ui-view name="search" ng-show="$ctrl.$state.includes('search')"></ui-view>
-    <ui-view name="detail"></ui-view>
-  </container>`
+  template: require('./name.component.html')
 };

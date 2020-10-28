@@ -1,6 +1,7 @@
 class incidentController {
   constructor($scope,$state,$transition) {
     this.$scope = $scope;
+    this.$state = $state;
   }
 }
 
