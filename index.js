@@ -128,6 +128,39 @@ appApi.post('/names/list',(req,res) => {
   });
 });
 
+appApi.post('/names/fetch',() => {
+  console.log('Fetching Names');
+  console.log(req.body);
+  let params = req.body;
+
+  let query = `select FileNumber,LastName,First,Middle,DOB from Name`;
+
+  if(_.isNumber(params.fileNumber)) {
+    query += ` where FileNumber=${params.fileNumber}`;
+  }
+  else if(_.isString(params.LastName) || _.isString(params.firstName) || _.isString(params.middleName)) {
+    query += ` where`;
+    query += _.isString(params.lastName) && params.lastName !== "" ? ` LastName like '${params.lastName}' and` : "";
+    query += _.isString(params.firstName) && params.firstName !== "" ? ` First like '${params.firstName}' and` : "";
+    query += _.isString(params.middleName) && params.middleName !== "" ? ` Middle like '${params.middleName}' and` : "";
+
+    // Remove any trailing ' and' at the end of the query string
+    query = query.slice(0,-4);
+  }
+
+  query += ` order by LastName,First,Middle asc offset ${params.offset} rows fetch next ${params.fetchSize} rows only; select count(*) as Count from Name;`;
+
+  poolConnect.then((p) => {
+    let request = p.request();
+
+    request.query(query).then((recordset) => {
+      res.send(recordset);
+    });
+  });
+
+  console.log(query);
+});
+
 appApi.post('/names/search',async (req,res) => {
   console.log(req.body);
   let params = req.body;
@@ -147,7 +180,7 @@ appApi.post('/names/search',async (req,res) => {
 
     // Trim off the trailing 'and' and and a ';'
     sqlStr = sqlStr.slice(0,-4);
-    sqlStr += " order by LastName,First;";
+    sqlStr += " order by LastName,First,Middle;";
 
     // Change any asterisks to per-cent signs
     sqlStr = sqlStr.replace(/\*/g,'%');

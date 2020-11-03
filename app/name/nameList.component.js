@@ -4,6 +4,15 @@ class nameListController {
     this.$transitions = $transitions;
     this.nameService = nameService;
     this.$scope = $scope;
+
+    this.load = true;
+
+    this.page = 1;
+    this.maxPage = -1;
+
+    this.recordOffset = 0;
+    this.fetchSize = 100;
+    this.recordCount = 0;
   }
 
   $onInit() {
@@ -23,6 +32,20 @@ class nameListController {
         this.names = result.recordset;
       });
     }
+  }
+
+  nextPage() {}
+
+  prevPage() {}
+
+  fetchRecords() {
+    this.nameService.getNames(terms).then((results) => {
+      console.log(results);
+      this.names = results.recordsets[0];
+      this.recordCount = results.recordsets[1][0];
+    }).finally(() => {
+      this.loading = false;
+    });
   }
 }
 

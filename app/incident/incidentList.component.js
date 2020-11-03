@@ -8,19 +8,24 @@ class incidentListController {
     this.recordCount = 0;
     this.page = 1;
     this.maxPage = -1;
+    this.loading = true;
   }
 
   $onInit() {
+    this.loading = true;
     this.fetchRecords();
   }
 
   nextPage() {
+    this.loading = true;
     this.page++;
     this.recordOffset += this.fetchSize;
+    this.incidents = [];
     this.fetchRecords();
   }
 
   prevPage() {
+    this.loading = true;
     this.page--;
     if(this.page > 0) {
       this.recordOffset -= this.fetchSize;
@@ -36,7 +41,9 @@ class incidentListController {
       console.log("Incidents",results);
       this.incidents = results.recordsets[0];
       this.recordCount = results.recordsets[1][0].Count;
-    })
+    }).finally(() => {
+      this.loading = false;
+    });
   }
 }
 

@@ -4,7 +4,7 @@
     <button ng-click="$ctrl.prevPage()">Prev Page</button>
     <button ng-click="$ctrl.nextPage()">Next Page</button>
   </div>
-  <table>
+  <table ng-show="!$ctrl.loading">
     <thead>
       <tr>
         <td></td><td>Incident</td><td>Rpt Date</td><td>Rpt Time</td><td>Offense</td><td>Offense Desc</td><td>ID</td>
@@ -16,4 +16,7 @@
       </tr>
     </tbody>
   </table>
+  <div ng-show="$ctrl.loading">
+    <h4>Loading incidents...</h4>
+  </div>
 </fieldset>

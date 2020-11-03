@@ -41,6 +41,13 @@ export function nameService($resource) {
       let listPromise = list.save({},{filenumber:filenumber}).$promise;
 
       return listPromise;
+    },
+    getIncidents: function(terms) {
+      let list = $resource("http://localhost:8001/names/fetch",{});
+
+      let promise = list.save({},terms).$promise;
+
+      return promise;
     }
   };
 
