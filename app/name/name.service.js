@@ -42,7 +42,7 @@ export function nameService($resource) {
 
       return listPromise;
     },
-    getIncidents: function(terms) {
+    getNames: function(terms) {
       let list = $resource("http://localhost:8001/names/fetch",{});
 
       let promise = list.save({},terms).$promise;

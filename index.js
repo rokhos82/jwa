@@ -128,27 +128,33 @@ appApi.post('/names/list',(req,res) => {
   });
 });
 
-appApi.post('/names/fetch',() => {
+appApi.post('/names/fetch',(req,res) => {
   console.log('Fetching Names');
   console.log(req.body);
   let params = req.body;
 
-  let query = `select FileNumber,LastName,First,Middle,DOB from Name`;
+  let whereClause = ``;
 
   if(_.isNumber(params.fileNumber)) {
-    query += ` where FileNumber=${params.fileNumber}`;
+    whereClause += ` CAST(FileNumber) LIKE '${params.fileNumber}'`;
   }
-  else if(_.isString(params.LastName) || _.isString(params.firstName) || _.isString(params.middleName)) {
-    query += ` where`;
-    query += _.isString(params.lastName) && params.lastName !== "" ? ` LastName like '${params.lastName}' and` : "";
-    query += _.isString(params.firstName) && params.firstName !== "" ? ` First like '${params.firstName}' and` : "";
-    query += _.isString(params.middleName) && params.middleName !== "" ? ` Middle like '${params.middleName}' and` : "";
+  else {
+    // Add in the terms from the parameters or use a placeholder if they are missing.
+    // I used the placeholder of '%' here in the event of wanting *all* of the names.
+    whereClause += _.isString(params.lastName) && params.lastName !== "" ? ` LastName like '${params.lastName}' and` : ` LastName like '%' and`;
+    whereClause += _.isString(params.firstName) && params.firstName !== "" ? ` First like '${params.firstName}' and` : ` First like '%' and`;
+    whereClause += _.isString(params.middleName) && params.middleName !== "" ? ` Middle like '${params.middleName}' and` : ` Middle like '%' and`;
 
     // Remove any trailing ' and' at the end of the query string
-    query = query.slice(0,-4);
+    whereClause = whereClause.slice(0,-4);
   }
 
-  query += ` order by LastName,First,Middle asc offset ${params.offset} rows fetch next ${params.fetchSize} rows only; select count(*) as Count from Name;`;
+  // Replace asterisks (*) with percent signs (%)
+  whereClause = whereClause.replace(/\*/g,'%');
+
+  // Setup the query string with the where where clause
+  // Add in the order by, offset, and fetch next statements as well as the Count query for a total count of Name records.
+  let query = `select FileNumber,LastName,First,Middle,DOB from Name where${whereClause} order by LastName,First,Middle asc offset ${params.recordOffset} rows fetch next ${params.fetchSize} rows only; select count(*) as Count from Name where${whereClause};`;
 
   poolConnect.then((p) => {
     let request = p.request();
