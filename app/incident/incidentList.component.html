@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="incident in $ctrl.incidents">
-        <td>{{$index+1}}</td><td><a ui-sref="incidentDetail({incidentnumber:incident.Incident})">{{incident.Incident}}</a></td><td>{{incident.RptDate}}</td><td>{{incident.RptTime}}</td><td>{{incident.Offense}}</td><td>{{incident.OffenseDesc}}</td><td>{{incident.ID}}</td>
+        <td>{{$index+1}}</td><td><a ui-sref="incidentDetail({incidentnumber:incident.Incident})">{{incident.Incident}}</a></td><td>{{incident.RptDate | date}}</td><td>{{incident.RptTime | time}}</td><td>{{incident.Offense}}</td><td>{{incident.OffenseDesc}}</td><td>{{incident.ID}}</td>
       </tr>
     </tbody>
   </table>

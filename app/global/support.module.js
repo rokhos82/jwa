@@ -1,1 +1,6 @@
+import {dateFilter,timeFilter} from './support.filters.js';
+
 export const SUPPORT_MODULE = angular.module('jwa-support',[]);
+
+SUPPORT_MODULE.filter('date',dateFilter);
+SUPPORT_MODULE.filter('time',timeFilter);

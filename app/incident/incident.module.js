@@ -9,7 +9,7 @@ import {incidentService} from "./incident.service.js";
 
 import {StickyStatesPlugin} from "@uirouter/sticky-states";
 
-export const INCIDENT_MODULE = angular.module("jwa-incident",["ui.router","ngResource"]);
+export const INCIDENT_MODULE = angular.module("jwa-incident",["ui.router","ngResource","jwa-support"]);
 
 INCIDENT_MODULE.config(["$uiRouterProvider",function($uiRouter) {
   // Enable tracing of each TRANSITION... (check the javascript console)

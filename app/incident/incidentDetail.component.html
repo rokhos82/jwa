@@ -1,3 +1,69 @@
 <container>
-  <h1>INCIDENT DETAILS</h1>
+  <fieldset>
+    <legend>Incident Detail</legend>
+    <div class="jwa_form_row">
+      <label for="incidentnumber">Incident #:</label><input readonly="readonly" type="text" id="incidentnumber" ng-model="$ctrl.incident.Incident" />
+      <label for="incidentdisclos">Disclos:</label><input readonly="readonly" type="text" id="incidentdisclos" ng-model="$ctrl.incident.Disclose" />
+      <label for="incidentzone">Zone:</label><input readonly="readonly" type="text" id="incidentzone" ng-model="$ctrl.incident.Zone" />
+      <label for="incidentid">ID:</label><input readonly="readonly" type="text" id="incidentid" ng-model="$ctrl.incident.OwnerName" />
+    </div>
+    <div class="jwa_form_row">
+      <label for="incidentOffense">Offense</label><input readonly="readonly" type="text" id="incidentOffense" ng-model="$ctrl.incident.Offense" />
+      <input readonly="readonly" type="text" ng-model="$ctrl.incident.OffenseDesc" />
+      <label for="incidentOffenseExt">Off Ext:</label><input readonly="readonly" type="text" id="incidentOffenseExt" ng-model="$ctrl.incident.OffenseExt" />
+    </div>
+    <div class="jwa_form_row">
+      <label for="incidentLocation">Location:</label><input readonly="readonly" type="text" id="incidentLocation" ng-model="$ctrl.incident.Loc_Number" />
+      <input readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_Direction" />
+      <input readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_StreetName" />
+      <input readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_StreetType" />
+      <input readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_Direction2" />
+      <input readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_Apt" />
+    </div>
+    <div class="jwa_form_row">
+      <input readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_Concat" />
+      <label for="incidentLocCity">City:</label><input readonly="readonly" type="text" id="incidentLocCity" ng-model="$ctrl.incident.Loc_City" />
+      <label for="incidentLocState">State:</label><input readonly="readonly" type="text" id="incidentLocState" ng-model="$ctrl.incident.Loc_State" />
+      <label for="incidentLocZip">Zip:</label><input readonly="readonly" type="text" id="incidentLocZip" ng-model="$ctrl.incident.Loc_Zip" />
+    </div>
+    <div class="jwa_form_row">
+      <label for="incidentReviewer">Reviewer:</label><input readonly="readonly" type="text" id="incidentReviewer" ng-model="$ctrl.incident.Reviewer" />
+      <label for="incidentCaseStatus">Case Status:</label><input readonly="readonly" type="text" id="incidentCaseStatus" ng-model="$ctrl.incident.CaseStatus" />
+      <label for="incidentCaseDispo">Case Dispo:</label><input readonly="readonly" type="text" id="incidentCaseDispo" ng-model="$ctrl.incident.CaseDispo" />
+      <label for="incidentAssignedTo">Assigned To:</label><input readonly="readonly" type="text" id="incidentAssignedTo" ng-model="$ctrl.incident.AssignedTo" />
+      <label for="incidentAssignedToSince">Since:</label><input readonly="readonly" type="text" id="incidentAssignedToSince" ng-model="$ctrl.incident.Since" />
+    </div>
+    <div class="jwa_form_row">
+      <input readonly="readonly" type="checkbox" id="incidentPrintPress" ng-model="$ctrl.incident.PrintRpt" /><label for="incidentPrintPress">Print on Press Report</label>
+      <label for="incidentDomesticVic">Domestic Victim:</label><input readonly="readonly" type="text" id="incidentDomesticVic" ng-model="$ctrl.incident.DomVic" />
+      <label for="incidentType">Type:</label><input readonly="readonly" type="text" id="incidentType" ng-model="$ctrl.incident.Type" />
+      <label for="incidentRelatedNumber">Related #:</label><input readonly="readonly" type="text" id="incidentRelatedNumber" ng-model="$ctrl.incident.RelatedNumber" />
+      <label for="incidentShift">Shift:</label><input readonly="readonly" type="text" id="incidentShift" ng-model="$ctrl.incident.Shift" />
+      <label for="incidentDispatcher">Dispatcher:</label><input readonly="readonly" type="text" id="incidentDispatcher" ng-model="$ctrl.incident.Dispatcher" />
+    </div>
+    <div class="jwa_form_row">
+      <label for="incidentAsOfDate">As of Date:</label><input readonly="readonly" type="text" id="incidentAsOfDate" ng-model="$ctrl.incident.AsOfDate" />
+      <label for="incidentMisc">Misc:</label><input readonly="readonly" type="text" id="incidentMisc" ng-model="$ctrl.incident.IncidentMisc" />
+    </div>
+    <fieldset>
+      <legend>Dates/Times</legend>
+      <div class="jwa_form_row">
+        <label for="incidentRptDate">Reported:</label><input readonly="readonly" type="text" id="incidentRptDate" ng-model="$ctrl.incident.RptDate" />
+        <input readonly="readonly" type="text" ng-model="$ctrl.incident.RptTime" />
+      </div>
+      <div class="jwa_form_row">
+        <label for="incidentBeginDate">Begin:</label><input readonly="readonly" type="text" id="incidentBeginDate" ng-model="$ctrl.incident.BeginDate" />
+        <input readonly="readonly" type="text" ng-model="$ctrl.incident.BeginTime" />
+      </div>
+      <div class="jwa_form_row">
+        <label for="incidentEndDate">End:</label><input readonly="readonly" type="text" id="incidentEndDate" ng-model="$ctrl.incident.EndDate" />
+        <input readonly="readonly" type="text" ng-model="$ctrl.incident.EndTime" />
+      </div>
+      <div class="jwa_form_row">
+        <label for="incidentDisp">Dispatched:</label><input readonly="readonly" type="text" id="incidentDisp" ng-model="$ctrl.incident.Disp" />
+        <label for="incidentArvd">Arrived:</label><input readonly="readonly" type="text" id="incidentArvd" ng-model="$ctrl.incident.Arvd" />
+        <label for="incidentClrd">Cleared:</label><input readonly="readonly" type="text" id="incidentClrd" ng-model="$ctrl.incident.Clrd" />
+      </div>
+    </fieldset>
+  </fieldset>
 </container>
