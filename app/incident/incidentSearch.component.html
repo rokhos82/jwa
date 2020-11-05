@@ -1,6 +1,12 @@
 <div>
   <fieldset>
     <legend>Incident Search</legend>
+    <div class="jwa_form_row">
+      <label for="incidentSearch">Incident:</label><input type="text" id="incidentSearch" ng-model="$ctrl.ui.incident" />
+    </div>
+    <container class="jwa_form_line">
+      <button type="button" ng-click="$ctrl.search()">Search</button>
+    </container>
   </fieldset>
-  <incident-list></incident-list>
+  <incident-list query="$ctrl.query"></incident-list>
 </div>

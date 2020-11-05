@@ -48,7 +48,12 @@ class incidentListController {
   }
 
   fetchRecords() {
-    this.incidentService.getIncidents(this.recordOffset,this.fetchSize).then((results) => {
+    let terms = this.terms || {};
+    console.log("Incident Search terms",terms);
+    terms.recordOffset = this.recordOffset;
+    terms.fetchSize = this.fetchSize;
+
+    this.incidentService.getIncidents(terms).then((results) => {
       console.log("Incidents",results);
       this.incidents = results.recordsets[0];
       this.recordCount = results.recordsets[1][0].Count;
@@ -61,7 +66,9 @@ class incidentListController {
 incidentListController.$inject = ["$scope","incidentService"];
 
 export const incidentList = {
-  bindings: {},
+  bindings: {
+    query: "<"
+  },
   controller: incidentListController,
   template: require('./incidentList.component.html')
 };

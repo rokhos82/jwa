@@ -285,7 +285,17 @@ appApi.post('/incidents/fetch',(req,res) => {
   console.log(req.body);
   let params = req.body;
 
-  let query = `select Incident,RptDate,RptTime,Offense,OffenseDesc,ID from Incident order by RptDate,RptTime,BeginDate,BeginTime,EndDate,EndTime asc offset ${params.offset} rows fetch next ${params.fetchSize} rows only; select count(*) as Count from Incident;`;
+  let whereClause = "";
+
+  // Check to see if there is an incident number first
+  if(_.has(params,"incident") && _.isString(params.incident) && params.incident !== "") {
+    whereClause = ` where Incident like '${params.incident}'`;
+  }
+
+  // Replace asterisks (*) with percent signs (%)
+  whereClause = whereClause.replace(/\*/g,'%');
+
+  let query = `select Incident,RptDate,RptTime,Offense,OffenseDesc,ID from Incident${whereClause} order by RptDate,RptTime,BeginDate,BeginTime,EndDate,EndTime asc offset ${params.recordOffset} rows fetch next ${params.fetchSize} rows only; select count(*) as Count from Incident${whereClause};`;
 
   poolConnect.then((p) => {
     let request = p.request();

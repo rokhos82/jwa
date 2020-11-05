@@ -19,10 +19,10 @@ export function incidentService($resource) {
 
       return promise;
     },
-    getIncidents: function(offset,fetchSize) {
+    getIncidents: function(terms) {
       let list = $resource("http://localhost:8001/incidents/fetch",{});
 
-      let promise = list.save({},{offset:offset,fetchSize:fetchSize}).$promise;
+      let promise = list.save({},terms).$promise;
 
       return promise;
     }

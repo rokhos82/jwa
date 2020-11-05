@@ -7,8 +7,7 @@ export const incidentState = {
   name: 'incident',
   url: '/incident',
   component: 'incident',
-  redirectTo: 'incidentSearch',
-  sticky: true
+  redirectTo: 'incidentSearch'
 };
 
 export const incidentSearchState = {
