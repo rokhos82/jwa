@@ -16,6 +16,17 @@ class incidentListController {
     this.fetchRecords();
   }
 
+  $onChanges(changeObj) {
+    let terms = changeObj.query.currentValue;
+    console.log(`New Query`,terms);
+    this.terms = terms;
+
+    this.recordOffset = 0;
+    this.page = 1;
+
+    this.fetchRecords();
+  }
+
   nextPage() {
     this.loading = true;
     this.page++;

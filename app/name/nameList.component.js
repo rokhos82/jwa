@@ -25,12 +25,9 @@ class nameListController {
     console.log(`New Query`,terms);
     this.terms = terms;
 
-    /*if(_.isObject(terms) && _.has(terms,'lastName')) {
-      this.nameService.masterNamesSearch(terms).then((result) => {
-        console.log(result);
-        this.names = result.recordset;
-      });
-    }//*/
+    this.recordOffset = 0;
+    this.page = 1;
+    
     this.fetchRecords();
   }
 
@@ -58,6 +55,7 @@ class nameListController {
     // Add the record offset and fetch next size for SQL query to the
     // search terms object.
     let terms = this.terms || {};
+    console.log("Names search terms",terms);
     terms.recordOffset = this.recordOffset;
     terms.fetchSize = this.fetchSize;
 

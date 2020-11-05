@@ -7,7 +7,8 @@ export const nameState = {
   name: 'name',
   url: '/name',
   component: 'name',
-  redirectTo: 'nameSearch'
+  redirectTo: 'nameSearch',
+  sticky: true
 };
 
 export const nameSearchState = {
