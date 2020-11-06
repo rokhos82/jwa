@@ -263,7 +263,7 @@ appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
     await poolConnect;
     let request = pool.request();
 
-    request.query(`select * from vIncidents where Incident = '${incidentnumber}'`,function(err,result) {
+    request.query(`select * from vIncidents where Incident = ${incidentnumber}`,function(err,result) {
       if(err) {
         console.log(err);
       }

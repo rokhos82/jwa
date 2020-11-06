@@ -12,13 +12,6 @@ export function incidentService($resource) {
 
       return promise;
     },
-    masterIncidentTop1000: function() {
-      let list = $resource("http://localhost:8001/incidents",{});
-
-      let promise = list.query().$promise;
-
-      return promise;
-    },
     getIncidents: function(terms) {
       let list = $resource("http://localhost:8001/incidents/fetch",{});
 

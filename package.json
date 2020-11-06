@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack",
+    "jsdoc": "./node_modules/.bin/jsdoc -r -d ./doc ./app -c ./.jsdoc.json"
   },
   "author": "",
   "license": "ISC",
@@ -31,8 +32,10 @@
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.6.0",
+    "esdoc-standard-plugin": "^1.0.0",
     "html-loader": "^1.3.2",
     "html-webpack-plugin": "^4.3.0",
+    "jsdoc": "^3.6.6",
     "style-loader": "^1.2.1"
   }
 }

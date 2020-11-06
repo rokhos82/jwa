@@ -30,7 +30,7 @@ export const incidentSearchDetailState = {
     }
   },
   views: {
-    'incidentDetail': 'incidentSearchDetail'
+    'incidentDetail@incident': 'incidentSearchDetail'
   }
 };
 

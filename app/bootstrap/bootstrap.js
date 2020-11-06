@@ -1,5 +1,6 @@
 /**
  * This file contains the entry point for the Justice Web app
+ * @namespace angular_module
  */
 
 import css from "../../src/style.css";
