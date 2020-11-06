@@ -5,6 +5,7 @@ const app = express();
 const appApi = express();
 const sql = require('mssql');
 const _ = require('lodash');
+const sqlString = require('tsqlstring');
 
 const config = {
   server: 'jcc-sql.jcc.ccjcc.us',
@@ -61,7 +62,7 @@ appApi.get('/',(req,res) => {
   return res.send('Received a GET HTTP method')
 });
 
-appApi.get('/names',(req,res) => {
+/*appApi.get('/names',(req,res) => {
   poolConnect.then((p) => {
     let request = p.request();
 
@@ -79,7 +80,7 @@ appApi.get('/names',(req,res) => {
       res.send(recordset);
     });
   });
-});
+});//*/
 
 appApi.get('/names/:filenumber',async (req,res) => {
   let filenumber = req.params.filenumber;
@@ -103,7 +104,7 @@ appApi.get('/names/:filenumber',async (req,res) => {
   }
 });
 
-appApi.get('/names/search/:keyword',async (req,res) => {
+/*appApi.get('/names/search/:keyword',async (req,res) => {
   let keyword = req.params.keyword;
 
   await poolConnect;
@@ -113,9 +114,9 @@ appApi.get('/names/search/:keyword',async (req,res) => {
     if(err) console.log(err);
     res.send(recordset);
   });
-});
+});//*/
 
-appApi.post('/names/list',(req,res) => {
+/*appApi.post('/names/list',(req,res) => {
   let query = `select top(1000) FileNumber,LastName,First,Middle,convert(varchar,convert(date,[DOB]),20) as DOB from Name order by LastName,First,Middle;`;
 
   poolConnect.then((p) => {
@@ -126,7 +127,7 @@ appApi.post('/names/list',(req,res) => {
       res.send(recordset);
     });
   });
-});
+});//*/
 
 appApi.post('/names/fetch',(req,res) => {
   console.log('Fetching Names');
@@ -228,7 +229,7 @@ appApi.post('/names/contacts',(req,res) => {
 ////////////////////////////////////////////////////////////////////////////////
 // Incident related handlers
 ////////////////////////////////////////////////////////////////////////////////
-appApi.get('/incidents',(req,res) => {
+/*appApi.get('/incidents',(req,res) => {
   poolConnect.then((p) => {
     let request = p.request();
 
@@ -245,10 +246,11 @@ appApi.get('/incidents',(req,res) => {
       console.log("INCIDENT QUERY COMPLETE");
     });
   });
-});
+});//*/
 
 appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
-  let incidentnumber = decodeURIComponent(req.params.incidentnumber);
+  // Decode the incident number and escape it to avoid SQL injection attacks.
+  let incidentnumber = sqlString.escape(decodeURIComponent(req.params.incidentnumber));
   console.log(`Incident Number: ${incidentnumber}`);
 
   if(_.has(localCache.incidents,incidentnumber)) {
@@ -287,21 +289,27 @@ appApi.post('/incidents/fetch',(req,res) => {
 
   let whereClause = "";
 
+  //params.incident = sqlString.escape(params.incident);
+
   // Check to see if there is an incident number first
   if(_.has(params,"incident") && _.isString(params.incident) && params.incident !== "") {
-    whereClause = ` where Incident like '${params.incident}'`;
+    whereClause = sqlString.format(" where Incident like ?",[params.incident]);
   }
 
   // Replace asterisks (*) with percent signs (%)
   whereClause = whereClause.replace(/\*/g,'%');
 
-  let query = `select Incident,RptDate,RptTime,Offense,OffenseDesc,ID from Incident${whereClause} order by RptDate,RptTime,BeginDate,BeginTime,EndDate,EndTime asc offset ${params.recordOffset} rows fetch next ${params.fetchSize} rows only; select count(*) as Count from Incident${whereClause};`;
+  let query = `select Incident,RptDate,RptTime,Offense,OffenseDesc,ID,Reviewer as ReviewerID from Incident${whereClause} order by RptDate,RptTime,BeginDate,BeginTime,EndDate,EndTime asc offset ${params.recordOffset} rows fetch next ${params.fetchSize} rows only; select count(*) as Count from Incident${whereClause};`;
 
   poolConnect.then((p) => {
     let request = p.request();
 
     request.query(query).then((recordset) => {
       res.send(recordset);
+    },(err) => {
+      console.log(err.originalError.code,err.originalError.message);
+    }).finally(() => {
+      console.log(`Incident search query completed`);
     });
   });
 

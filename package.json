@@ -24,6 +24,7 @@
     "normalize.css": "^8.0.1",
     "oclazyload": "^1.1.0",
     "tedious": "^9.2.1",
+    "tsqlstring": "^1.0.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },

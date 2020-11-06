@@ -7,12 +7,18 @@
   <table ng-show="!$ctrl.loading">
     <thead>
       <tr>
-        <td></td><td>Incident</td><td>Rpt Date</td><td>Rpt Time</td><td>Offense</td><td>Offense Desc</td><td>ID</td>
+        <td></td><td>Incident</td><td>Rpt Date</td><td>Rpt Time</td><td>Offense</td><td>Offense Desc</td><td>ID</td><td>Reviewer</td>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="incident in $ctrl.incidents">
-        <td>{{$index+1}}</td><td><a ui-sref="incidentDetail({incidentnumber:incident.Incident})">{{incident.Incident}}</a></td><td>{{incident.RptDate | date}}</td><td>{{incident.RptTime | time}}</td><td>{{incident.Offense}}</td><td>{{incident.OffenseDesc}}</td><td>{{incident.ID}}</td>
+        <td>{{$index+1}}</td><td><a ui-sref="incidentSearchDetail({incidentnumber:incident.Incident})">{{incident.Incident}}</a></td>
+        <td>{{incident.RptDate | date}}</td>
+        <td>{{incident.RptTime | time}}</td>
+        <td>{{incident.Offense}}</td>
+        <td>{{incident.OffenseDesc}}</td>
+        <td>{{incident.ID}}</td>
+        <td>{{incident.ReviewerID}}</td>
       </tr>
     </tbody>
   </table>

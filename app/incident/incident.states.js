@@ -20,6 +20,20 @@ export const incidentSearchState = {
   sticky: true
 };
 
+export const incidentSearchDetailState = {
+  parent: 'incidentSearch',
+  name: 'incidentSearchDetail',
+  url: '/{incidentnumber}',
+  resolve: {
+    incidentnumber: function($stateParams) {
+      return $stateParams.incidentnumber;
+    }
+  },
+  views: {
+    'incidentDetail': 'incidentSearchDetail'
+  }
+};
+
 export const incidentDetailState = {
   parent: 'incident',
   name: 'incidentDetail',

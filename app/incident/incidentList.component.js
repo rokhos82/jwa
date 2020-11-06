@@ -13,7 +13,7 @@ class incidentListController {
 
   $onInit() {
     this.loading = true;
-    this.fetchRecords();
+    //this.fetchRecords();
   }
 
   $onChanges(changeObj) {

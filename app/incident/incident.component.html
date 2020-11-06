@@ -1,4 +1,4 @@
 <container>
-  <ui-view name="incidentSearch" ng-show="$ctrl.$state.includes('incidentSearch')"></ui-view>
-  <ui-view name="incidentDetail" ng-show="$ctrl.$state.includes('incidentDetail')"></ui-view>
+  <ui-view name="incidentSearch" ng-show="$ctrl.$state.is('incidentSearch')"></ui-view>
+  <ui-view name="incidentDetail" ng-show="$ctrl.$state.includes('incidentDetail') || $ctrl.$state.includes('incidentSearchDetail')"></ui-view>
 </container>
