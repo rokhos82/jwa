@@ -1,12 +1,27 @@
-<div>
-  <fieldset>
-    <legend>Incident Search</legend>
-    <div class="jwa_form_row">
-      <label for="incidentSearch">Incident:</label><input type="text" id="incidentSearch" ng-model="$ctrl.ui.incident" />
-    </div>
-    <container class="jwa_form_line">
-      <button type="button" ng-click="$ctrl.doSearch()">Search</button>
-    </container>
-  </fieldset>
+<div class="row">
+  <form class="form-horizontal">
+      <fieldset>
+        <legend>Incident Search</legend>
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="incidentSearch">Incident:</label>
+          <div class="col-sm-11">
+            <input class="form-control" type="text" id="incidentSearch" ng-model="$ctrl.ui.incident" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-1 control-label" for="officerSearch">Officer:</label>
+          <div class="col-sm-11">
+            <input class="form-control" type="text" name="officerSearch" ng-model="$ctrl.ui.officer" />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-1 col-sm-11">
+            <button class="btn btn-default" type="submit" ng-click="$ctrl.doSearch()">Search</button>
+          </div>
+        </div>
+      </fieldset>
+  </form>
+</div>
+<div class="row">
   <incident-list query="$ctrl.query"></incident-list>
 </div>

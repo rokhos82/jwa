@@ -1,7 +1,19 @@
 <container>
-  <span class="jwa-app-title">{{$ctrl.greeting}}</span>
-  <button ui-sref="welcome">Home</button>
-  <button ui-sref="name">Names</button>
-  <button ui-sref="incident">Incidents</button>
-  <ui-view></ui-view>
+  <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand">{{$ctrl.greeting}}</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li ui-sref-active="active"><a ui-sref="welcome">Home</a></li>
+            <li ui-sref-active="active"><a ui-sref="name">Names</a></li>
+            <li ui-sref-active="active"><a ui-sref="incident">Incidents</a></li>
+          </ul>
+        </div>
+      </div>
+  </nav>
+  <div class="container">
+    <ui-view></ui-view>
+  </div>
 </container>
