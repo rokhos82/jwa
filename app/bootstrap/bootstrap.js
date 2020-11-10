@@ -3,7 +3,7 @@
  * @namespace angular_module
  */
 
-import css from "../../src/style.css";
+import css from "../layout/global.css";
 import _ from 'lodash';
 
 import "../main/ngmodule.js";
