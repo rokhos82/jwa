@@ -1,0 +1,19 @@
+.jwa-input-narrow {
+  width: 60px !important;
+}
+
+.jwa-input-tiny {
+  width: 35px !important;
+}
+
+.jwa-input-date {
+  width: 80px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.jwa-input-time {
+  width: 50px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}

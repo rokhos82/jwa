@@ -4,25 +4,68 @@ class nameListController {
     this.$transitions = $transitions;
     this.nameService = nameService;
     this.$scope = $scope;
+
+    this.loading = true;
+    this.terms = null;
+
+    this.page = 1;
+    this.maxPage = -1;
+
+    this.recordOffset = 0;
+    this.fetchSize = 100;
+    this.recordCount = 0;
   }
 
   $onInit() {
-    this.nameService.masterNamesTop1000().then((result) => {
-      console.log(result);
-      this.names = result.recordset;
-    });
+    this.fetchRecords();
   }
 
   $onChanges(changeObj) {
     let terms = changeObj.query.currentValue;
     console.log(`New Query`,terms);
+    this.terms = terms;
 
-    if(_.isObject(terms) && _.has(terms,'lastName')) {
-      this.nameService.masterNamesSearch(terms).then((result) => {
-        console.log(result);
-        this.names = result.recordset;
-      });
+    this.recordOffset = 0;
+    this.page = 1;
+    
+    this.fetchRecords();
+  }
+
+  prevPage() {
+    this.loading = true;
+    this.page--;
+    if(this.page > 0) {
+      this.recordOffset -= this.fetchSize;
+      this.fetchRecords();
     }
+    else {
+      this.page = 1;
+    }
+  }
+
+  nextPage() {
+    this.loading = true;
+    this.page++;
+    this.recordOffset += this.fetchSize;
+    this.incidents = [];
+    this.fetchRecords();
+  }
+
+  fetchRecords() {
+    // Add the record offset and fetch next size for SQL query to the
+    // search terms object.
+    let terms = this.terms || {};
+    console.log("Names search terms",terms);
+    terms.recordOffset = this.recordOffset;
+    terms.fetchSize = this.fetchSize;
+
+    this.nameService.getNames(terms).then((results) => {
+      console.log(results);
+      this.names = results.recordsets[0];
+      this.recordCount = results.recordsets[1][0].Count;
+    }).finally(() => {
+      this.loading = false;
+    });
   }
 }
 

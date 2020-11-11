@@ -26,7 +26,15 @@ class nameDetailController {
 
 nameDetailController.$inject = ['$scope','nameService','$state','$transitions'];
 
+/**
+ * nameDetail state definition
+ * @type {object}
+ */
 export const nameDetail = {
+  /**
+   * The ui-router state binding information
+   * @type {object}
+   */
   bindings: {
     filenumber: '<',
     search: '<'

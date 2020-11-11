@@ -10,5 +10,5 @@ welcomeController.$inject = ['$scope','$state','$transitions'];
 
 export const welcome = {
   controller: welcomeController,
-  template: `<p>Welcome to the Justice Web App.  This program is currently under development and will be buggy.</p>`
+  template: require('./welcome.component.html')
 };

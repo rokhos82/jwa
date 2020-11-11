@@ -1,0 +1,12 @@
+{
+  "plugins": ["plugins/markdown"],
+  "recurseDepth": 10,
+  "source": {
+    "includePattern": ".+\\.js$"
+  },
+  "sourceType": "module",
+  "opt": {
+    "destination": "./jsdoc/",
+    "recurse": true
+  }
+}

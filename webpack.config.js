@@ -12,7 +12,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       title: 'Justice Web App',
-      template: './src/index.html'
+      template: './app/layout/index.html'
     })
   ],
   devtool: 'inline-source-map',
@@ -42,6 +42,18 @@ module.exports = {
             loader: 'html-loader',
             options: {
               minimize: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/'
             }
           }
         ]

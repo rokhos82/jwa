@@ -15,12 +15,10 @@ import {nameList} from "./nameList.component.js";
 
 import {nameService} from "./name.service.js";
 
-import {dateFilter} from "./name.filters.js";
-
 import {nameState,nameSearchState,nameDetailState} from "./name.states.js";
 import {StickyStatesPlugin} from "@uirouter/sticky-states";
 
-export const NAME_MODULE = angular.module("jwa-name",["ui.router","ngResource"]);
+export const NAME_MODULE = angular.module("jwa-name",["ui.router","ngResource","jwa-support"]);
 
 NAME_MODULE.config(["$uiRouterProvider",function($uiRouter) {
   // Enable tracing of each TRANSITION... (check the javascript console)
@@ -49,5 +47,3 @@ NAME_MODULE.component('nameDetailAssociates',nameDetailAssociates);
 NAME_MODULE.component('nameList',nameList);
 
 NAME_MODULE.service('nameService',nameService);
-
-NAME_MODULE.filter('dateFilter',dateFilter);
