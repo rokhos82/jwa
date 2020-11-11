@@ -7,13 +7,11 @@ class incidentListController {
     this.fetchSize = 100;
     this.recordCount = 0;
     this.page = 1;
-    this.maxPage = -1;
     this.loading = true;
   }
 
   $onInit() {
     this.loading = true;
-    //this.fetchRecords();
   }
 
   $onChanges(changeObj) {
@@ -25,26 +23,14 @@ class incidentListController {
     this.page = 1;
 
     this.fetchRecords();
+    this.changePage();
   }
 
-  nextPage() {
+  changePage() {
+    console.log("Page",this.page);
     this.loading = true;
-    this.page++;
-    this.recordOffset += this.fetchSize;
-    this.incidents = [];
+    this.recordOffset = (this.page-1) * this.fetchSize;
     this.fetchRecords();
-  }
-
-  prevPage() {
-    this.loading = true;
-    this.page--;
-    if(this.page > 0) {
-      this.recordOffset -= this.fetchSize;
-      this.fetchRecords();
-    }
-    else {
-      this.page = 1;
-    }
   }
 
   fetchRecords() {
