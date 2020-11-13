@@ -2,6 +2,7 @@ const path = require('path');
 const package = require('./package.json');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -13,6 +14,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Justice Web App',
       template: './app/layout/index.html'
+    }),
+    new webpack.DefinePlugin({
+      'SERVER_IP': `'ubuntu2004.wsl'`,
+      'SERVER_PORT': `'8001'`
     })
   ],
   devtool: 'inline-source-map',

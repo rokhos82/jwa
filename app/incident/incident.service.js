@@ -1,8 +1,8 @@
-export function incidentService($resource) {
+export function incidentService($resource,server,port) {
   let _service = {
     getIncidentDetail: function(incidentnumber) {
       console.log(`Name Serivce getIncidentDetail: ${incidentnumber}`);
-      let detail = $resource('http://localhost:8001/incidents/detail/:incidentnumber',{
+      let detail = $resource(`http://${server}:${port}/incidents/detail/:incidentnumber`,{
         incidentnumber: encodeURIComponent(incidentnumber)
       });
 
@@ -13,7 +13,7 @@ export function incidentService($resource) {
       return promise;
     },
     getIncidents: function(terms) {
-      let list = $resource("http://localhost:8001/incidents/fetch",{});
+      let list = $resource(`http://${server}:${port}/incidents/fetch`,{});
 
       let promise = list.save({},terms).$promise;
 
@@ -24,4 +24,4 @@ export function incidentService($resource) {
   return _service;
 }
 
-incidentService.$inject = ["$resource"];
+incidentService.$inject = ["$resource","jwa-config-serverIp","jwa-config-serverPort"];

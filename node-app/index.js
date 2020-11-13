@@ -6,6 +6,7 @@ const appApi = express();
 const sql = require('mssql');
 const _ = require('lodash');
 const sqlString = require('tsqlstring');
+const path = require('path');
 
 const config = {
   server: 'jcc-sql.jcc.ccjcc.us',
@@ -49,9 +50,11 @@ app.use(myLogger);
 
 app.use(cors());
 
-app.use(express.static('dist'));
+let staticPath = path.join(__dirname,"../dist");
+console.log("Serving static path:",staticPath);
+app.use(express.static(staticPath));
 
-app.listen(8000,() => {
+app.listen(8000,"0.0.0.0",() => {
   console.log('JWA listening on port 8000!');
 });
 
@@ -316,7 +319,7 @@ appApi.post('/incidents/fetch',(req,res) => {
   console.log(query);
 });
 
-appApi.listen(8001,() => {
+appApi.listen(8001,"0.0.0.0",() => {
   console.log(`Listening on port 8001`);
 });
 

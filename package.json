@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "jsdoc": "./node_modules/.bin/jsdoc -r -d ./doc ./app -c ./.jsdoc.json"
+    "jsdoc": "./node_modules/.bin/jsdoc -r -d ./doc ./app -c ./.jsdoc.json",
+    "serve": "node ./node-app/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,9 +16,9 @@
     "@uirouter/angularjs": "^1.0.28",
     "@uirouter/dsr": "^1.2.0",
     "@uirouter/sticky-states": "^1.5.1",
-    "angular": "^1.8.0",
+    "angular": "^1.8.2",
     "angular-animate": "^1.8.2",
-    "angular-resource": "^1.8.0",
+    "angular-resource": "^1.8.2",
     "angular-touch": "^1.8.2",
     "angular-ui-bootstrap": "^2.5.6",
     "body-parser": "^1.19.0",
@@ -25,23 +26,23 @@
     "bootswatch": "^3.4.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.20",
     "mssql": "^6.2.3",
     "normalize.css": "^8.0.1",
     "oclazyload": "^1.1.0",
     "tedious": "^9.2.1",
     "tsqlstring": "^1.0.1",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "webpack": "^5.4.0",
+    "webpack-cli": "^4.2.0"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
-    "css-loader": "^3.6.0",
+    "css-loader": "^5.0.1",
     "esdoc-standard-plugin": "^1.0.0",
     "file-loader": "^6.2.0",
     "html-loader": "^1.3.2",
-    "html-webpack-plugin": "^4.3.0",
+    "html-webpack-plugin": "^4.5.0",
     "jsdoc": "^3.6.6",
-    "style-loader": "^1.2.1"
+    "style-loader": "^2.0.0"
   }
 }

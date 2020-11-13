@@ -10,6 +10,7 @@ import spacelab from "bootswatch/spacelab/bootstrap.min.css";
 import _ from 'lodash';
 
 import "../main/ngmodule.js";
+import "../global/config.module.js";
 import "../global/support.module.js";
 import "../main/main.module.js";
 import "../name/name.module.js";
