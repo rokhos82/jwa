@@ -1,12 +1,26 @@
+.jwa-input-wide {
+  width: 400px !important;
+}
+
+.jwa-input-half {
+  width: 120px !important;
+}
+
 .jwa-input-narrow {
   width: 60px !important;
 }
 
 .jwa-input-tiny {
-  width: 35px !important;
+  width: 37px !important;
 }
 
 .jwa-input-date {
+  width: 90px !important;
+  padding-left: 7px !important;
+  padding-right: 7px !important;
+}
+
+.jwa-input-date-sm {
   width: 80px !important;
   padding-left: 5px !important;
   padding-right: 5px !important;

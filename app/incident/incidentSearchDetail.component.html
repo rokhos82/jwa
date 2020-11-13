@@ -1,12 +1,6 @@
 <container>
-  <div class="jwa_form_row">
-    <button ui-sref="incidentSearch">Back to Search</button>
-  </div>
-  <div class="jwa_form_row">
-    <button type="button" ng-click="$ctrl.onFirst()">First</button>
-    <button type="button" ng-click="$ctrl.onPrev()">Prev</button>
-    <button type="button" ng-click="$ctrl.onNext()">Next</button>
-    <button type="button" ng-click="$ctrl.onLast()">Last</button>
+  <div class="row">
+    <button class="btn btn-primary" type="button" ui-sref="incidentSearch">Back to Search</button>
   </div>
   <incident-detail incidentnumber="$ctrl.incidentnumber"></incident-detail>
 </container>
