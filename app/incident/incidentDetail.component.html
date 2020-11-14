@@ -2,120 +2,136 @@
   <fieldset>
     <legend>Incident Detail</legend>
     <div class="col-sm-9">
-      <div class="form-inline">
-        <div class="form-group">
-          <label for="incidentnumber">Incident #:</label>
-          <input class="form-control jwa-input-half" readonly="readonly" type="text" id="incidentnumber" ng-model="$ctrl.incident.Incident" />
+      <div class="row">
+        <div class="form-horizontal">
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentnumber" class="col-sm-1 text-right jwa-col-inline">Incident:</label>
+            <div class="col-sm-3 jwa-col-inline">
+              <input class="form-control" readonly="readonly" type="text" id="incidentnumber" ng-model="$ctrl.incident.Incident" />
+            </div>
+            <label for="incidentdisclos" class="col-sm-1 text-right jwa-col-inline">Disclos:</label>
+            <div class="col-sm-1 jwa-col-inline">
+              <input class="form-control" readonly="readonly" type="text" id="incidentdisclos" ng-model="$ctrl.incident.Disclose" />
+            </div>
+            <label for="incidentzone" class="col-sm-1 text-right jwa-col-inline">Zone:</label>
+            <div class="col-sm-1 jwa-col-inline">
+              <input class="form-control" readonly="readonly" type="text" id="incidentzone" ng-model="$ctrl.incident.Zone" />
+            </div>
+            <label for="incidentid" class="col-sm-1 text-right jwa-col-inline">ID:</label>
+            <div class="col-sm-1 jwa-col-inline">
+              <input class="form-control" readonly="readonly" type="text" id="incidentid" ng-model="$ctrl.incident.ID" tooltip-popup-close-delay="500" tooltip-popup-delay="200" tooltip-placement="top" uib-tooltip="{{$ctrl.incident.OwnerName}}"  />
+            </div>
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentOffense" class="col-sm-1 jwa-col-inline text-right">Offense:</label>
+            <div class="col-sm-1 jwa-col-inline">
+              <input class="form-control" readonly="readonly" type="text" id="incidentOffense" ng-model="$ctrl.incident.Offense" />
+            </div>
+            <div class="col-sm-4 jwa-col-inline">
+              <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.incident.OffenseDesc" />
+            </div>
+            <label for="incidentOffenseExt" class="col-sm-1 jwa-col-inline text-right">Off Ext:</label>
+            <div class="col-sm-4 jwa-col-inline">
+              <input class="form-control" readonly="readonly" type="text" id="incidentOffenseExt" ng-model="$ctrl.incident.OffenseExt" />
+            </div>
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentLocation" class="col-sm-1 jwa-col-inline text-right">Location:</label>
+            <div class="col-sm-1 jwa-col-inline">
+              <input class="form-control" readonly="readonly" type="text" id="incidentLocation" ng-model="$ctrl.incident.Loc_Number" />
+            </div>
+            <div class="col-sm-1 jwa-col-inline">
+              <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_Direction" />
+            </div>
+            <div class="col-sm-4 jwa-col-inline">
+              <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_StreetName" />
+            </div>
+            <div class="col-sm-1 jwa-col-inline">
+              <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_StreetType" />
+            </div>
+            <div class="col-sm-1 jwa-col-inline">
+              <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_Direction2" />
+            </div>
+            <div class="col-sm-1 jwa-col-inline">
+              <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_Apt" />
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="incidentdisclos">Disclos:</label>
-          <input class="form-control jwa-input-tiny" readonly="readonly" type="text" id="incidentdisclos" ng-model="$ctrl.incident.Disclose" />
+        <div class="form-inline">
+          <div class="form-group jwa-form-group-sm">
+            <input class="form-control jwa-input-wide" readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_Concat" />
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentLocCity">City:</label>
+            <input class="form-control jwa-input-half" readonly="readonly" type="text" id="incidentLocCity" ng-model="$ctrl.incident.Loc_City" />
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentLocState">State:</label>
+            <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentLocState" ng-model="$ctrl.incident.Loc_State" />
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentLocZip">Zip:</label>
+            <input class="form-control jwa-input-half" readonly="readonly" type="text" id="incidentLocZip" ng-model="$ctrl.incident.Loc_Zip" />
+          </div>
         </div>
-        <div class="form-group">
-          <label for="incidentzone">Zone:</label>
-          <input class="form-control" readonly="readonly" type="text" id="incidentzone" ng-model="$ctrl.incident.Zone" />
+        <div class="form-inline">
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentReviewer">Reviewer:</label>
+            <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentReviewer" ng-model="$ctrl.incident.ReviewerID" tooltip-popup-close-delay="500" tooltip-popup-delay="200" tooltip-placement="top" uib-tooltip="{{$ctrl.incident.Reviewer}}" />
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentCaseStatus">Case Status:</label>
+            <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentCaseStatus" ng-model="$ctrl.incident.CaseStatus" />
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentCaseDispo">Case Dispo:</label>
+            <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentCaseDispo" ng-model="$ctrl.incident.CaseDispo" />
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentAssignedTo">Assigned To:</label>
+            <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentAssignedTo" ng-model="$ctrl.incident.AssignedToID" tooltip-popup-close-delay="500" tooltip-popup-delay="200" tooltip-placement="top" uib-tooltip="{{$ctrl.incident.AssignedTo}}" />
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentAssignedToSince">Since:</label>
+            <input class="form-control jwa-input-date" readonly="readonly" type="text" id="incidentAssignedToSince" ng-model="$ctrl.incident.Since" />
+          </div>
         </div>
-        <div class="form-group">
-          <label for="incidentid">ID:</label>
-          <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentid" ng-model="$ctrl.incident.ID" tooltip-popup-close-delay="500" tooltip-popup-delay="200" tooltip-placement="top" uib-tooltip="{{$ctrl.incident.OwnerName}}"  />
+        <div class="form-inline">
+          <div class="form-group jwa-form-group-sm">
+            <input readonly="readonly" type="checkbox" id="incidentPrintPress" ng-model="$ctrl.incident.PrintRpt" /><label for="incidentPrintPress">Print on Press Report</label>
+          </div>
         </div>
-      </div>
-      <div class="form-inline">
-        <div class="form-group">
-          <label for="incidentOffense">Offense:</label>
-          <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentOffense" ng-model="$ctrl.incident.Offense" />
-          <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.incident.OffenseDesc" />
+        <div class="form-inline">
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentDomesticVic">Domestic Victim:</label>
+            <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentDomesticVic" ng-model="$ctrl.incident.DomVic" />
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentType">Type:</label>
+            <input class="form-control jwa-input-tiny" readonly="readonly" type="text" id="incidentType" ng-model="$ctrl.incident.Type" />
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentRelatedNumber">Related #:</label>
+            <input class="form-control jwa-input-half" readonly="readonly" type="text" id="incidentRelatedNumber" ng-model="$ctrl.incident.RelatedNumber" />
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentShift">Shift:</label>
+            <input class="form-control jwa-input-tiny" readonly="readonly" type="text" id="incidentShift" ng-model="$ctrl.incident.Shift" />
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentDispatcher">Dispatcher:</label>
+            <input class="form-control" readonly="readonly" type="text" id="incidentDispatcher" ng-model="$ctrl.incident.Dispatcher" />
+          </div>
         </div>
-        <div class="form-group">
-          <label for="incidentOffenseExt">Off Ext:</label>
-          <input class="form-control" readonly="readonly" type="text" id="incidentOffenseExt" ng-model="$ctrl.incident.OffenseExt" />
-        </div>
-      </div>
-      <div class="form-inline">
-        <div class="form-group">
-          <label for="incidentLocation">Location:</label>
-          <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentLocation" ng-model="$ctrl.incident.Loc_Number" />
-          <input class="form-control jwa-input-narrow" readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_Direction" />
-          <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_StreetName" />
-          <input class="form-control jwa-input-narrow" readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_StreetType" />
-          <input class="form-control jwa-input-narrow" readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_Direction2" />
-          <input class="form-control jwa-input-narrow" readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_Apt" />
-        </div>
-      </div>
-      <div class="form-inline">
-        <div class="form-group">
-          <input class="form-control jwa-input-wide" readonly="readonly" type="text" ng-model="$ctrl.incident.Loc_Concat" />
-        </div>
-        <div class="form-group">
-          <label for="incidentLocCity">City:</label>
-          <input class="form-control jwa-input-half" readonly="readonly" type="text" id="incidentLocCity" ng-model="$ctrl.incident.Loc_City" />
-        </div>
-        <div class="form-group">
-          <label for="incidentLocState">State:</label>
-          <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentLocState" ng-model="$ctrl.incident.Loc_State" />
-        </div>
-        <div class="form-group">
-          <label for="incidentLocZip">Zip:</label>
-          <input class="form-control jwa-input-half" readonly="readonly" type="text" id="incidentLocZip" ng-model="$ctrl.incident.Loc_Zip" />
-        </div>
-      </div>
-      <div class="form-inline">
-        <div class="form-group">
-          <label for="incidentReviewer">Reviewer:</label>
-          <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentReviewer" ng-model="$ctrl.incident.ReviewerID" tooltip-popup-close-delay="500" tooltip-popup-delay="200" tooltip-placement="top" uib-tooltip="{{$ctrl.incident.Reviewer}}" />
-        </div>
-        <div class="form-group">
-          <label for="incidentCaseStatus">Case Status:</label>
-          <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentCaseStatus" ng-model="$ctrl.incident.CaseStatus" />
-        </div>
-        <div class="form-group">
-          <label for="incidentCaseDispo">Case Dispo:</label>
-          <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentCaseDispo" ng-model="$ctrl.incident.CaseDispo" />
-        </div>
-        <div class="form-group">
-          <label for="incidentAssignedTo">Assigned To:</label>
-          <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentAssignedTo" ng-model="$ctrl.incident.AssignedToID" tooltip-popup-close-delay="500" tooltip-popup-delay="200" tooltip-placement="top" uib-tooltip="{{$ctrl.incident.AssignedTo}}" />
-        </div>
-        <div class="form-group">
-          <label for="incidentAssignedToSince">Since:</label>
-          <input class="form-control jwa-input-date" readonly="readonly" type="text" id="incidentAssignedToSince" ng-model="$ctrl.incident.Since" />
-        </div>
-      </div>
-      <div class="form-inline">
-        <div class="form-group">
-          <input readonly="readonly" type="checkbox" id="incidentPrintPress" ng-model="$ctrl.incident.PrintRpt" /><label for="incidentPrintPress">Print on Press Report</label>
-        </div>
-      </div>
-      <div class="form-inline">
-        <div class="form-group">
-          <label for="incidentDomesticVic">Domestic Victim:</label>
-          <input class="form-control jwa-input-narrow" readonly="readonly" type="text" id="incidentDomesticVic" ng-model="$ctrl.incident.DomVic" />
-        </div>
-        <div class="form-group">
-          <label for="incidentType">Type:</label>
-          <input class="form-control jwa-input-tiny" readonly="readonly" type="text" id="incidentType" ng-model="$ctrl.incident.Type" />
-        </div>
-        <div class="form-group">
-          <label for="incidentRelatedNumber">Related #:</label>
-          <input class="form-control jwa-input-half" readonly="readonly" type="text" id="incidentRelatedNumber" ng-model="$ctrl.incident.RelatedNumber" />
-        </div>
-        <div class="form-group">
-          <label for="incidentShift">Shift:</label>
-          <input class="form-control jwa-input-tiny" readonly="readonly" type="text" id="incidentShift" ng-model="$ctrl.incident.Shift" />
-        </div>
-        <div class="form-group">
-          <label for="incidentDispatcher">Dispatcher:</label>
-          <input class="form-control" readonly="readonly" type="text" id="incidentDispatcher" ng-model="$ctrl.incident.Dispatcher" />
-        </div>
-      </div>
-      <div class="form-inline">
-        <div class="form-group">
-          <label for="incidentAsOfDate">As of Date:</label>
-          <input class="form-control jwa-input-date" readonly="readonly" type="text" id="incidentAsOfDate" ng-model="$ctrl.incident.AsOfDate" />
-        </div>
-        <div class="form-group">
-          <label for="incidentMisc">Misc:</label>
-          <input class="form-control" readonly="readonly" type="text" id="incidentMisc" ng-model="$ctrl.incident.IncidentMisc" />
+        <div class="form-inline">
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentAsOfDate">As of Date:</label>
+            <input class="form-control jwa-input-date" readonly="readonly" type="text" id="incidentAsOfDate" ng-model="$ctrl.incident.AsOfDate" />
+          </div>
+          <div class="form-group jwa-form-group-sm">
+            <label for="incidentMisc">Misc:</label>
+            <input class="form-control" readonly="readonly" type="text" id="incidentMisc" ng-model="$ctrl.incident.IncidentMisc" />
+          </div>
         </div>
       </div>
     </div>
