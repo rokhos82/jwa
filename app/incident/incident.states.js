@@ -25,14 +25,17 @@ export const incidentSearchDetailState = {
   name: 'incidentSearchDetail',
   url: '/{incidentnumber}',
   resolve: {
-    incidentnumber: function($stateParams) {
-      return $stateParams.incidentnumber;
-    }
+    incidentnumber: incidentSearchDetailStateResolver
   },
   views: {
     'incidentDetail@incident': 'incidentSearchDetail'
   }
 };
+
+incidentSearchDetailStateResolver.$inject = ["$stateParams","auditService"];
+function incidentSearchDetailStateResolver($stateParams,auditService) {
+  return $stateParams.incidentnumber;
+}
 
 export const incidentDetailState = {
   parent: 'incident',
