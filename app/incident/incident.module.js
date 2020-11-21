@@ -3,6 +3,9 @@ import {incidentSearch} from "./incidentSearch.component.js";
 import {incidentSearchDetail} from "./incidentSearchDetail.component.js";
 import {incidentList} from "./incidentList.component.js";
 import {incidentDetail} from "./incidentDetail.component.js";
+import {incidentDetailContacts} from "./incidentDetailContacts.component.js";
+import {incidentDetailProperty} from "./incidentDetailProperty.component.js";
+import {incidentDetailVehicle} from "./incidentDetailVehicle.component.js";
 
 import {incidentState,incidentSearchState,incidentSearchDetailState,incidentDetailState} from "./incident.states.js";
 
@@ -31,5 +34,8 @@ INCIDENT_MODULE.component('incidentSearch',incidentSearch);
 INCIDENT_MODULE.component('incidentSearchDetail',incidentSearchDetail);
 INCIDENT_MODULE.component('incidentList',incidentList);
 INCIDENT_MODULE.component('incidentDetail',incidentDetail);
+INCIDENT_MODULE.component('incidentDetailContacts',incidentDetailContacts);
+INCIDENT_MODULE.component('incidentDetailProperty',incidentDetailProperty);
+INCIDENT_MODULE.component('incidentDetailVehicle',incidentDetailVehicle);
 
 INCIDENT_MODULE.factory('incidentService',incidentService);
