@@ -12,7 +12,9 @@ class incidentDetailPropertyController {
 incidentDetailPropertyController.$inject = ["$scope"];
 
 export const incidentDetailProperty = {
-  bindings: {},
+  bindings: {
+    property: "<"
+  },
   controller: incidentDetailPropertyController,
   template: require('./incidentDetailProperty.component.html')
 };

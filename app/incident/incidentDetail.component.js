@@ -12,7 +12,9 @@ class incidentDetailController {
   $onInit() {
     this.incidentService.getIncidentDetail(this.incidentnumber).then((result) => {
       console.log('Detail',result);
-      this.incident = result[0];
+      this.incident = result[0].detail;
+      this.contacts = result[0].contacts;
+      this.property = result[0].property;
       this.cleanupDateTime();
     }).finally(() => {
       this.loading = false;

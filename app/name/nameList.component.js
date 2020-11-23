@@ -9,7 +9,6 @@ class nameListController {
     this.terms = null;
 
     this.page = 1;
-    this.maxPage = -1;
 
     this.recordOffset = 0;
     this.fetchSize = 100;
@@ -17,7 +16,7 @@ class nameListController {
   }
 
   $onInit() {
-    this.fetchRecords();
+    this.loading = true;
   }
 
   $onChanges(changeObj) {
@@ -27,7 +26,14 @@ class nameListController {
 
     this.recordOffset = 0;
     this.page = 1;
-    
+
+    this.fetchRecords();
+  }
+
+  changePage() {
+    console.log("Page",this.page);
+    this.loading = true;
+    this.recordOffset = (this.page-1)*this.fetchSize;
     this.fetchRecords();
   }
 

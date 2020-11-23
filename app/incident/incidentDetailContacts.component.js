@@ -10,7 +10,7 @@ incidentDetailContactsController.$inject = ["$scope"];
 
 export const incidentDetailContacts = {
   bindings: {
-    incidentnumber: "@"
+    contacts: "<"
   },
   controller: incidentDetailContactsController,
   template: require('./incidentDetailContacts.component.html')

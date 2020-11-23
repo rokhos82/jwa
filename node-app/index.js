@@ -266,14 +266,21 @@ appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
     await poolConnect;
     let request = pool.request();
 
-    request.query(`select * from vIncidents where Incident = ${incidentnumber}`,function(err,result) {
+    let queryString = `select * from vIncidents where Incident = ${incidentnumber}; select * from vIncidentContacts_CCIT where Incident = ${incidentnumber} order by ContactsKey; select * from vIncidentProperty where Incident = ${incidentnumber};`;
+
+    request.query(queryString,function(err,result) {
       if(err) {
         console.log(err);
       }
       else {
         console.log(result);
-        localCache.incidents[incidentnumber] = result.recordset[0];
-        res.send(result.recordset);
+        let r = {
+          detail: result.recordsets[0][0],
+          contacts: result.recordsets[1],
+          property: result.recordsets[2]
+        };
+        localCache.incidents[incidentnumber] = r
+        res.send([r]);
       }
     });
   }
