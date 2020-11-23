@@ -1,17 +1,7 @@
-/**
- *
- */
-function setStateCache(key,value) {}
-
-/**
- *
- */
-function getStateCache(key,value) {}
-
-export function nameService($resource) {
+export function nameService($resource,server,port) {
   let _service = {
     getNameDetailByFilenumber: function(filenumber) {
-      let detail = $resource('http://localhost:8001/names/:filenumber',{
+      let detail = $resource(`http://${server}:${port}/names/:filenumber`,{
         filenumber: filenumber
       });
 
@@ -43,7 +33,7 @@ export function nameService($resource) {
       return listPromise;
     },
     getNames: function(terms) {
-      let list = $resource("http://localhost:8001/names/fetch",{});
+      let list = $resource(`http://${server}:${port}/names/fetch`,{});
 
       let promise = list.save({},terms).$promise;
 
@@ -54,4 +44,4 @@ export function nameService($resource) {
   return _service;
 }
 
-nameService.$inject = ["$resource"];
+nameService.$inject = ["$resource","jwa-config-serverIp","jwa-config-serverPort"];
