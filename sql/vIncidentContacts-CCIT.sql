@@ -41,7 +41,13 @@ SELECT
   OfficerName,
   ArrestDate,
   Charge,
-  ChargeDesc
+  ChargeDesc,
+  SSN,
+  Eth,
+  Wt,
+  Ht,
+  Felony,
+  Disclose
 FROM
   (SELECT
     c.FileNumber,
@@ -86,7 +92,13 @@ FROM
     p.OfficerName AS OfficerName,
     c.ArrestDate AS ArrestDate,
     c.Charge AS Charge,
-    c.ChargeDesc AS ChargeDesc
+    c.ChargeDesc AS ChargeDesc,
+    n.SSN AS SSN,
+    n.Eth AS Eth,
+    n.Wt AS Wt,
+    n.Ht AS Ht,
+    c.Felony AS Felony,
+    c.Disclose AS Disclose
   FROM
     dbo.Contacts AS c LEFT OUTER JOIN
       dbo.Ticket AS t ON t.CitationNumber = c.Citation AND c.Citation IS NOT NULL AND c.Citation <> '' LEFT OUTER JOIN
@@ -137,7 +149,13 @@ FROM
     p.OfficerName,
     c.ArrestDate,
     c.Charge,
-    c.ChargeDesc) AS it
+    c.ChargeDesc,
+    n.SSN,
+    n.Eth,
+    n.Wt,
+    n.Ht,
+    c.Felony,
+    c.Disclose) AS it
 GROUP BY
     FileNumber,
     Incident,
@@ -181,4 +199,10 @@ GROUP BY
     OfficerName,
     ArrestDate,
     Charge,
-    ChargeDesc
+    ChargeDesc,
+    SSN,
+    Eth,
+    Wt,
+    Ht,
+    Felony,
+    Disclose
