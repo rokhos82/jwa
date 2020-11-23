@@ -47,8 +47,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="contact in $ctrl.contacts">
-            <!-- I can find some of this data in the Contacts table by search for the ContactKey -->
-            <td><a ui-sref="nameDetail(contact.FileNumber)">{{contact.FileNumber}}</a></td>
+            <td><a ui-sref="nameDetail({filenumber:contact.FileNumber})">{{contact.FileNumber}}</a></td>
             <td>{{contact.LastName}}</td>
             <td>{{contact.FirstName}}</td>
             <td>{{contact.Middle}}</td>
