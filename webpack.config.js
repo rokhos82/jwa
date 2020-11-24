@@ -17,7 +17,8 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'SERVER_IP': `'ubuntu2004.wsl'`,
-      'SERVER_PORT': `'8001'`
+      'SERVER_PORT': `'8001'`,
+      'APP_VERSION': `"${package.version}"`
     })
   ],
   devtool: 'inline-source-map',
