@@ -1,6 +1,6 @@
 export function nameService($resource,server,port) {
   let _service = {
-    getNameDetailByFilenumber: function(filenumber) {
+    /*getNameDetailByFilenumber: function(filenumber) {
       let detail = $resource(`http://${server}:${port}/names/:filenumber`,{
         filenumber: filenumber
       });
@@ -31,11 +31,23 @@ export function nameService($resource,server,port) {
       let listPromise = list.save({},{filenumber:filenumber}).$promise;
 
       return listPromise;
-    },
+    },//*/
     getNames: function(terms) {
       let list = $resource(`http://${server}:${port}/names/fetch`,{});
 
       let promise = list.save({},terms).$promise;
+
+      return promise;
+    },
+    getNameDetail: (filenumber) => {
+      console.log(`Name Service getNameDateil: ${filenumber}`);
+      let detail = $resource(`http://${server}:${port}/names/detail/:filenumber`,{
+        filenumber: encodeURIComponent(filenumber)
+      });
+
+      let promise = detail.query().$promise;
+
+      // @todo I could add some audit logging here and capture the data returned with a .then()
 
       return promise;
     }

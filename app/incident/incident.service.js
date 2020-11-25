@@ -1,7 +1,7 @@
 export function incidentService($resource,server,port) {
   let _service = {
     getIncidentDetail: function(incidentnumber) {
-      console.log(`Name Serivce getIncidentDetail: ${incidentnumber}`);
+      console.log(`Incident Service getIncidentDetail: ${incidentnumber}`);
       let detail = $resource(`http://${server}:${port}/incidents/detail/:incidentnumber`,{
         incidentnumber: encodeURIComponent(incidentnumber)
       });

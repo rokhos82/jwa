@@ -1,29 +1,48 @@
 <div class="row">
   <fieldset>
     <legend>Contacts</legend>
-    <table class="jwa-master-names-table">
-      <thead>
-        <tr>
-          <td>Inc#</td>
-          <td>Cit/War</td>
-          <td>Date</td>
-          <td>Juv</td>
-          <td>Inv</td>
-          <td>Offense Desc.</td>
-          <td>Charge Desc.</td>
-          <td>Address</td>
-          <td>Participant</td>
-          <td>Status</td>
-          <td>Status Date</td>
-          <td>Bond Amount</td>
-          <td>Bond Type</td>
-          <td>ID</td>
-          <td>Comments</td></tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="contact in $ctrl.contacts"><td>{{contact.Incident}}</td><td>{{contact.Citation}}</td><td>{{contact.ContactDate | date}}</td><td>{{contact.Juvenile}}</td><td>{{contact.Involvement}}</td><td>{{contact.OffenseDesc}}</td><td></td><td>{{contact.Addr_Concat}}</td><td>{{contact.Participant}}</td><td>{{contact.ParticipantStatus}}</td><td></td><td></td><td></td><td>{{contact.ID}}</td><td>{{contact.Comments}}</td></tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-condensed table-striped table-border table-hover">
+        <thead>
+          <tr>
+            <th>Inc#</th>
+            <th>Cit/War</th>
+            <th>Date</th>
+            <th>Juv</th>
+            <th>Inv</th>
+            <th>Offense Desc.</th>
+            <th>Charge Desc.</th>
+            <th>Address</th>
+            <th>Participant</th>
+            <th>Status</th>
+            <th>Status Date</th>
+            <th>Bond Amount</th>
+            <th>Bond Type</th>
+            <th>ID</th>
+            <th>Comments</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="contact in $ctrl.contacts">
+            <td><a ui-sref="incidentDetail({incidentnumber:contact.Incident})">{{contact.Incident}}</a></td>
+            <td>{{contact.Citation}}</td>
+            <td>{{contact.ContactDate | date}}</td>
+            <td>{{contact.Juvenile}}</td>
+            <td>{{contact.Involvement}}</td>
+            <td>{{contact.OffenseDesc}}</td>
+            <td></td>
+            <td>{{contact.Addr_Concat}}</td>
+            <td>{{contact.Participant}}</td>
+            <td>{{contact.ParticipantStatus}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{contact.ID}}</td>
+            <td>{{contact.Comments}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </fieldset>
 
 </div>
