@@ -8,7 +8,7 @@ class appController {
     this.$resource = $resource;
     this.$scope = $scope;
 
-    this.greeting = "Justice Web App" + " v0.3.0";
+    this.greeting = "Justice Web App v" + APP_VERSION;
   }
 };
 

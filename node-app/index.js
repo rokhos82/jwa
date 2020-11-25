@@ -85,9 +85,13 @@ appApi.get('/',(req,res) => {
   });
 });//*/
 
-appApi.get('/names/:filenumber',async (req,res) => {
-  let filenumber = req.params.filenumber;
+appApi.get('/names/detail/:filenumber',async (req,res) => {
+  // Decode the filenumber and escape it to avoid SQL injection attacks.
+  let filenumber = sqlString.escape(decodeURIComponent(req.params.filenumber));
 
+  // @todo add some audit logging here too
+
+  // Check the local cache
   if(_.has(localCache.names,filenumber)) {
     // The cache exists.  Return the cached data.
     console.log(`Cache exists, returning data for ${filenumber}`);
@@ -98,11 +102,24 @@ appApi.get('/names/:filenumber',async (req,res) => {
     await poolConnect;
     let request = pool.request();
 
-    request.query(`select * from Name where FileNumber = ${filenumber}`,function(err,result) {
-      if(err) console.log(err);
-      console.log(result);
-      localCache.names[filenumber] = result.recordset[0];
-      res.send(result.recordset);
+    let queryString = `select * from Name where FileNumber = ${filenumber}; select * from vNameContacts where FileNumber=${filenumber};`;
+
+    request.query(queryString,function(err,result) {
+      // Check for an error
+      if(err) {
+        // Print the error
+        console.log(err);
+      }
+      else {
+        // Query was succesful.  Process and return to front-end
+        console.log(result);
+        let r = {
+          detail: result.recordsets[0][0],
+          contacts: result.recordsets[1]
+        };
+        localCache.names[filenumber] = r;
+        res.send([r]);
+      }
     });
   }
 });
@@ -279,7 +296,7 @@ appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
           contacts: result.recordsets[1],
           property: result.recordsets[2]
         };
-        localCache.incidents[incidentnumber] = r
+        localCache.incidents[incidentnumber] = r;
         res.send([r]);
       }
     });

@@ -1,30 +1,34 @@
 class nameDetailController {
-  constructor($scope,nameService,$state,$transitions) {
+  constructor($scope,nameService,$state,$transitions,dateFilter,timeFilter) {
     this.$state = $state;
     this.$transitions = $transitions;
     this.nameService = nameService;
     this.$scope = $scope;
+    this.dateFilter = dateFilter;
+    this.timeFilter = timeFilter;
+
+    this.loading = true;
   }
 
   $onInit() {
     console.log(this.filenumber);
 
-    this.nameService.getNameDetailByFilenumber(this.filenumber).then((n) => {
-      console.log(n);
-      this.name = n[0];
+    this.nameService.getNameDetail(this.filenumber).then((result) => {
+      console.log('Detail',result);
+      this.name = result[0].detail;
+      this.contacts = result[0].contacts;
+      this.cleanupDateTime();
+    }).finally(() => {
+      this.loading = false;
     });
+  }
 
-    this.nameService.getNameContacts(this.filenumber).then((n) => {
-      console.log(n);
-      this.nameContacts = n.recordset;
-    });
-
-    console.log(this.search);
-    this.searched = _.isObject(this.search);
+  cleanupDateTime() {
+    this.name.DOB = this.dateFilter(this.name.DOB);
   }
 }
 
-nameDetailController.$inject = ['$scope','nameService','$state','$transitions'];
+nameDetailController.$inject = ['$scope','nameService','$state','$transitions',"dateFilter","timeFilter"];
 
 /**
  * nameDetail state definition
@@ -36,8 +40,7 @@ export const nameDetail = {
    * @type {object}
    */
   bindings: {
-    filenumber: '<',
-    search: '<'
+    filenumber: '<'
   },
   controller: nameDetailController,
   template: require('./nameDetail.component.html')

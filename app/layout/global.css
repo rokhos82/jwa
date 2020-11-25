@@ -49,3 +49,7 @@
 .jwa-form-group-sm {
   margin-bottom: 5px !important;
 }
+
+.jwa-inline-block {
+  display: inline-block !important;
+}

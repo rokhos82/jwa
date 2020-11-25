@@ -7,6 +7,7 @@ import css from "../layout/global.css";
 import bootstrapCss from "bootstrap/dist/css/bootstrap.min.css";
 //import darkly from "bootswatch/darkly/bootstrap.min.css";
 import spacelab from "bootswatch/spacelab/bootstrap.min.css";
+import boostrap_ext from "../layout/bootstrap-ext.less";
 import _ from 'lodash';
 
 import "../main/ngmodule.js";
