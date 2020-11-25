@@ -1,79 +1,176 @@
-<div>
-  <button ui-sref="nameSearch" ng-show="$ctrl.searched">Back to Search</button>
-</div>
-<fieldset>
-  <legend>Name Detail</legend>
-  <div class="jwa_form_row">
-    <label class="jwa_form_label" for="fileNumber">File Number:</label><input readonly="readonly" type="text" id="fileNumber" ng-model="$ctrl.name.fileNumber" />
-    <label class="jwa_form_label" for="phone">Phone:</label><input readonly="readonly" type="text" id="phone" ng-model="$ctrl.name.Phone" />
-    <label class="jwa_form_label" for="cellPhone">Cell:</label><input readonly="readonly" type="text" id="cellPhone" ng-model="$ctrl.name.AltPhone" />
-    <label class="jwa_form_label" for="alias">Alias?</label><input class="jwa_form_small" readonly="readonly" type="text" id="alias" ng-model="$ctrl.name.AKAYN" />
-  </div>
-  <div class="jwa_form_row">
-    <label class="jwa_form_label" for="lastName">Last Name/Business:</label><input readonly="readonly" type="text" id="lastName" ng-model="$ctrl.name.LastName" />
-    <label class="jwa_form_label" for="firstName">First:</label><input readonly="readonly" type="text" id="firstName" ng-model="$ctrl.name.First" />
-    <label class="jwa_form_label" for="middleName">Middle:</label><input readonly="readonly" type="text" id="middleName" ng-model="$ctrl.name.Middle" />
-  </div>
-  <div class="jwa_form_row">
-    <label class="jwa_form_label">Address:</label>
-    <input class="jwa_form_small" readonly="readonly" type="text" ng-model="$ctrl.name.Addr_Number" />
-    <input class="jwa_form_small" readonly="readonly" type="text" ng-model="$ctrl.name.Addr_Direction" />
-    <input readonly="readonly" type="text" ng-model="$ctrl.name.Addr_StreetName" />
-    <input class="jwa_form_small" readonly="readonly" type="text" ng-model="$ctrl.name.Addr_StreetType" />
-    <input class="jwa_form_small" readonly="readonly" type="text" ng-model="$ctrl.name.Addr_Direciton2" />
-    <input class="jwa_form_small" readonly="readonly" type="text" ng-model="$ctrl.name.Addr_Apt" />
-  </div>
-  <div class="jwa_form_row">
-    <label class="jwa_form_label" for="city">City:</label><input readonly="readonly" type="text" id="city" ng-model="$ctrl.name.Addr_City" />
-    <label class="jwa_form_label" for="state">State:</label><input class="jwa_form_small" readonly="readonly" type="text" id="state" ng-model="$ctrl.name.Addr_State" />
-    <label class="jwa_form_label" for="zip">Zip:</label><input readonly="readonly" type="text" id="zip" ng-model="$ctrl.name.Addr_Zip" />
-  </div>
-  <div class="jwa_form_row">
-    <label class="jwa_form_label" for="race">Race:</label><input class="jwa_form_small" readonly="readonly" type="text" id="race" ng-model="$ctrl.name.Race" />
-    <label class="jwa_form_label" for="sex">Sex:</label><input class="jwa_form_small" readonly="readonly" type="text" id="sex" ng-model="$ctrl.name.Sex" />
-    <label class="jwa_form_label" for="height">Ht:</label><input class="jwa_form_small" readonly="readonly" type="text" id="height" ng-model="$ctrl.name.Ht" />
-    <label class="jwa_form_label" for="weight">Wt:</label><input class="jwa_form_small" readonly="readonly" type="text" id="weight" ng-model="$ctrl.name.Wt" />
-    <label class="jwa_form_label" for="eyeColor">Eyes:</label><input class="jwa_form_small" readonly="readonly" type="text" id="eyeColor" ng-model="$ctrl.name.EyeColor" />
-    <label class="jwa_form_label" for="hairColor">Hair:</label><input class="jwa_form_small" readonly="readonly" type="text" id="hairColor" ng-model="$ctrl.name.HairColor" />
-    <label class="jwa_form_label" for="ethnicity">Eth:</label><input class="jwa_form_small" readonly="readonly" type="text" id="ethnicity" ng-model="$ctrl.name.Eth" />
-  </div>
-  <div class="jwa_form_row">
-    <label class="jwa_form_label" for="DOB">DOB:</label><input readonly="readonly" type="text" id="DOB" ng-model="$ctrl.name.DOB" />
-    <label class="jwa_form_label" for="OLN">OLN:</label><input readonly="readonly" type="text" id="OLN" ng-model="$ctrl.name.OLN" /><input class="jwa_form_small" readonly="readonly" type="text" id="OLNState" ng-model="$ctrl.name.OLNState" />
-  </div>
-  <div class="jwa_form_row">
-    <label class="jwa_form_label" for="caution">Caution:</label><input readonly="readonly" type="text" id="caution" ng-model="$ctrl.name.Caution" />
-  </div>
-  <div class="jwa_form_row">
+<div class="row">
+  <fieldset>
+    <legend>Name Detail</legend>
+    <div class="row">
+      <div class="form-horizontal">
+        <div class="form-group jwa-form-group-sm">
+          <label class="control-label col-sm-1 text-right jwa-col-inline" for="fileNumber">File Number</label>
+          <div class="col-sm-2 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" id="fileNumber" ng-model="$ctrl.name.fileNumber" />
+          </div>
+          <label class="control-label col-sm-1 text-right jwa-col-inline" for="phone">Phone</label>
+          <div class="col-sm-2 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" id="phone" ng-model="$ctrl.name.Phone" />
+          </div>
+          <label class="control-label col-sm-1 text-right jwa-col-inline" for="cellPhone">Cell</label>
+          <div class="col-sm-2 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" id="cellPhone" ng-model="$ctrl.name.AltPhone" />
+          </div>
+          <label class="control-label col-sm-1 text-right jwa-col-inline" for="alias">Alias?</label>
+          <div class="col-sm-1 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" id="alias" ng-model="$ctrl.name.AKAYN" />
+          </div>
+        </div>
+        <div class="form-group jwa-form-group-sm">
+          <label class="control-label col-sm-2 text-right jwa-col-inline" for="lastName">Last Name/Business</label>
+          <div class="col-sm-4 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" id="lastName" ng-model="$ctrl.name.LastName" />
+          </div>
+          <label class="control-label col-sm-1 text-right jwa-col-inline" for="firstName">First</label>
+          <div class="col-sm-2 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" id="firstName" ng-model="$ctrl.name.First" />
+          </div>
+          <label class="control-label col-sm-1 text-right jwa-col-inline" for="middleName">Middle</label>
+          <div class="col-sm-2 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" id="middleName" ng-model="$ctrl.name.Middle" />
+          </div>
+        </div>
+        <div class="form-group jwa-form-group-sm">
+          <label class="control-label col-sm-1 text-right jwa-col-inline">Address</label>
+          <div class="col-sm-1 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.name.Addr_Number" />
+          </div>
+          <div class="col-sm-1 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.name.Addr_Direction" />
+          </div>
+          <div class="col-sm-5 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.name.Addr_StreetName" />
+          </div>
+          <div class="col-sm-1 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.name.Addr_StreetType" />
+          </div>
+          <div class="col-sm-1 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.name.Addr_Direciton2" />
+          </div>
+          <div class="col-sm-1 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.name.Addr_Apt" />
+          </div>
+        </div>
+        <!-- Form Row 4: Address Concat, City, State, and Zip -->
+        <div class="form-group jwa-form-group-sm">
+          <div class="col-sm-3 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" ng-model="$ctrl.name.Addr_Concat" />
+          </div>
+          <label class="control-label col-sm-1 text-right jwa-col-inline" for="city">City</label>
+          <div class="col-sm-2 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" id="city" ng-model="$ctrl.name.Addr_City" />
+          </div>
+          <label class="control-label col-sm-1 text-right jwa-col-inline" for="state">State</label>
+          <div class="col-sm-1 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" id="state" ng-model="$ctrl.name.Addr_State" />
+          </div>
+          <label class="control-label col-sm-1 text-right jwa-col-inline" for="zip">Zip</label>
+          <div class="col-sm-1 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" id="zip" ng-model="$ctrl.name.Addr_Zip" />
+          </div>
+        </div>
+        <!-- Form Row 5: Race, Sex, Ht, Wt, Eyes, Hair, Eth -->
+        <div class="form-group jwa-form-group-sm">
+          <div class="col-sm-1">
+            <div class="row">
+              <label class="control-label col-sm-6 text-right jwa-col-inline" for="race">Race</label>
+              <div class="col-sm-6 jwa-col-inline">
+                <input class="form-control" readonly="readonly" type="text" id="race" ng-model="$ctrl.name.Race" />
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <div class="row">
+              <label class="control-label col-sm-6 text-right jwa-col-inline" for="sex">Sex</label>
+              <div class="col-sm-6 jwa-col-inline">
+                <input class="form-control" readonly="readonly" type="text" id="sex" ng-model="$ctrl.name.Sex" />
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <div class="row">
+              <label class="control-label col-sm-4 text-right jwa-col-inline" for="height">Ht</label>
+              <div class="col-sm-8 jwa-col-inline">
+                <input class="form-control" readonly="readonly" type="text" id="height" ng-model="$ctrl.name.Ht" />
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <div class="row">
+              <label class="control-label col-sm-4 text-right jwa-col-inline" for="weight">Wt</label>
+              <div class="col-sm-8 jwa-col-inline">
+                <input class="form-control" readonly="readonly" type="text" id="weight" ng-model="$ctrl.name.Wt" />
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="row">
+              <label class="control-label col-sm-4 text-right jwa-col-inline" for="eyeColor">Eyes</label>
+              <div class="col-sm-8 jwa-col-inline">
+                <input class="form-control" readonly="readonly" type="text" id="eyeColor" ng-model="$ctrl.name.EyeColor" />
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="row">
+              <label class="control-label col-sm-4 text-right jwa-col-inline" for="hairColor">Hair</label>
+              <div class="col-sm-8 jwa-col-inline">
+                <input class="form-control" readonly="readonly" type="text" id="hairColor" ng-model="$ctrl.name.HairColor" />
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <div class="row">
+              <label class="control-label col-sm-4 text-right jwa-col-inline" for="ethnicity">Eth</label>
+              <div class="col-sm-8 jwa-col-inline">
+                <input class="form-control" readonly="readonly" type="text" id="ethnicity" ng-model="$ctrl.name.Eth" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Form Row 6: DOB, OLN, OLNState -->
+        <div class="form-group jwa-form-group-sm">
+          <label class="control-label col-sm-1 text-right jwa-col-inline" for="DOB">DOB</label>
+          <div class="col-sm-3 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" id="DOB" ng-model="$ctrl.name.DOB" />
+          </div>
+          <label class="control-label col-sm-1 text-right jwa-col-inline" for="OLN">OLN</label>
+          <div class="col-sm-2 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" id="OLN" ng-model="$ctrl.name.OLN" />
+          </div>
+          <div class="col-sm-1 jwa-col-inline">
+            <input class="form-control" readonly="readonly" type="text" id="OLNState" ng-model="$ctrl.name.OLNState" />
+          </div>
+        </div>
+        <!-- Form Row 7: Caution -->
+        <div class="form-group jwa-form-group-sm has-error">
+          <label class="control-label col-sm-1 text-right jwa-col-inline" for="caution">Caution</label>
+          <div class="col-sm-6 jwa-col-inline">
+            <input class="form-control jwa-input-caution" readonly="readonly" type="text" id="caution" ng-model="$ctrl.name.Caution" />
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Contacts Pane -->
     <name-detail-contacts contacts="$ctrl.nameContacts"></name-detail-contacts>
-  </div>
-  <div class="jwa_form_row">
     <!-- Other Info Pane -->
     <name-detail-other-info name="$ctrl.name"></name-detail-other-info>
-  </div>
-  <div class="jwa_form_row">
     <!-- Next of Kin Pane -->
     <name-detail-kin kin="$ctrl.name.NextOfKin"></name-detail-kin>
-  </div>
-  <div class="jwa_form_row">
     <!-- Professionals & Work Pane -->
     <name-detail-work name="$ctrl.name"></name-detail-work>
-  </div>
-  <div class="jwa_form_row">
     <!-- AKA Pane -->
     <name-detail-aka name="$ctrl.name"></name-detail-aka>
-  </div>
-  <div class="jwa_form_row">
     <!-- Intel Pane -->
     <name-detail-intel name="$ctrl.name"></name-detail-intel>
-  </div>
-  <div>
     <!-- Comments Pane -->
     <name-detail-comments name="$ctrl.name"></name-detail-comments>
-  </div>
-  <div>
     <!-- Associates Pane -->
     <name-detail-associates associates="$ctrl.associates"></name-detail-associates>
-  </div>
-</fieldset>
+  </fieldset>
+</div>
