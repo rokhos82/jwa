@@ -1,4 +1,7 @@
-<div class="row">
+<div class="row" ng-show="$ctrl.loading">
+  Loading...
+</div>
+<div class="row" ng-show="!$ctrl.loading">
   <fieldset>
     <legend>Name Detail</legend>
     <div class="row">

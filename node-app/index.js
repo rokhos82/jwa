@@ -37,10 +37,6 @@ process.on('exit',function() {
   console.log('Exiting via exit event');
 });
 
-/*app.get('/',(req,res) => {
-  res.send('Hello World!');
-});//*/
-
 let myLogger = function(req,res,next) {
   console.log('LOGGED');
   next();
@@ -64,26 +60,6 @@ appApi.use(bodyParser.json());
 appApi.get('/',(req,res) => {
   return res.send('Received a GET HTTP method')
 });
-
-/*appApi.get('/names',(req,res) => {
-  poolConnect.then((p) => {
-    let request = p.request();
-
-    request.query('select top(1000) FileNumber,LastName,First,Middle,DOB from Name;',function(err,recordset) {
-      if(err) console.log(err);
-
-      var names = [];
-
-      _.forEach(recordset,record => {
-        let r = `Name: ${record.First} ${record.Middle} ${record.LastName}`;
-        //console.log(r);
-        names.push(r)
-      });
-
-      res.send(recordset);
-    });
-  });
-});//*/
 
 appApi.get('/names/detail/:filenumber',async (req,res) => {
   // Decode the filenumber and escape it to avoid SQL injection attacks.
@@ -123,31 +99,6 @@ appApi.get('/names/detail/:filenumber',async (req,res) => {
     });
   }
 });
-
-/*appApi.get('/names/search/:keyword',async (req,res) => {
-  let keyword = req.params.keyword;
-
-  await poolConnect;
-  let request = pool.request();
-
-  request.query(`select FileNumber,LastName,First,Middle,DOB from Name where LastName like '%${keyword}%' or First like '%${keyword}%' or Middle like '%${keyword}%'`,function(err,recordset) {
-    if(err) console.log(err);
-    res.send(recordset);
-  });
-});//*/
-
-/*appApi.post('/names/list',(req,res) => {
-  let query = `select top(1000) FileNumber,LastName,First,Middle,convert(varchar,convert(date,[DOB]),20) as DOB from Name order by LastName,First,Middle;`;
-
-  poolConnect.then((p) => {
-    let request = p.request();
-
-    request.query(query).then((recordset) => {
-      console.log(recordset);
-      res.send(recordset);
-    });
-  });
-});//*/
 
 appApi.post('/names/fetch',(req,res) => {
   console.log('Fetching Names');
@@ -249,25 +200,6 @@ appApi.post('/names/contacts',(req,res) => {
 ////////////////////////////////////////////////////////////////////////////////
 // Incident related handlers
 ////////////////////////////////////////////////////////////////////////////////
-/*appApi.get('/incidents',(req,res) => {
-  poolConnect.then((p) => {
-    let request = p.request();
-
-    console.log("INCIDENT QUERY: Selecting Incidents");
-
-    let queryString = `select Incident,RptDate,RptTime,Offense,OffenseDesc,ID from Incident order by RptDate,RptTime,BeginDate,BeginTime,EndDate,EndTime asc offset 0 rows fetch next 100 rows only; select count(*) as Count from Incident;`;
-
-    request.query(queryString,function(err,recordset) {
-      if(err) console.log(err);
-
-      console.log(recordset.recordsets);
-
-      res.send(recordset.recordsets);
-      console.log("INCIDENT QUERY COMPLETE");
-    });
-  });
-});//*/
-
 appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
   // Decode the incident number and escape it to avoid SQL injection attacks.
   let incidentnumber = sqlString.escape(decodeURIComponent(req.params.incidentnumber));
@@ -346,19 +278,3 @@ appApi.post('/incidents/fetch',(req,res) => {
 appApi.listen(8001,"0.0.0.0",() => {
   console.log(`Listening on port 8001`);
 });
-
-/*sql.connect(config,function(err) {
-  if(err) console.log(err);
-
-  let request = new sql.Request();
-
-  request.query('select * from Name where DAY(DOB) = 10 and MONTH(DOB) = 11 AND YEAR(DOB) = 1982 order by First',function(err,recordset) {
-    if(err) console.log(err);
-
-    _.forEach(recordset,record => {
-      console.log(`Name: ${record.First} ${record.Middle} ${record.LastName}`);
-    });
-
-    //console.log(recordset);
-  });
-});//*/
