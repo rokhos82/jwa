@@ -266,6 +266,12 @@ appApi.post('/incidents/fetch',(req,res) => {
     whereClauseBuilder += sqlString.format(" Offense like ? and",[params.offense]);
   }
 
+  // Check to see if there is a date range in the search terms
+  if(_.has(params,"reportDateBegin") && _.isString(params.reportDateBegin) && params.reportDateBegin !== ""
+    && _.has(params,"reportDateEnd") && _.isString(params.reportDateEnd) && params.reportDateEnd !== "") {
+    whereClauseBuilder += sqlString.format(" RptDate between convert(datetime,?) and convert(datetime,?) and",[params.reportDateBegin,params.reportDateEnd]);
+  }
+
   // Add an extra truthy statement to make the query work if the search terms are empty
   whereClauseBuilder += " 1=1 and"
 
