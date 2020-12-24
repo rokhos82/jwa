@@ -261,6 +261,11 @@ appApi.post('/incidents/fetch',(req,res) => {
     whereClauseBuilder += sqlString.format(" ID like ? and",[params.officer]);
   }
 
+  // Check to see if there is a reviwer ID in the search terms
+  if(_.has(params,"reviewer") && _.isString(params.reviewer) && params.reviewer !== "") {
+    whereClauseBuilder += sqlString.format(" Reviewer like ? and",[params.reviewer]);
+  }
+
   // Check to see if there is an offense in the search terms
   if(_.has(params,"offense") && _.isString(params.offense) && params.offense !== "") {
     whereClauseBuilder += sqlString.format(" Offense like ? and",[params.offense]);
