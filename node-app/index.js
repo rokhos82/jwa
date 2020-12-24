@@ -250,10 +250,40 @@ appApi.post('/incidents/fetch',(req,res) => {
 
   //params.incident = sqlString.escape(params.incident);
 
-  // Check to see if there is an incident number first
+  // Check to see if there is an incident number in the search terms
+  let whereClauseBuilder = "";
   if(_.has(params,"incident") && _.isString(params.incident) && params.incident !== "") {
-    whereClause = sqlString.format(" where Incident like ?",[params.incident]);
+    whereClauseBuilder += sqlString.format(" Incident like ? and",[params.incident]);
   }
+
+  // Check to see if there is an officer ID in the search terms
+  if(_.has(params,"officer") && _.isString(params.officer) && params.officer !== "") {
+    whereClauseBuilder += sqlString.format(" ID like ? and",[params.officer]);
+  }
+
+  // Check to see if there is a reviwer ID in the search terms
+  if(_.has(params,"reviewer") && _.isString(params.reviewer) && params.reviewer !== "") {
+    whereClauseBuilder += sqlString.format(" Reviewer like ? and",[params.reviewer]);
+  }
+
+  // Check to see if there is an offense in the search terms
+  if(_.has(params,"offense") && _.isString(params.offense) && params.offense !== "") {
+    whereClauseBuilder += sqlString.format(" Offense like ? and",[params.offense]);
+  }
+
+  // Check to see if there is a date range in the search terms
+  if(_.has(params,"reportDateBegin") && _.isString(params.reportDateBegin) && params.reportDateBegin !== ""
+    && _.has(params,"reportDateEnd") && _.isString(params.reportDateEnd) && params.reportDateEnd !== "") {
+    whereClauseBuilder += sqlString.format(" RptDate between convert(datetime,?) and convert(datetime,?) and",[params.reportDateBegin,params.reportDateEnd]);
+  }
+
+  // Add an extra truthy statement to make the query work if the search terms are empty
+  whereClauseBuilder += " 1=1 and"
+
+  // Trim off the trailing `add`
+  whereClauseBuilder = whereClauseBuilder.slice(0,-4);
+
+  whereClause = ` where${whereClauseBuilder}`;
 
   // Replace asterisks (*) with percent signs (%)
   whereClause = whereClause.replace(/\*/g,'%');
