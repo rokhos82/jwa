@@ -7,6 +7,10 @@ const sql = require('mssql');
 const _ = require('lodash');
 const sqlString = require('tsqlstring');
 const path = require('path');
+const fs = require('fs');
+
+const logFilename = '';
+const logFileStream = fs.createWriteStream("./jwa.log",{flags: 'a'});
 
 const config = {
   server: 'jcc-sql.jcc.ccjcc.us',
@@ -38,7 +42,7 @@ process.on('exit',function() {
 });
 
 let myLogger = function(req,res,next) {
-  console.log('LOGGED');
+  console.log("Loading resource: " + req.originalUrl);
   next();
 }
 
@@ -53,6 +57,13 @@ app.use(express.static(staticPath));
 app.listen(8000,"0.0.0.0",() => {
   console.log('JWA listening on port 8000!');
 });
+
+let auditLogger = function(req,res,next) {
+  console.log("URL: " + req.originalUrl);
+  next();
+}
+
+appApi.use(auditLogger);
 
 appApi.use(cors());
 appApi.use(bodyParser.json());

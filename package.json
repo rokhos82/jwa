@@ -8,7 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "jsdoc": "./node_modules/.bin/jsdoc -r -d ./doc ./app -c ./.jsdoc.json",
-    "serve": "node ./node-app/index.js"
+    "serve": "node ./node-app/index.js",
+    "daemon-start": "pm2 start ./node-app/index.js --name jwa",
+    "daemon-stop": "pm2 stop jwa"
   },
   "author": "",
   "license": "ISC",
