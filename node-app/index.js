@@ -60,13 +60,13 @@ app.listen(8000,"0.0.0.0",() => {
 
 let auditLogger = function(req,res,next) {
   console.log("URL: " + req.originalUrl);
+  console.log(req.body);
   next();
 }
 
-appApi.use(auditLogger);
-
 appApi.use(cors());
 appApi.use(bodyParser.json());
+appApi.use(auditLogger);
 
 appApi.get('/',(req,res) => {
   return res.send('Received a GET HTTP method')
@@ -113,8 +113,8 @@ appApi.get('/names/detail/:filenumber',async (req,res) => {
 
 appApi.post('/names/fetch',(req,res) => {
   console.log('Fetching Names');
-  console.log(req.body);
-  let params = req.body;
+  console.log(req.body.terms);
+  let params = req.body.terms;
 
   let whereClause = ``;
 

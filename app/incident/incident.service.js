@@ -15,7 +15,7 @@ export function incidentService($resource,server,port) {
     getIncidents: function(terms) {
       let list = $resource(`http://${server}:${port}/incidents/fetch`,{});
 
-      let promise = list.save({},terms).$promise;
+      let promise = list.save({},{terms: terms}).$promise;
 
       return promise;
     }
