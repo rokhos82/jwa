@@ -43,6 +43,9 @@ export const incidentSearchNarrativeDetailState = {
   url: '/narrative/{narrativekey}',
   resolve: {
     narrativekey: incidentSearchNarrativeDetailStateResolver
+  },
+  views: {
+    'incidentDetail@incident': 'narrativeDetail'
   }
 };
 

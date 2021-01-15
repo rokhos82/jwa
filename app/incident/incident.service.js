@@ -18,6 +18,15 @@ export function incidentService($resource,server,port) {
       let promise = list.save({},{terms: terms}).$promise;
 
       return promise;
+    },
+    getNarrative: function(key) {
+      let narratives = $resource(`http://${server}:${port}/narratives/:key`,{
+        key: encodeURIComponent(key)
+      });
+
+      let promise = narratives.query().$promise;
+
+      return promise;
     }
   };
 

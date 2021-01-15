@@ -313,11 +313,40 @@ appApi.post('/incidents/fetch',(req,res) => {
     },(err) => {
       console.log(err.originalError.code,err.originalError.message);
     }).finally(() => {
-      console.log(`Incident search query completed`);
+      console.log(`Incident search query completed.`);
     });
   });
 
   console.log(query);
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// Narrative related handlers
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * This handler expects a GET request with the key being the last part of the
+ * URL.  It then returns the details for the requested narrative.
+ */
+appApi.get('/narratives/:key',async (req,res) => {
+  // Get the NarrativeKey from the URL
+  let key = sqlString.escape(decodeURIComponent(req.params.key));
+  console.log(`Narrative Key: ${key}`);
+
+  let query = `select * from vIncidentNarrative where NarrativeID = ${key}`;
+  console.log(`${query}`);
+
+  poolConnect.then((p) => {
+    let request = p.request();
+
+    request.query(query).then((result) => {
+      res.send(result.recordset);
+    },(err) => {
+      console.log(err.originalError.code,err.originalError.message);
+    }).finally(() => {
+      console.log(`Narrative detail query completed.`);
+    });
+  });
 });
 
 appApi.listen(8001,"0.0.0.0",() => {
