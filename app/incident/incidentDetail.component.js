@@ -1,5 +1,5 @@
 class incidentDetailController {
-  constructor($scope,incidentService,dateFilter,timeFilter) {
+  constructor($scope,incidentService,dateFilter,timeFilter,$state) {
     this.$scope = $scope;
     this.incidentService = incidentService;
     this.dateFilter = dateFilter;
@@ -15,6 +15,7 @@ class incidentDetailController {
       this.incident = result[0].detail;
       this.contacts = result[0].contacts;
       this.property = result[0].property;
+      this.narratives = result[0].narratives;
       this.cleanupDateTime();
     }).finally(() => {
       this.loading = false;
@@ -38,7 +39,7 @@ class incidentDetailController {
   }
 }
 
-incidentDetailController.$inject = ["$scope","incidentService","dateFilter","timeFilter"];
+incidentDetailController.$inject = ["$scope","incidentService","dateFilter","timeFilter","$state"];
 
 export const incidentDetail = {
   bindings: {

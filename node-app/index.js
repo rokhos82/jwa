@@ -7,6 +7,10 @@ const sql = require('mssql');
 const _ = require('lodash');
 const sqlString = require('tsqlstring');
 const path = require('path');
+const fs = require('fs');
+
+const logFilename = '';
+const logFileStream = fs.createWriteStream("./jwa.log",{flags: 'a'});
 
 const config = {
   server: 'jcc-sql.jcc.ccjcc.us',
@@ -38,7 +42,7 @@ process.on('exit',function() {
 });
 
 let myLogger = function(req,res,next) {
-  console.log('LOGGED');
+  console.log("Loading resource: " + req.originalUrl);
   next();
 }
 
@@ -54,8 +58,15 @@ app.listen(8000,"0.0.0.0",() => {
   console.log('JWA listening on port 8000!');
 });
 
+let auditLogger = function(req,res,next) {
+  console.log("URL: " + req.originalUrl);
+  console.log(req.body);
+  next();
+}
+
 appApi.use(cors());
 appApi.use(bodyParser.json());
+appApi.use(auditLogger);
 
 appApi.get('/',(req,res) => {
   return res.send('Received a GET HTTP method')
@@ -102,8 +113,8 @@ appApi.get('/names/detail/:filenumber',async (req,res) => {
 
 appApi.post('/names/fetch',(req,res) => {
   console.log('Fetching Names');
-  console.log(req.body);
-  let params = req.body;
+  console.log(req.body.terms);
+  let params = req.body.terms;
 
   let whereClause = ``;
 
@@ -215,7 +226,10 @@ appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
     await poolConnect;
     let request = pool.request();
 
-    let queryString = `select * from vIncidents where Incident = ${incidentnumber}; select * from vIncidentContacts_CCIT where Incident = ${incidentnumber} order by ContactsKey; select * from vIncidentProperty where Incident = ${incidentnumber};`;
+    let queryString = `select * from vIncidents where Incident = ${incidentnumber};
+select * from vIncidentContacts_CCIT where Incident = ${incidentnumber} order by ContactsKey;
+select * from vIncidentProperty where Incident = ${incidentnumber};
+select IncidentNumber,Date,Time,ID,Narrative1,NarrativeKey from Narrative134 where IncidentNumber = ${incidentnumber} order by NarrativeKey;`;
 
     request.query(queryString,function(err,result) {
       if(err) {
@@ -226,7 +240,8 @@ appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
         let r = {
           detail: result.recordsets[0][0],
           contacts: result.recordsets[1],
-          property: result.recordsets[2]
+          property: result.recordsets[2],
+          narratives: result.recordsets[3]
         };
         localCache.incidents[incidentnumber] = r;
         res.send([r]);
@@ -244,7 +259,7 @@ appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
 appApi.post('/incidents/fetch',(req,res) => {
   console.log('Fetching Incidents');
   console.log(req.body);
-  let params = req.body;
+  let params = req.body.terms;
 
   let whereClause = "";
 
@@ -298,11 +313,40 @@ appApi.post('/incidents/fetch',(req,res) => {
     },(err) => {
       console.log(err.originalError.code,err.originalError.message);
     }).finally(() => {
-      console.log(`Incident search query completed`);
+      console.log(`Incident search query completed.`);
     });
   });
 
   console.log(query);
+});
+
+////////////////////////////////////////////////////////////////////////////////
+// Narrative related handlers
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * This handler expects a GET request with the key being the last part of the
+ * URL.  It then returns the details for the requested narrative.
+ */
+appApi.get('/narratives/:key',async (req,res) => {
+  // Get the NarrativeKey from the URL
+  let key = sqlString.escape(decodeURIComponent(req.params.key));
+  console.log(`Narrative Key: ${key}`);
+
+  let query = `select * from vIncidentNarrative where NarrativeID = ${key}`;
+  console.log(`${query}`);
+
+  poolConnect.then((p) => {
+    let request = p.request();
+
+    request.query(query).then((result) => {
+      res.send(result.recordset);
+    },(err) => {
+      console.log(err.originalError.code,err.originalError.message);
+    }).finally(() => {
+      console.log(`Narrative detail query completed.`);
+    });
+  });
 });
 
 appApi.listen(8001,"0.0.0.0",() => {

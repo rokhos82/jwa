@@ -1,0 +1,31 @@
+<div class="row">
+  <fieldset>
+    <legend>Narrative Details</legend>
+    <form class="form">
+      <div class="form-group">
+        <label class="control-label" for="narrativeSource">Source</label>
+        <textarea readonly class="form-control" name="narrativeSource" rows="10">{{$ctrl.narrative.Summary}}</textarea>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="narrativeMentioned">Mentioned</label>
+        <textarea readonly class="form-control" name="narrativeMentioned" rows="8">{{$ctrl.narrative.Mentioned}}</textarea>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="narrativeInvestigation">Investigation</label>
+        <textarea readonly class="form-control" name="narrativeInvestigation" rows="10">{{$ctrl.narrative.ActionTaken}}</textarea>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="narrativeFollowUp">Follow-Up</label>
+        <textarea readonly class="form-control" name="narrativeFollowUp" rows="10">{{$ctrl.narrative.Statements}}</textarea>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="narrativeEvidence">Evidence/Property</label>
+        <textarea readonly class="form-control" name="narrativeEvidence" rows="10">{{$ctrl.narrative.Evidence}}</textarea>
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="narrativeUndeveloped">Undeveloped Leads</label>
+        <textarea readonly class="form-control" name="narrativeUndeveloped" rows="10">{{$ctrl.narrative.ActionRecommened}}</textarea>
+      </div>
+    </form>
+  </fieldset>
+</div>
