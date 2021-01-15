@@ -226,7 +226,10 @@ appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
     await poolConnect;
     let request = pool.request();
 
-    let queryString = `select * from vIncidents where Incident = ${incidentnumber}; select * from vIncidentContacts_CCIT where Incident = ${incidentnumber} order by ContactsKey; select * from vIncidentProperty where Incident = ${incidentnumber};`;
+    let queryString = `select * from vIncidents where Incident = ${incidentnumber};
+select * from vIncidentContacts_CCIT where Incident = ${incidentnumber} order by ContactsKey;
+select * from vIncidentProperty where Incident = ${incidentnumber};
+select IncidentNumber,Date,Time,ID,Narrative1,NarrativeKey from Narrative134 where IncidentNumber = ${incidentnumber} order by NarrativeKey;`;
 
     request.query(queryString,function(err,result) {
       if(err) {
@@ -237,7 +240,8 @@ appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
         let r = {
           detail: result.recordsets[0][0],
           contacts: result.recordsets[1],
-          property: result.recordsets[2]
+          property: result.recordsets[2],
+          narratives: result.recordsets[3]
         };
         localCache.incidents[incidentnumber] = r;
         res.send([r]);
@@ -255,7 +259,7 @@ appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
 appApi.post('/incidents/fetch',(req,res) => {
   console.log('Fetching Incidents');
   console.log(req.body);
-  let params = req.body;
+  let params = req.body.terms;
 
   let whereClause = "";
 

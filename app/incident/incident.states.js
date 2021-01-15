@@ -37,6 +37,20 @@ function incidentSearchDetailStateResolver($stateParams,auditService) {
   return $stateParams.incidentnumber;
 }
 
+export const incidentSearchNarrativeDetailState = {
+  parent: 'incidentSearch',
+  name: 'incidentSearchNarrativeDetail',
+  url: '/narrative/{narrativekey}',
+  resolve: {
+    narrativekey: incidentSearchNarrativeDetailStateResolver
+  }
+};
+
+incidentSearchNarrativeDetailStateResolver.$inject = ["$stateParams","auditService"];
+function incidentSearchNarrativeDetailStateResolver($stateParams,auditService) {
+  return $stateParams.narrativekey;
+}
+
 export const incidentDetailState = {
   parent: 'incident',
   name: 'incidentDetail',

@@ -6,8 +6,11 @@ import {incidentDetail} from "./incidentDetail.component.js";
 import {incidentDetailContacts} from "./incidentDetailContacts.component.js";
 import {incidentDetailProperty} from "./incidentDetailProperty.component.js";
 import {incidentDetailVehicle} from "./incidentDetailVehicle.component.js";
+import {incidentDetailNarratives} from "./incidentDetailNarratives.component.js";
 
-import {incidentState,incidentSearchState,incidentSearchDetailState,incidentDetailState} from "./incident.states.js";
+import {narrativeDetail} from "./narrativeDetail.component.js";
+
+import {incidentState,incidentSearchState,incidentSearchDetailState,incidentDetailState,incidentSearchNarrativeDetailState} from "./incident.states.js";
 
 import {incidentService} from "./incident.service.js";
 
@@ -26,6 +29,7 @@ INCIDENT_MODULE.config(["$uiRouterProvider",function($uiRouter) {
   $stateRegistry.register(incidentSearchState);
   $stateRegistry.register(incidentSearchDetailState);
   $stateRegistry.register(incidentDetailState);
+  $stateRegistry.register(incidentSearchNarrativeDetailState);
 }]);
 
 // Setup components for the incident module
@@ -37,5 +41,8 @@ INCIDENT_MODULE.component('incidentDetail',incidentDetail);
 INCIDENT_MODULE.component('incidentDetailContacts',incidentDetailContacts);
 INCIDENT_MODULE.component('incidentDetailProperty',incidentDetailProperty);
 INCIDENT_MODULE.component('incidentDetailVehicle',incidentDetailVehicle);
+INCIDENT_MODULE.component('incidentDetailNarratives',incidentDetailNarratives);
+
+INCIDENT_MODULE.component('narrativeDetail',narrativeDetail);
 
 INCIDENT_MODULE.factory('incidentService',incidentService);
