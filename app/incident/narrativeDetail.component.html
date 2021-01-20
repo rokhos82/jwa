@@ -1,31 +1,34 @@
-<div class="row">
-  <fieldset>
-    <legend>Narrative Details</legend>
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close">&times;</button>
+    <h4 class="modal-title">Narrative Details</h4>
+  </div>
+  <div class="modal-body">
     <form class="form">
       <div class="form-group">
         <label class="control-label" for="narrativeSource">Source</label>
-        <textarea readonly class="form-control" name="narrativeSource" rows="10">{{$ctrl.narrative.Summary}}</textarea>
+        <textarea readonly class="form-control" name="narrativeSource" rows="9">{{$ctrl.narrative.Summary}}</textarea>
       </div>
       <div class="form-group">
         <label class="control-label" for="narrativeMentioned">Mentioned</label>
-        <textarea readonly class="form-control" name="narrativeMentioned" rows="8">{{$ctrl.narrative.Mentioned}}</textarea>
+        <textarea readonly class="form-control" name="narrativeMentioned" rows="9">{{$ctrl.narrative.Mentioned}}</textarea>
       </div>
       <div class="form-group">
         <label class="control-label" for="narrativeInvestigation">Investigation</label>
-        <textarea readonly class="form-control" name="narrativeInvestigation" rows="10">{{$ctrl.narrative.ActionTaken}}</textarea>
+        <textarea readonly class="form-control" name="narrativeInvestigation" rows="9">{{$ctrl.narrative.ActionTaken}}</textarea>
       </div>
       <div class="form-group">
         <label class="control-label" for="narrativeFollowUp">Follow-Up</label>
-        <textarea readonly class="form-control" name="narrativeFollowUp" rows="10">{{$ctrl.narrative.Statements}}</textarea>
+        <textarea readonly class="form-control" name="narrativeFollowUp" rows="9">{{$ctrl.narrative.Statements}}</textarea>
       </div>
       <div class="form-group">
         <label class="control-label" for="narrativeEvidence">Evidence/Property</label>
-        <textarea readonly class="form-control" name="narrativeEvidence" rows="10">{{$ctrl.narrative.Evidence}}</textarea>
+        <textarea readonly class="form-control" name="narrativeEvidence" rows="9">{{$ctrl.narrative.Evidence}}</textarea>
       </div>
       <div class="form-group">
         <label class="control-label" for="narrativeUndeveloped">Undeveloped Leads</label>
-        <textarea readonly class="form-control" name="narrativeUndeveloped" rows="10">{{$ctrl.narrative.ActionRecommened}}</textarea>
+        <textarea readonly class="form-control" name="narrativeUndeveloped" rows="9">{{$ctrl.narrative.ActionRecommened}}</textarea>
       </div>
     </form>
-  </fieldset>
+  </div>
 </div>
