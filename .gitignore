@@ -162,3 +162,9 @@ API
 Training
 Blog
 About
+
+auth.json
+
+node-app/secret.js
+
+node-app/mongodb.config.js
