@@ -9,6 +9,47 @@ const sqlString = require('tsqlstring');
 const path = require('path');
 const fs = require('fs');
 
+const dbConfig = require('./mongodb.config.js');
+const db = require('./models/index.js');
+const Role = db.role;
+
+db.mongoose.connect(`mongodb://${dbConfig.host}:${dbConfig.port}/${dbConfig.db}`,{
+  useNewUrlParser: true,
+  useUnifiedToplogy: true
+}).then(() => {
+  console.log("Successfully connected to MongoDB!");
+  initial();
+}).catch((err) => {
+  console.error("Connection error",err);
+  process.exit();
+});
+
+function initial() {
+  Role.estimatedDocumentCount((err, count) => {
+    if (!err && count === 0) {
+      new Role({
+        name: "user"
+      }).save((err) => {
+        if(err) {
+          console.log("Error",err);
+        }
+
+        console.log("Added 'user' to roles collection");
+      });
+
+      new Role({
+        name: "admin"
+      }).save((err) => {
+        if(err) {
+          console.log("Error",err);
+        }
+
+        console.log("Added 'admin' to roles collection");
+      });
+    }
+  });
+}
+
 const logFilename = '';
 const logFileStream = fs.createWriteStream("./jwa.log",{flags: 'a'});
 
