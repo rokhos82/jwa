@@ -53,7 +53,9 @@ function initial() {
 const logFilename = '';
 const logFileStream = fs.createWriteStream("./jwa.log",{flags: 'a'});
 
-const config = {
+const {dbWare} = require("./db/index.js");
+
+/*const config = {
   server: 'jcc-sql.jcc.ccjcc.us',
   user: 'test',
   password: 'test',
@@ -66,7 +68,7 @@ const poolConnect = pool.connect();
 
 pool.on('error',err => {
   console.log(err);
-});
+});//*/
 
 let localCache = {};
 localCache.names = {};
@@ -74,7 +76,7 @@ localCache.incidents = {};
 
 process.on('SIGINT',function() {
   console.log('Exiting via SIGINT');
-  pool.close();
+  dbWare.pool.close();
   process.kill(0);
 });
 
@@ -99,58 +101,13 @@ app.listen(8000,"0.0.0.0",() => {
   console.log('JWA listening on port 8000!');
 });
 
-let auditLogger = function(req,res,next) {
-  console.log("URL: " + req.originalUrl);
-  console.log(req.body);
-  next();
-}
-
 appApi.use(cors());
 appApi.use(bodyParser.json());
-appApi.use(auditLogger);
 
-appApi.get('/',(req,res) => {
-  return res.send('Received a GET HTTP method')
-});
-
-appApi.get('/names/detail/:filenumber',async (req,res) => {
-  // Decode the filenumber and escape it to avoid SQL injection attacks.
-  let filenumber = sqlString.escape(decodeURIComponent(req.params.filenumber));
-
-  // @todo add some audit logging here too
-
-  // Check the local cache
-  if(_.has(localCache.names,filenumber)) {
-    // The cache exists.  Return the cached data.
-    console.log(`Cache exists, returning data for ${filenumber}`);
-    res.send([localCache.names[filenumber]]);
-  }
-  else {
-    // No cached value.  Query the database
-    await poolConnect;
-    let request = pool.request();
-
-    let queryString = `select * from Name where FileNumber = ${filenumber}; select * from vNameContacts where FileNumber=${filenumber};`;
-
-    request.query(queryString,function(err,result) {
-      // Check for an error
-      if(err) {
-        // Print the error
-        console.log(err);
-      }
-      else {
-        // Query was succesful.  Process and return to front-end
-        console.log(result);
-        let r = {
-          detail: result.recordsets[0][0],
-          contacts: result.recordsets[1]
-        };
-        localCache.names[filenumber] = r;
-        res.send([r]);
-      }
-    });
-  }
-});
+require("./audit/index.js")(appApi);
+require("./auth/auth.routes.js")(appApi);
+require("./names/name.routes.js")(appApi,dbWare);
+require("./test/test.routes.js")(appApi);
 
 appApi.post('/names/fetch',(req,res) => {
   console.log('Fetching Names');
@@ -159,19 +116,14 @@ appApi.post('/names/fetch',(req,res) => {
 
   let whereClause = ``;
 
-  if(_.isNumber(params.fileNumber)) {
-    whereClause += ` CAST(FileNumber) LIKE '${params.fileNumber}'`;
-  }
-  else {
-    // Add in the terms from the parameters or use a placeholder if they are missing.
-    // I used the placeholder of '%' here in the event of wanting *all* of the names.
-    whereClause += _.isString(params.lastName) && params.lastName !== "" ? ` LastName like '${params.lastName}' and` : ` LastName like '%' and`;
-    whereClause += _.isString(params.firstName) && params.firstName !== "" ? ` First like '${params.firstName}' and` : ` First like '%' and`;
-    whereClause += _.isString(params.middleName) && params.middleName !== "" ? ` Middle like '${params.middleName}' and` : ` Middle like '%' and`;
+  // Add in the terms from the parameters or use a placeholder if they are missing.
+  // I used the placeholder of '%' here in the event of wanting *all* of the names.
+  whereClause += _.isString(params.lastName) && params.lastName !== "" ? ` LastName like '${params.lastName}' and` : ` LastName like '%' and`;
+  whereClause += _.isString(params.firstName) && params.firstName !== "" ? ` First like '${params.firstName}' and` : ` First like '%' and`;
+  whereClause += _.isString(params.middleName) && params.middleName !== "" ? ` Middle like '${params.middleName}' and` : ` Middle like '%' and`;
 
-    // Remove any trailing ' and' at the end of the query string
-    whereClause = whereClause.slice(0,-4);
-  }
+  // Remove any trailing ' and' at the end of the query string
+  whereClause = whereClause.slice(0,-4);
 
   // Replace asterisks (*) with percent signs (%)
   whereClause = whereClause.replace(/\*/g,'%');
@@ -180,7 +132,7 @@ appApi.post('/names/fetch',(req,res) => {
   // Add in the order by, offset, and fetch next statements as well as the Count query for a total count of Name records.
   let query = `select FileNumber,LastName,First,Middle,DOB from Name where${whereClause} order by LastName,First,Middle asc offset ${params.recordOffset} rows fetch next ${params.fetchSize} rows only; select count(*) as Count from Name where${whereClause};`;
 
-  poolConnect.then((p) => {
+  dbWare.poolConnect.then((p) => {
     let request = p.request();
 
     request.query(query).then((recordset) => {
@@ -219,7 +171,7 @@ appApi.post('/names/search',async (req,res) => {
     console.log(sqlStr);
 
     // Query the database
-    poolConnect.then((p) => {
+    dbWare.poolConnect.then((p) => {
       let request = p.request();
 
       request.query(sqlStr).then(function(recordset) {
@@ -237,7 +189,7 @@ appApi.post('/names/contacts',(req,res) => {
 
   let query = `select * from vNameContacts where FileNumber=${params.filenumber}`;
 
-  poolConnect.then((p) => {
+  dbWare.poolConnect.then((p) => {
     let request = p.request();
 
     request.query(query).then((recordset) => {
@@ -264,8 +216,8 @@ appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
   }
   else {
     // No cached value.  Query the database
-    await poolConnect;
-    let request = pool.request();
+    await dbWare.poolConnect;
+    let request = dbWare.pool.request();
 
     let queryString = `select * from vIncidents where Incident = ${incidentnumber};
 select * from vIncidentContacts_CCIT where Incident = ${incidentnumber} order by ContactsKey;
@@ -346,7 +298,7 @@ appApi.post('/incidents/fetch',(req,res) => {
 
   let query = `select Incident,RptDate,RptTime,Offense,OffenseDesc,ID,Reviewer as ReviewerID from Incident${whereClause} order by RptDate,RptTime,BeginDate,BeginTime,EndDate,EndTime asc offset ${params.recordOffset} rows fetch next ${params.fetchSize} rows only; select count(*) as Count from Incident${whereClause};`;
 
-  poolConnect.then((p) => {
+  dbWare.poolConnect.then((p) => {
     let request = p.request();
 
     request.query(query).then((recordset) => {
@@ -377,7 +329,7 @@ appApi.get('/narratives/:key',async (req,res) => {
   let query = `select * from vIncidentNarrative where NarrativeID = ${key}`;
   console.log(`${query}`);
 
-  poolConnect.then((p) => {
+  dbWare.poolConnect.then((p) => {
     let request = p.request();
 
     request.query(query).then((result) => {
