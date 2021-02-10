@@ -4,9 +4,10 @@
  * @desc Allows the user to login, displays nothing if the user is logged in
  */
 class userLoginController {
-  constructor($scope,userService) {
+  constructor($scope,userService,$state) {
     this.$scope = $scope;
     this.service = userService;
+    this.$state = $state;
   }
 
   $onInit() {
@@ -18,14 +19,16 @@ class userLoginController {
 
   doUserLogin() {
     this.authenticating = true;
-    console.log("Do the user login thing!");
 
     const returnToOriginalState = () => {
-      console.log("User is authenticated.  Returning to original state!");
+      let state = this.returnTo.state();
+      let params = this.returnTo.params();
+      let options = Object.assign({},this.returnTo.options(),{ reload:true });
+      this.$state.go(state,params,options);
     };
 
     const showError = (error) => {
-      this.errorMessage = error.data.message;
+      console.error(error);
     };
 
     this.service.authenticateUser(this.username,this.password)
@@ -37,7 +40,7 @@ class userLoginController {
   }
 }
 
-userLoginController.$inject = ["$scope","userService"];
+userLoginController.$inject = ["$scope","userService","$state"];
 
 export const userLogin = {
   bindings: {
