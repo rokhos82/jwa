@@ -13,6 +13,8 @@ const dbConfig = require('./mongodb.config.js');
 const db = require('./models/index.js');
 const Role = db.role;
 
+const authJwt = require("./authJwt.js");
+
 db.mongoose.connect(`mongodb://${dbConfig.host}:${dbConfig.port}/${dbConfig.db}`,{
   useNewUrlParser: true,
   useUnifiedToplogy: true
@@ -204,7 +206,7 @@ appApi.post('/names/contacts',(req,res) => {
 ////////////////////////////////////////////////////////////////////////////////
 // Incident related handlers
 ////////////////////////////////////////////////////////////////////////////////
-appApi.get('/incidents/detail/:incidentnumber',async (req,res) => {
+appApi.get('/incidents/detail/:incidentnumber',[authJwt.verifyToken],async (req,res) => {
   // Decode the incident number and escape it to avoid SQL injection attacks.
   let incidentnumber = sqlString.escape(decodeURIComponent(req.params.incidentnumber));
   console.log(`Incident Number: ${incidentnumber}`);

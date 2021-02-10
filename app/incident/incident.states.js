@@ -7,7 +7,8 @@ export const incidentState = {
   name: 'incident',
   url: '/incident',
   component: 'incident',
-  redirectTo: 'incidentSearch'
+  redirectTo: 'incidentSearch',
+  data: { requiresAuth: true }
 };
 
 export const incidentSearchState = {

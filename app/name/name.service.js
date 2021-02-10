@@ -1,4 +1,4 @@
-export function nameService($resource,server,port) {
+export function nameService($resource,server,port,userService) {
   let _service = {
     getNames: function(terms) {
       let list = $resource(`http://${server}:${port}/names/fetch`,{});
@@ -24,4 +24,4 @@ export function nameService($resource,server,port) {
   return _service;
 }
 
-nameService.$inject = ["$resource","jwa-config-serverIp","jwa-config-serverPort"];
+nameService.$inject = ["$resource","jwa-config-serverIp","jwa-config-serverPort","userService"];
