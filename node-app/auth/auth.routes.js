@@ -11,6 +11,8 @@ module.exports = (app) => {
     next();
   });
 
+  app.use(authJwt.protectPath);
+
   app.post('/api/auth/signup',[authJwt.verifyToken,authJwt.isAdmin],controller.signup);
 
   app.post("/api/auth/signin",controller.signin);
