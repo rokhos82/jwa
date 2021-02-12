@@ -1,7 +1,7 @@
 /**
  *
  */
-
+const authJwt = require("../authJwt.js");
 const controller = require("./name.controller.js");
 
 module.exports = (app,db) => {
@@ -14,5 +14,7 @@ module.exports = (app,db) => {
   });
 
   app.get("/",controller.test);
-  app.get("/names/detail/:filenumber",db.setup,controller.nameDetail);
+  app.get("/names/detail/:filenumber",[authJwt.verifyToken,db.setup],controller.nameDetail);
+  app.post("/names/fetch",[authJwt.verifyToken,db.setup],controller.nameFetch);
+  //app.post("/names/search",[authJwt.verifyToken,db.setup],controller.nameSearch);
 };

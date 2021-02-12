@@ -1,14 +1,7 @@
 export function incidentService($resource,server,port,userService) {
   let _service = {
     getIncidentDetail: function(incidentnumber) {
-      console.log(`Incident Service getIncidentDetail: ${incidentnumber}`);
-      /*let detail = $resource(`http://${server}:${port}/incidents/detail/:incidentnumber`,{
-        incidentnumber: encodeURIComponent(incidentnumber)
-      });//*/
-
       let token = userService.getToken();
-      console.log(token);
-
       let detail = $resource(`http://${server}:${port}/incidents/detail/:incidentnumber`,{},{
         get: {
           method: "GET",
@@ -29,9 +22,18 @@ export function incidentService($resource,server,port,userService) {
       return promise;
     },
     getIncidents: function(terms) {
-      let list = $resource(`http://${server}:${port}/incidents/fetch`,{});
+      let token = userService.getToken();
+      let list = $resource(`http://${server}:${port}/incidents/fetch`,{},{
+        post: {
+          method: "POST",
+          headers: {
+            "x-access-token": token
+          },
+          isArray: false
+        }
+      });
 
-      let promise = list.save({},{terms: terms}).$promise;
+      let promise = list.post({},{terms: terms}).$promise;
 
       return promise;
     },

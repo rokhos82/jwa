@@ -1,3 +1,4 @@
+const authJwt = require("../authJwt.js");
 const controller = require("./auth.controller.js");
 
 module.exports = (app) => {
@@ -10,7 +11,7 @@ module.exports = (app) => {
     next();
   });
 
-  app.post('/api/auth/signup',controller.signup);
+  app.post('/api/auth/signup',[authJwt.verifyToken,authJwt.isAdmin],controller.signup);
 
   app.post("/api/auth/signin",controller.signin);
 };

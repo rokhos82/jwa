@@ -11,7 +11,11 @@ const fs = require('fs');
 
 const dbConfig = require('./mongodb.config.js');
 const db = require('./models/index.js');
+const bcrypt = require("bcryptjs");
 const Role = db.role;
+const User = db.user;
+const Agency = db.agency;
+const EventType = db.event;
 
 const authJwt = require("./authJwt.js");
 
@@ -27,28 +31,105 @@ db.mongoose.connect(`mongodb://${dbConfig.host}:${dbConfig.port}/${dbConfig.db}`
 });
 
 function initial() {
-  Role.estimatedDocumentCount((err, count) => {
-    if (!err && count === 0) {
-      new Role({
-        name: "user"
-      }).save((err) => {
+  Agency.findOne({
+    name: "JWA"
+  }).exec((err,agency) => {
+    if(err) {
+      console.log(err);
+    }
+
+    if(!agency) {
+      console.log("JWA agency does not exist.  Creating the agency.");
+      let jwaAgency = new Agency({
+        name: "JWA"
+      }).save((err,agency) => {
         if(err) {
-          console.log("Error",err);
+          console.log(err);
         }
-
-        console.log("Added 'user' to roles collection");
-      });
-
-      new Role({
-        name: "admin"
-      }).save((err) => {
-        if(err) {
-          console.log("Error",err);
-        }
-
-        console.log("Added 'admin' to roles collection");
       });
     }
+
+    Role.estimatedDocumentCount((err, count) => {
+      if(!err && count === 0) {
+        new Role({
+          name: "user"
+        }).save((err) => {
+          if(err) {
+            console.log("Error",err);
+          }
+
+          console.log("Added 'user' to roles collection");
+
+          new Role({
+            name: "manager"
+          }).save((err) => {
+            if(err) {
+              console.log("Error",err);
+            }
+
+            console.log("Added 'manager' to roles collection");
+
+            new Role({
+              name: "admin"
+            }).save((err) => {
+              if(err) {
+                console.log("Error",err);
+              }
+
+              console.log("Added 'admin' to roles collection");
+
+              User.findOne({
+                username: "jwa.admin"
+              }).exec((err,user) => {
+                if(err) {
+                  console.log(err);
+                }
+
+                if(!user) {
+                  console.log("jwa.admin user does not exist.  Creating the user.");
+                  let adminUser = new User({
+                    username: "jwa.admin",
+                    name: {
+                      first: "JWA",
+                      last: "Admin"
+                    },
+                    password: bcrypt.hashSync("123456",8)
+                  });
+
+                  Role.find({
+                    name: { $in: ["user","manager","admin"] }
+                  }).exec((err,roles) => {
+                    if(err)  {
+                      console.log(err);
+                    }
+                    adminUser.roles = roles.map(role => role._id);
+
+                    Agency.findOne({
+                      name: "JWA"
+                    }).exec((err,agency) => {
+                      if(err) {
+                        console.log(err);
+                      }
+
+                      if(agency) {
+                        adminUser.agencyId = agency._id;
+                        adminUser.save(err => {
+                          if(err) {
+                            console.log(err);
+                          }
+
+                          console.log("jwa.admin user successfully created!");
+                        });
+                      }
+                    });
+                  });
+                }
+              });
+            });
+          });
+        });
+      }
+    });
   });
 }
 
@@ -109,80 +190,8 @@ appApi.use(bodyParser.json());
 require("./audit/index.js")(appApi);
 require("./auth/auth.routes.js")(appApi);
 require("./names/name.routes.js")(appApi,dbWare);
+require("./incidents/incident.routes.js")(appApi,dbWare);
 require("./test/test.routes.js")(appApi);
-
-appApi.post('/names/fetch',(req,res) => {
-  console.log('Fetching Names');
-  console.log(req.body.terms);
-  let params = req.body.terms;
-
-  let whereClause = ``;
-
-  // Add in the terms from the parameters or use a placeholder if they are missing.
-  // I used the placeholder of '%' here in the event of wanting *all* of the names.
-  whereClause += _.isString(params.lastName) && params.lastName !== "" ? ` LastName like '${params.lastName}' and` : ` LastName like '%' and`;
-  whereClause += _.isString(params.firstName) && params.firstName !== "" ? ` First like '${params.firstName}' and` : ` First like '%' and`;
-  whereClause += _.isString(params.middleName) && params.middleName !== "" ? ` Middle like '${params.middleName}' and` : ` Middle like '%' and`;
-
-  // Remove any trailing ' and' at the end of the query string
-  whereClause = whereClause.slice(0,-4);
-
-  // Replace asterisks (*) with percent signs (%)
-  whereClause = whereClause.replace(/\*/g,'%');
-
-  // Setup the query string with the where where clause
-  // Add in the order by, offset, and fetch next statements as well as the Count query for a total count of Name records.
-  let query = `select FileNumber,LastName,First,Middle,DOB from Name where${whereClause} order by LastName,First,Middle asc offset ${params.recordOffset} rows fetch next ${params.fetchSize} rows only; select count(*) as Count from Name where${whereClause};`;
-
-  dbWare.poolConnect.then((p) => {
-    let request = p.request();
-
-    request.query(query).then((recordset) => {
-      res.send(recordset);
-    });
-  });
-
-  console.log(query);
-});
-
-appApi.post('/names/search',async (req,res) => {
-  console.log(req.body);
-  let params = req.body;
-  if(params.fileNumber) {
-    // Search by file number if it exists
-  }
-  else {
-    // Search by name fields
-
-    let sqlStr = `select FileNumber,LastName,First,Middle,DOB from Name where`;
-    sqlStr += _.isString(params.lastName) && params.lastName !== "" ? ` LastName like '${params.lastName}' and` : "";
-    sqlStr += _.isString(params.firstName) && params.firstName !== "" ? ` First like '${params.firstName}' and` : "";
-    sqlStr += _.isString(params.middleName) && params.middleName !== "" ? ` Middle like '${params.middleName}' and` : "";
-
-    //console.log(sqlStr);
-    //console.log(sqlStr.split(' ').pop());
-
-    // Trim off the trailing 'and' and and a ';'
-    sqlStr = sqlStr.slice(0,-4);
-    sqlStr += " order by LastName,First,Middle;";
-
-    // Change any asterisks to per-cent signs
-    sqlStr = sqlStr.replace(/\*/g,'%');
-
-    // Log the search string for posterity
-    console.log(sqlStr);
-
-    // Query the database
-    dbWare.poolConnect.then((p) => {
-      let request = p.request();
-
-      request.query(sqlStr).then(function(recordset) {
-        console.log('Query complete!');
-        res.send(recordset);
-      });
-    });
-  }
-});
 
 appApi.post('/names/contacts',(req,res) => {
   console.log('Querying Master Names Contacts');
@@ -201,48 +210,6 @@ appApi.post('/names/contacts',(req,res) => {
   });
 
   console.log(query);
-});
-
-////////////////////////////////////////////////////////////////////////////////
-// Incident related handlers
-////////////////////////////////////////////////////////////////////////////////
-appApi.get('/incidents/detail/:incidentnumber',[authJwt.verifyToken],async (req,res) => {
-  // Decode the incident number and escape it to avoid SQL injection attacks.
-  let incidentnumber = sqlString.escape(decodeURIComponent(req.params.incidentnumber));
-  console.log(`Incident Number: ${incidentnumber}`);
-
-  if(_.has(localCache.incidents,incidentnumber)) {
-    // The cache exists.  Return the cached data.
-    console.log(`Cache exists, returning data for ${incidentnumber}`);
-    res.send([localCache.incidents[incidentnumber]]);
-  }
-  else {
-    // No cached value.  Query the database
-    await dbWare.poolConnect;
-    let request = dbWare.pool.request();
-
-    let queryString = `select * from vIncidents where Incident = ${incidentnumber};
-select * from vIncidentContacts_CCIT where Incident = ${incidentnumber} order by ContactsKey;
-select * from vIncidentProperty where Incident = ${incidentnumber};
-select IncidentNumber,Date,Time,ID,Narrative1,NarrativeKey from Narrative134 where IncidentNumber = ${incidentnumber} order by NarrativeKey;`;
-
-    request.query(queryString,function(err,result) {
-      if(err) {
-        console.log(err);
-      }
-      else {
-        console.log(result);
-        let r = {
-          detail: result.recordsets[0][0],
-          contacts: result.recordsets[1],
-          property: result.recordsets[2],
-          narratives: result.recordsets[3]
-        };
-        localCache.incidents[incidentnumber] = r;
-        res.send([r]);
-      }
-    });
-  }
 });
 
 /**
