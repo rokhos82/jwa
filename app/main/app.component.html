@@ -11,6 +11,10 @@
             <li ui-sref-active="active"><a ui-sref="incident">Incidents</a></li>
             <li ui-sref-active="active"><a ui-sref="userTestRoot">User Test</a></li>
           </ul>
+          <ul class="nav navbar-nav nav-bar-right">
+            <li ng-show="$ctrl.userService.user"><a ui-sref="userLogout"></a></li>
+            <li ng-show="!$ctrl.userService.user"><a ui-sref="userLogin"></a></li>
+          </ul>
         </div>
       </div>
   </nav>

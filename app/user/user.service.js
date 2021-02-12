@@ -1,4 +1,4 @@
-export function userService($resource,server,port) {
+export function userService($resource,server,port,$state) {
   let _service = {};
 
   const TOKEN_KEY = "auth-token";
@@ -31,27 +31,41 @@ export function userService($resource,server,port) {
     /*window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.setItem(USER_KEY,angular.toJson(user));//*/
     _storage[USER_KEY] = user;
+    window.sessionStorage.setItem(USER_KEY,user);
   };
 
   _service.getUser = () => {
-    return _storage[USER_KEY];
+    let user = window.sessionStorage.getItem(USER_KEY);
+    if(user) {
+      return user;
+    }
+    else {
+      return _storage[USER_KEY];
+    }
   };
 
   _service.saveToken = (token) => {
     _storage[TOKEN_KEY] = token;
+    window.sessionStorage.setItem(TOKEN_KEY,token);
   };
 
   _service.getToken = () => {
-    return _storage[TOKEN_KEY];
+    return window.sessionStorage.getItem(TOKEN_KEY);
   };
 
   _service.isAuthenticated = () => {
-    return !!_storage[TOKEN_KEY];
+    return !!window.sessionStorage.getItem(TOKEN_KEY);
   };
+
+  _service.logout = () => {
+    window.sessionStorage.removeItem(TOKEN_KEY);
+    window.sessionStorage.removeItem(USER_KEY);
+    $state.go("welcome");
+  }
 
   return _service;
 }
 
-userService.$inject = ["$resource","jwa-config-serverIp","jwa-config-serverPort"];
+userService.$inject = ["$resource","jwa-config-serverIp","jwa-config-serverPort","$state"];
 
 // Service Function Definitions Below
