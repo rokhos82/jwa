@@ -6,7 +6,7 @@
  * @param {string} input The string to parse.  Must in the format of 'YYYY-MM-DDTHH:MM:00.00Z'.
  * @return {string} The parsed date portion 'YYYY-MM-DD'.
  * @example
- * {{dateTimeString | date}}
+ * {{dateTimeString | jwaDate}}
  */
 export function dateFilter() {
   return function(input) {

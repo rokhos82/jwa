@@ -13,7 +13,7 @@
       <tbody>
         <tr ng-repeat="incident in $ctrl.incidents">
           <td>{{$index+$ctrl.recordOffset+1}}</td><td><a ui-sref="incidentSearchDetail({incidentnumber:incident.Incident})">{{incident.Incident}}</a></td>
-          <td>{{incident.RptDate | date}}</td>
+          <td>{{incident.RptDate | jwaDate}}</td>
           <td>{{incident.RptTime | time}}</td>
           <td>{{incident.Offense}}</td>
           <td>{{incident.OffenseDesc}}</td>

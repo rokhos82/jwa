@@ -15,6 +15,13 @@ export const userLoginState = {
   }
 };
 
+export const userLogoutState = {
+  parent: "app",
+  name: "userLogout",
+  url: "/logout",
+  component: "userLogout"
+};
+
 /**
  * A resolve function for 'login' state which figures out what state to return to, after a successful login.
  *

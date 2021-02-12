@@ -15,7 +15,7 @@
         <tbody>
           <tr ng-repeat="narrative in $ctrl.narratives" ng-click="$ctrl.viewNarrative(narrative.NarrativeKey)">
             <td>{{narrative.IncidentNumber}}</td>
-            <td>{{narrative.Date | date}}</td>
+            <td>{{narrative.Date | jwaDate}}</td>
             <td>{{narrative.Time | time}}</td>
             <td>{{narrative.ID}}</td>
             <td>{{narrative.Narrative1}}</td>

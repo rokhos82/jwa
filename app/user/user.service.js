@@ -1,4 +1,4 @@
-export function userService($resource,server,port,$state) {
+export function userService($resource,server,port,$state,appState) {
   let _service = {};
 
   const TOKEN_KEY = "auth-token";
@@ -22,6 +22,7 @@ export function userService($resource,server,port,$state) {
     promise.then((response) => {
       _service.saveUser(response.username);
       _service.saveToken(response.accessToken);
+      appState.getUserState().authenticated = true;
     });
 
     return promise;
@@ -60,12 +61,13 @@ export function userService($resource,server,port,$state) {
   _service.logout = () => {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.removeItem(USER_KEY);
-    $state.go("welcome");
+    appState.getUserState().authenticated = false;
+    $state.go("welcome",{},{ reload: true });
   }
 
   return _service;
 }
 
-userService.$inject = ["$resource","jwa-config-serverIp","jwa-config-serverPort","$state"];
+userService.$inject = ["$resource","jwa-config-serverIp","jwa-config-serverPort","$state","jwa-app-state-service"];
 
 // Service Function Definitions Below
