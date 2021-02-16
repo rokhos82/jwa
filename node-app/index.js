@@ -191,6 +191,7 @@ appApi.use(bodyParser.urlencoded({ extended: true }));
 require("./audit/index.js")(appApi);
 require("./auth/auth.routes.js")(appApi);
 require("./cache/cache.index.js")(appApi);
+require("./admin/admin.routes.js")(appApi);
 require("./names/name.routes.js")(appApi,dbWare);
 require("./incidents/incident.routes.js")(appApi,dbWare);
 require("./test/test.routes.js")(appApi);
