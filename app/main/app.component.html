@@ -7,10 +7,12 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li ui-sref-active="active"><a ui-sref="welcome">Home</a></li>
-            <li ui-sref-active="active" ng-show="$ctrl.userState.authenticated"><a ui-sref="name">Names</a></li>
-            <li ui-sref-active="active" ng-show="$ctrl.userState.authenticated"><a ui-sref="incident">Incidents</a></li>
+            <li ui-sref-active="active" ng-show="$ctrl.userState.isUser"><a ui-sref="name">Names</a></li>
+            <li ui-sref-active="active" ng-show="$ctrl.userState.isUser"><a ui-sref="incident">Incidents</a></li>
+            <li ui-sref-active="active" ng-show="$ctrl.userState.isAdmin"><a ui-sref="adminRoot">Admin</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+            <li ng-show="$ctrl.userState.isUser"><a>User Name</a></li>
             <li><a>{{$ctrl.date | date:'yyyy-MM-dd HH:mm:ss':'-0700'}}</a></li>
             <li ng-show="$ctrl.userState.authenticated"><a ui-sref="userLogout">Logout</a></li>
             <li ng-show="!$ctrl.userState.authenticated"><a ui-sref="userLogin">Login</a></li>

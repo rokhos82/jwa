@@ -3,13 +3,12 @@
  * @memberOf angular_module
  */
 
-import {userTest} from "./userTest.component.js";
 import {userLogin} from "./userLogin.component.js";
 import {userLogout} from "./userLogout.component.js";
 
 import {userService} from "./user.service.js";
 
-import {userTestState,userLoginState,userLogoutState} from "./user.states.js";
+import {userLoginState,userLogoutState} from "./user.states.js";
 
 export const USER_MODULE = angular.module("jwa-user",["ui.router","ngResource","jwa-support","jwa-config","jwa-audit"]);
 
@@ -21,12 +20,10 @@ function userController($uiRouter) {
 
   // Setup the states that the Incident module will use
   const $stateRegistry = $uiRouter.stateRegistry;
-  $stateRegistry.register(userTestState);
   $stateRegistry.register(userLoginState);
   $stateRegistry.register(userLogoutState);
 }
 
-USER_MODULE.component("userTest",userTest);
 USER_MODULE.component("userLogin",userLogin);
 USER_MODULE.component("userLogout",userLogout);
 

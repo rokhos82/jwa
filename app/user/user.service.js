@@ -14,15 +14,20 @@ export function userService($resource,server,port,$state,appState) {
       }
     });
 
-    let promise = auth.save({},{
+    let promise = auth.post({},{
       username: username,
       password: password
     }).$promise;
 
     promise.then((response) => {
+      let userState = appState.getUserState();
       _service.saveUser(response.username);
       _service.saveToken(response.accessToken);
-      appState.getUserState().authenticated = true;
+      console.info(response);
+      userState.authenticated = true;
+      userState.isUser = _.includes(response.roles,"ROLE_USER");
+      userState.isManager = _.includes(response.roles,"ROLE_MANAGER");
+      userState.isAdmin = _.includes(response.roles,"ROLE_ADMIN");
     });
 
     return promise;
@@ -55,13 +60,17 @@ export function userService($resource,server,port,$state,appState) {
   };
 
   _service.isAuthenticated = () => {
-    return !!window.sessionStorage.getItem(TOKEN_KEY);
+    return appState.getUserState().authenticated;
   };
 
   _service.logout = () => {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.removeItem(USER_KEY);
-    appState.getUserState().authenticated = false;
+    let userState = appState.getUserState();
+    userState.authenticated = false;
+    userState.isAdmin = false;
+    userState.isManager = false;
+    userState.isUser = false;
     $state.go("welcome",{},{ reload: true });
   }
 
