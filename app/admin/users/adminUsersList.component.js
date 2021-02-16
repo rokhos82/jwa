@@ -4,12 +4,17 @@
  * @desc Listing the users
  */
 class adminUsersListController {
-  constructor($scope) {
+  constructor($scope,adminService) {
     this.$scope = $scope;
+    this.adminService = adminService;
+  }
+
+  $onInit() {
+    this.adminService.getUserInfo();
   }
 }
 
-adminUsersListController.$inject = ["$scope"];
+adminUsersListController.$inject = ["$scope","adminService"];
 
 export const adminUsersList = {
   bindings: {},

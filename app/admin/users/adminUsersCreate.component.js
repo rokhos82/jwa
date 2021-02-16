@@ -4,12 +4,13 @@
  * @desc Panel for creating new users
  */
 class adminUsersCreateController {
-  constructor($scope) {
+  constructor($scope,adminService) {
     this.$scope = $scope;
+    this.adminService = adminService;
   }
 }
 
-adminUsersCreateController.$inject = ["$scope"];
+adminUsersCreateController.$inject = ["$scope","adminService"];
 
 export const adminUsersCreate = {
   bindings: {},

@@ -2,32 +2,76 @@ const _ = require("lodash");
 const db = require("../models/index.js");
 const User = db.user;
 const Role = db.role;
+const Agency = db.agency;
 
 exports.getUsers = (req,res) => {
   // Get all of the users from the MongoDB.
   User.find({}).exec((err,users) => {
     if(err) {
       console.log(err);
+      res.status(500).send("Unable to get Users from database");
     }
 
     if(users) {
-      // Get a list of roles to change the role _id into a name.
-      Role.find({}).exec((err,roles) => {
-        if(err) {
-          console.log(err);
-        }
+      let info = _.map(users,(user) => {
+        return {
+          _id: user._id,
+          name: user.name,
+          username: user.username,
+          roles: user.roles,
+          agencyId: user.agencyId
+        };
+      });
+      res.status(200).send(info);
+    }
+    else {
+      res.status(500).send("I don't believe it...");
+    }
+  });
+};
 
-        if(roles) {
-          users = _.map(users,(user) => {
-            user.roles = _.map(user.roles,(userRole) => {
-              return _.find(roles,{_id:userRole}).name;
-            });
-            return user;
-          });
+exports.getRoles = (req,res) => {
+  Role.find({}).exec((err,roles) => {
+    if(err) {
+      console.log(err);
+      res.status(500).send("Unable to get Roles from database");
+    }
 
-          console.log(users);
-        }
-      })
+    if(roles) {
+      let info = _.map(roles,(role) => {
+        return {
+          _id: role._id,
+          name: role.name
+        };
+      });
+
+      res.status(200).send(info);
+    }
+    else {
+      res.status(500).send("How did you get here!?  You shouldn't be able to get here.");
+    }
+  });
+};
+
+exports.getAgencies = (req,res) => {
+  Agency.find({}).exec((err,agencies) => {
+    if(err) {
+      console.log(err);
+      res.status(500).send("Unable to get Agencies from database");
+    }
+
+    if(agencies) {
+      let info = _.map(agencies,(agency) => {
+        return {
+          _id: agency._id,
+          name: agency.name
+        };
+      });
+
+      res.status(200).send(info);
+    }
+    else {
+      res.status(500).send("What!? How!?");
     }
   });
 };
