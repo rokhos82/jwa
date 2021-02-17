@@ -7,10 +7,16 @@ class adminUsersListController {
   constructor($scope,adminService) {
     this.$scope = $scope;
     this.adminService = adminService;
+    this.info = {};
   }
 
   $onInit() {
-    this.adminService.getUserInfo();
+    let userResults = this.adminService.getUserInfo();
+    userResults.then((results) => {
+      this.info.users = results;
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 }
 

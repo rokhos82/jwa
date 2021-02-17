@@ -8,6 +8,16 @@ class adminUsersCreateController {
     this.$scope = $scope;
     this.adminService = adminService;
   }
+
+  $onInit() {
+    this.info = {};
+    angular.element("firstName").focus();
+  }
+
+  createUser() {
+    console.log(this.info);
+    this.adminService.createUser(this.info.firstName,this.info.lastName,this.info.username,this.info.password,["user"]);
+  }
 }
 
 adminUsersCreateController.$inject = ["$scope","adminService"];

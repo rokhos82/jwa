@@ -17,6 +17,7 @@ exports.getUsers = (req,res) => {
         return {
           _id: user._id,
           name: user.name,
+          fullName: user.fullName,
           username: user.username,
           roles: user.roles,
           agencyId: user.agencyId

@@ -4,12 +4,13 @@
  * @desc The root of the user admin module
  */
 class adminRootController {
-  constructor($scope) {
+  constructor($scope,adminService) {
     this.$scope = $scope;
+    this.adminService = adminService;
   }
 }
 
-adminRootController.$inject = ["$scope"];
+adminRootController.$inject = ["$scope","adminService"];
 
 export const adminRoot = {
   bindings: {},

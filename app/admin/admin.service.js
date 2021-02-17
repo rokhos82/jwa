@@ -3,7 +3,6 @@ export function adminService($resource,server,port,userService) {
 
   _service.getUserInfo = () => {
     let token = userService.getToken();
-    let info = {};
 
     let users = $resource(`http://${server}:${port}/api/admin/users`,{},{
       get: {
@@ -15,13 +14,32 @@ export function adminService($resource,server,port,userService) {
       }
     });
 
-    users.get().then((results) => {
-      console.log(results);
-    }).catch((err) => {
-      console.log(err);
-    }).finally(() => {
-      console.log("All is done");
+    return users.get().$promise;
+  };
+
+  _service.createUser = (firstName,lastName,username,password,roles) => {
+    let token = userService.getToken();
+    let create = $resource(`http://${server}:${port}/api/auth/signup`,{},{
+      post: {
+        method: "POST",
+        headers: {
+          "x-access-token": token
+        }
+      }
     });
+
+    let promise = create.post({},{
+      name: {first: firstName, last: lastName},
+      username: username,
+      password: password,
+      roles: roles
+    }).$promise;
+
+    promise.catch((err) => {
+      console.error(err);
+    });
+
+    return promise;
   };
 
   return _service;
