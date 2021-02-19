@@ -11,12 +11,14 @@ class adminUsersCreateController {
 
   $onInit() {
     this.info = {};
-    angular.element("firstName").focus();
+    this.adminService.getRoleInfo().then((results) => {
+      this.roles = results;
+    });
   }
 
   createUser() {
     console.log(this.info);
-    this.adminService.createUser(this.info.firstName,this.info.lastName,this.info.username,this.info.password,["user"]);
+    this.adminService.createUser(this.info.firstName,this.info.lastName,this.info.username,this.info.password,[this.info.role.name]);
   }
 }
 

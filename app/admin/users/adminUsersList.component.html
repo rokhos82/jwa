@@ -12,6 +12,7 @@
         <td>{{$index}}</td>
         <td>{{user.fullName}}</td>
         <td>{{user.username}}</td>
+        <td><button class="btn btn-primary" type="button" ng-click="$ctrl.editUser(user._id)">Edit</button></td>
       </tr>
     </tbody>
   </table>

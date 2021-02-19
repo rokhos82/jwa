@@ -17,6 +17,58 @@ export function adminService($resource,server,port,userService) {
     return users.get().$promise;
   };
 
+  _service.getRoleInfo = () => {
+    let token = userService.getToken();
+    let roles = $resource(`http://${server}:${port}/api/admin/roles`,{},{
+      get: {
+        method: "GET",
+        headers: {
+          "x-access-token": token
+        },
+        isArray: true
+      }
+    });
+
+    let promise = roles.get().$promise;
+
+    return promise;
+  };
+
+  _service.getAgencyInfo = () => {
+    let token = userService.getToken();
+    let agencies = $resource(`http://${server}:${port}/api/admin/agencies`,{},{
+      get: {
+        method: "GET",
+        headers: {
+          "x-access-token": token
+        },
+        isArray: true
+      }
+    });
+
+    let promise = agencies.get().$promise;
+
+    return promise;
+  };
+
+  _service.getUser = (id) => {
+    let token = userService.getToken();
+    let user = $resource(`http://${server}:${port}/api/admin/user/:userId`,{},{
+      get: {
+        method: "GET",
+        headers: {
+          "x-access-token": token
+        },
+        params: {
+          userId: encodeURIComponent(id)
+        },
+        isArray: false
+      }
+    });
+
+    return user.get().$promise;
+  };
+
   _service.createUser = (firstName,lastName,username,password,roles) => {
     let token = userService.getToken();
     let create = $resource(`http://${server}:${port}/api/auth/signup`,{},{

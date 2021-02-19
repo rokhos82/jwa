@@ -6,10 +6,11 @@ import {adminRoot} from "./adminRoot.component.js";
 import {adminUsers} from "./users/adminUsers.component.js";
 import {adminUsersList} from "./users/adminUsersList.component.js";
 import {adminUsersCreate} from "./users/adminUsersCreate.component.js";
+import {adminUsersEdit} from "./users/adminUsersEdit.component.js";
 
 import {adminService} from "./admin.service.js";
 
-import {adminRootState,adminUsersState,adminUsersListState,adminUsersCreateState} from "./admin.states.js";
+import {adminRootState,adminUsersState,adminUsersListState,adminUsersCreateState,adminUsersEditState} from "./admin.states.js";
 
 export const ADMIN_MODULE = angular.module("jwa-admin",["ui.router","ngResource","jwa-support","jwa-config","jwa-user"]);
 
@@ -25,11 +26,13 @@ function adminController($uiRouter) {
   $stateRegistry.register(adminUsersState);
   $stateRegistry.register(adminUsersListState);
   $stateRegistry.register(adminUsersCreateState);
+  $stateRegistry.register(adminUsersEditState);
 }
 
 ADMIN_MODULE.component("adminRoot",adminRoot);
 ADMIN_MODULE.component("adminUsers",adminUsers);
 ADMIN_MODULE.component("adminUsersList",adminUsersList);
 ADMIN_MODULE.component("adminUsersCreate",adminUsersCreate);
+ADMIN_MODULE.component("adminUsersEdit",adminUsersEdit);
 
 ADMIN_MODULE.factory("adminService",adminService);

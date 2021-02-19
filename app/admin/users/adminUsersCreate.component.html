@@ -25,6 +25,12 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="control-label col-lg-2" for="role">Role</label>
+      <div class="col-lg-10">
+        <select class="form-control" ng-options="role as role.name for role in $ctrl.roles track by role._id" ng-model="$ctrl.info.role"></select>
+      </div>
+    </div>
+    <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
         <button class="btn btn-primary" type="submit">Submit</button>
       </div>

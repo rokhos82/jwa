@@ -4,9 +4,10 @@
  * @desc Listing the users
  */
 class adminUsersListController {
-  constructor($scope,adminService) {
+  constructor($scope,adminService,$state) {
     this.$scope = $scope;
     this.adminService = adminService;
+    this.$state = $state;
     this.info = {};
   }
 
@@ -18,9 +19,13 @@ class adminUsersListController {
       console.log(err);
     });
   }
+
+  editUser(userId) {
+    this.$state.go("adminUsersEdit",{userId: userId});
+  }
 }
 
-adminUsersListController.$inject = ["$scope","adminService"];
+adminUsersListController.$inject = ["$scope","adminService","$state"];
 
 export const adminUsersList = {
   bindings: {},

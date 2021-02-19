@@ -28,3 +28,18 @@ export const adminUsersCreateState = {
   url: "/new",
   component: "adminUsersCreate"
 };
+
+export const adminUsersEditState = {
+  parent: "adminUsers",
+  name: "adminUsersEdit",
+  url: "/edit/:userId",
+  component: "adminUsersEdit",
+  resolve: {
+    user: userResolve
+  }
+};
+
+userResolve.$inject = ["$stateParams","adminService"];
+function userResolve($stateParams,adminService) {
+  return adminService.getUser($stateParams.userId).$promise;
+}

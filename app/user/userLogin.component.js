@@ -15,7 +15,6 @@ class userLoginController {
     this.password = "";
     this.authenticating = false;
     this.errorMessage = false;
-    angular.element("username").focus();
   }
 
   doUserLogin() {

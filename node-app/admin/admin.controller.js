@@ -76,3 +76,32 @@ exports.getAgencies = (req,res) => {
     }
   });
 };
+
+exports.getUser = (req,res) => {
+  let _id = req.params.userId;
+  User.findOne({
+    _id: _id
+  }).exec((err,user) => {
+    if(err) {
+      console.log(err);
+      res.status(500).send("Unable to retrieve user information");
+    }
+
+    if(user) {
+      res.status(200).send({
+        _id: user._id,
+        name: {
+          first: user.first,
+          last: user.last
+        },
+        fullName: user.fullName,
+        username: user.username,
+        roles: user.roles,
+        agencyId: user.agencyId
+      });
+    }
+    else {
+      res.status(500).send("...unbelievable...");
+    }
+  });
+}
