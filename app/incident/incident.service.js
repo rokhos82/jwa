@@ -38,11 +38,20 @@ export function incidentService($resource,server,port,userService) {
       return promise;
     },
     getNarrative: function(key) {
+      let token = userService.getToken();
       let narratives = $resource(`http://${server}:${port}/narratives/:key`,{
         key: encodeURIComponent(key)
+      },{
+        get: {
+          method: "GET",
+          headers: {
+            "x-access-token": token
+          },
+          isArray: true
+        }
       });
 
-      let promise = narratives.query().$promise;
+      let promise = narratives.get().$promise;
 
       return promise;
     }
