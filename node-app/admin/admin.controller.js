@@ -1,5 +1,6 @@
 const _ = require("lodash");
 const db = require("../models/index.js");
+const bcrypt = require("bcryptjs");
 const User = db.user;
 const Role = db.role;
 const Agency = db.agency;
@@ -91,8 +92,8 @@ exports.getUser = (req,res) => {
       res.status(200).send({
         _id: user._id,
         name: {
-          first: user.first,
-          last: user.last
+          first: user.name.first,
+          last: user.name.last
         },
         fullName: user.fullName,
         username: user.username,
@@ -104,4 +105,53 @@ exports.getUser = (req,res) => {
       res.status(500).send("...unbelievable...");
     }
   });
-}
+};
+
+exports.updateUser = (req,res) => {
+  console.log("Entering the user update controller...");
+
+  let updateInfo = {
+    name: {
+      first: req.body.name.first,
+      last: req.body.name.last
+    },
+    username: req.body.username,
+    roles: req.body.roles
+  };
+
+  User.findByIdAndUpdate(req.body._id,updateInfo,(err,result) => {
+    if(err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
+    console.log(result);
+  });
+};
+
+exports.deleteUser = (req,res) => {
+  console.log("Entering delete user controller...");
+  User.findByIdAndDelete(req.body._id,(err) => {
+    if(err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
+    else {
+      res.status(200).send("User deleted.");
+    }
+  });
+};
+
+exports.resetPassword = (req,res) => {
+  console.log("Entering password reset controller...");
+
+  let password = bcrypt.hashSync(req.body.password,8);
+
+  User.findByIdAndUpdate(req.body._id,{password: password},(err) => {
+    if(err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
+
+    res.status(200).send("Password reset successful");
+  });
+};

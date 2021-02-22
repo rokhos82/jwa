@@ -2,7 +2,10 @@ export function appStateService() {
   let _service = {};
 
   let _user = {
-    authenticated: false
+    authenticated: false,
+    isUser: false,
+    isManager: false,
+    isAdmin: false
   };
 
   _service.getUserState = () => {

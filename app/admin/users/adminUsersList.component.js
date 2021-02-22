@@ -23,6 +23,14 @@ class adminUsersListController {
   editUser(userId) {
     this.$state.go("adminUsersEdit",{userId: userId});
   }
+
+  resetPassword(userId) {
+    console.log("Password Reset for " + userId);
+  }
+
+  deleteUser(userId) {
+    console.log("Delete user " + userId);
+  }
 }
 
 adminUsersListController.$inject = ["$scope","adminService","$state"];

@@ -41,5 +41,5 @@ export const adminUsersEditState = {
 
 userResolve.$inject = ["$stateParams","adminService"];
 function userResolve($stateParams,adminService) {
-  return adminService.getUser($stateParams.userId).$promise;
+  return adminService.getUser($stateParams.userId);
 }

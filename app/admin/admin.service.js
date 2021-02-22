@@ -69,6 +69,31 @@ export function adminService($resource,server,port,userService) {
     return user.get().$promise;
   };
 
+  _service.updateUser = (id,firstName,lastName,username,roles) => {
+    let token = userService.getToken();
+    let update = $resource(`http://${server}:${port}/api/admin/update`,{},{
+      post: {
+        method: "POST",
+        headers: {
+          "x-access-token": token
+        }
+      }
+    });
+
+    let promise = update.post({},{
+      _id: id,
+      name: {first: firstName, last: lastName},
+      username: username,
+      roles: roles
+    }).$promise;
+
+    promise.catch((err) => {
+      console.error(err);
+    });
+
+    return promise;
+  };
+
   _service.createUser = (firstName,lastName,username,password,roles) => {
     let token = userService.getToken();
     let create = $resource(`http://${server}:${port}/api/auth/signup`,{},{

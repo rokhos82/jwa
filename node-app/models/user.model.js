@@ -16,7 +16,8 @@ const UserSchema = new mongoose.Schema({
   agencyId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Agency"
-  }
+  },
+  active: Boolean
 });
 
 UserSchema.virtual('fullName').get(function() {
