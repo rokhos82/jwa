@@ -2,11 +2,14 @@ export function incidentService($resource,server,port,userService) {
   let _service = {
     getIncidentDetail: function(incidentnumber) {
       let token = userService.getToken();
+      let username = userService.getUser();
+
       let detail = $resource(`http://${server}:${port}/incidents/detail/:incidentnumber`,{},{
         get: {
           method: "GET",
           headers: {
-            "x-access-token": token
+            "x-access-token": token,
+            "username": username
           },
           params: {
             incidentnumber: encodeURIComponent(incidentnumber)
@@ -23,11 +26,14 @@ export function incidentService($resource,server,port,userService) {
     },
     getIncidents: function(terms) {
       let token = userService.getToken();
+      let username = userService.getUser();
+
       let list = $resource(`http://${server}:${port}/incidents/fetch`,{},{
         post: {
           method: "POST",
           headers: {
-            "x-access-token": token
+            "x-access-token": token,
+            "username": username
           },
           isArray: false
         }
@@ -39,13 +45,16 @@ export function incidentService($resource,server,port,userService) {
     },
     getNarrative: function(key) {
       let token = userService.getToken();
+      let username = userService.getUser();
+
       let narratives = $resource(`http://${server}:${port}/narratives/:key`,{
         key: encodeURIComponent(key)
       },{
         get: {
           method: "GET",
           headers: {
-            "x-access-token": token
+            "x-access-token": token,
+            "username": username
           },
           isArray: true
         }

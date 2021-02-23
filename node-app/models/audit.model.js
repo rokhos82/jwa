@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const AuditSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+  user: {
+    type: String,
+    required: true
   },
   date: {
     type: Date,
@@ -14,7 +14,11 @@ const AuditSchema = new mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     ref: "EventType"
   },
-  outcome: Boolean
+  outcome: Boolean,
+  remoteAddress: {
+    type: String,
+    required: true
+  }
 });
 
 const Audit = mongoose.model("Audit",AuditSchema);

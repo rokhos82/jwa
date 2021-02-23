@@ -138,21 +138,6 @@ const logFileStream = fs.createWriteStream("./jwa.log",{flags: 'a'});
 
 const {dbWare} = require("./db/index.js");
 
-/*const config = {
-  server: 'jcc-sql.jcc.ccjcc.us',
-  user: 'test',
-  password: 'test',
-  database: 'CMIdb-test',
-  driver: 'tedious'
-};
-
-const pool = new sql.ConnectionPool(config);
-const poolConnect = pool.connect();
-
-pool.on('error',err => {
-  console.log(err);
-});//*/
-
 let localCache = {};
 localCache.names = {};
 localCache.incidents = {};
