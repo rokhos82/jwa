@@ -8,6 +8,7 @@ class adminUsersEditController {
     this.$scope = $scope;
     this.adminService = adminService;
     this.$state = $state;
+    this.agencies = {};
   }
 
   $onInit() {
@@ -18,6 +19,16 @@ class adminUsersEditController {
       _.forEach(this.roles,(role) => {
         role.active = _.includes(this.user.roles,role._id);
       });
+    });
+
+    this.adminService.getAgencyInfo().then((results) => {
+      _.forEach(results,(result) => {
+        this.agencies[result._id] = result;
+      });
+    }).finally(() => {
+      if(this.user.agencyId) {
+        this.agency = this.agencies[this.user.agencyId];
+      }
     });
   }
 

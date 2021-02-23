@@ -31,6 +31,12 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="control-label col-lg-2" for="agency">Agency</label>
+      <div class="col-lg-10">
+        <select class="form-control" name="agency" ng-options="agency as agency.name for agency in $ctrl.agencies track by agency._id" ng-model="$ctrl.info.agency"></select>
+      </div>
+    </div>
+    <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
         <button class="btn btn-primary" type="submit">Submit</button>
       </div>

@@ -11,8 +11,13 @@ class adminUsersCreateController {
 
   $onInit() {
     this.info = {};
+
     this.adminService.getRoleInfo().then((results) => {
       this.roles = results;
+    });
+
+    this.adminService.getAgencyInfo().then((results) => {
+      this.agencies = results;
     });
   }
 
