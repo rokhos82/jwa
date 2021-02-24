@@ -16,6 +16,24 @@ function checkBlackList(obj,blacklist) {
   return _.omit(obj,blacklist);
 }
 
+const infoDefaults = {
+  username: "unknown",
+  remoteAddress: "0.0.0.0"
+};
+
+function auditLog(info) {
+  // Make sure the audit information has the required defaults
+  _.defaults(info,infoDefaults);
+
+  // Build the audit document and save it
+  new Audit(info).save((err) => {
+    if(err) {
+      // Log the error if there is one
+      console.log(err);
+    }
+  });
+}
+
 module.exports = (app) => {
   app.use((req,res,next) => {
     // Collect the information for auditing
@@ -24,7 +42,7 @@ module.exports = (app) => {
       url: req.originalUrl,
       body: checkBlackList(req.body,blacklist),
       params: checkBlackList(req.params,blacklist),
-      username: req.body.username || req.headers.username || "unknown"
+      username: req.headers.username || req.body.username || "unknown"
     };
 
     // Log basic information to the console
@@ -36,16 +54,18 @@ module.exports = (app) => {
       console.log("Params: ",info.params);
     }
 
+    // Inject the audit system into the request for other controllers to use
+    req.audit = auditLog;
+    req.auditInfo = info;
+    req.auditDefault = {
+      user: info.username,
+      remoteAddress: info.remoteAddress
+    };
+
     // Log the event to the database
-    let event = new Audit({
-      information: "URL Accessed: " + info.url,
-      remoteAddress: info.remoteAddress,
-      user: info.username
-    }).save((err) => {
-      if(err) {
-        console.log("Error",err);
-      }
-    });
+    auditLog(_.defaults({
+      information: "URL Accessed: " + info.url
+    },req.auditDefault));
 
     next();
   });

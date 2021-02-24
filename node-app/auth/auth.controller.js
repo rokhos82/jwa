@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const config = require("../auth.config.js");
 const db = require("../models/index.js");
 const User = db.user;
@@ -7,6 +8,12 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 exports.signup = (req,res) => {
+  // Log the audit entry for creating a user
+  req.audit(_.defaults({
+    information: "Accessing user signup",
+    outcome: true
+  },req.auditDefault));
+
   const user = new User({
     username: req.body.username,
     password: bcrypt.hashSync(req.body.password,8),
@@ -18,6 +25,10 @@ exports.signup = (req,res) => {
 
   user.save((err,user) => {
     if(err) {
+      req.audit(_.defaults({
+        information: "Failed to create user",
+        outcome: false
+      },req.auditDefault));
       res.status(500).send({ message: err });
       return;
     }
@@ -29,6 +40,10 @@ exports.signup = (req,res) => {
         },
         (err,roles) => {
           if(err) {
+            req.audit(_.defaults({
+              information: "Failed to create user",
+              outcome: false
+            },req.auditDefault));
             res.status(500).send({ message: err });
             return;
           }
@@ -36,10 +51,18 @@ exports.signup = (req,res) => {
           user.roles = roles.map(role => role._id);
           user.save(err => {
             if(err) {
+              req.audit(_.defaults({
+                information: "Failed to create user",
+                outcome: false
+              },req.auditDefault));
               res.status(500).send({ message: err });
               return;
             }
 
+            req.audit(_.defaults({
+              information: "Successfully created user",
+              outcome: true
+            },req.auditDefault));
             res.send({ message: "User was registered successfully!" });
           });
         }
@@ -49,6 +72,10 @@ exports.signup = (req,res) => {
         name: "user"
       },(err, role) => {
         if(err) {
+          req.audit(_.defaults({
+            information: "Failed to create user",
+            outcome: false
+          },req.auditDefault));
           res.status(500).send({ message: err });
           return;
         }
@@ -56,10 +83,18 @@ exports.signup = (req,res) => {
         user.roles = [role._id];
         user.save(err => {
           if(err) {
+            req.audit(_.defaults({
+              information: "Failed to create user",
+              outcome: false
+            },req.auditDefault));
             res.status(500).send({ message: err });
             return;
           }
 
+          req.audit(_.defaults({
+            information: "Successfully created user",
+            outcome: true
+          },req.auditDefault));
           res.send({ message: "User was registered successfully!" });
         });
       });
