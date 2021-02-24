@@ -8,12 +8,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 exports.signup = (req,res) => {
-  // Log the audit entry for creating a user
-  req.audit(_.defaults({
-    information: "Accessing user signup",
-    outcome: true
-  },req.auditDefault));
-
   const user = new User({
     username: req.body.username,
     password: bcrypt.hashSync(req.body.password,8),
@@ -25,10 +19,10 @@ exports.signup = (req,res) => {
 
   user.save((err,user) => {
     if(err) {
-      req.audit(_.defaults({
+      req.audit({
         information: "Failed to create user",
         outcome: false
-      },req.auditDefault));
+      });
       res.status(500).send({ message: err });
       return;
     }
@@ -40,10 +34,10 @@ exports.signup = (req,res) => {
         },
         (err,roles) => {
           if(err) {
-            req.audit(_.defaults({
+            req.audit({
               information: "Failed to create user",
               outcome: false
-            },req.auditDefault));
+            });
             res.status(500).send({ message: err });
             return;
           }
@@ -51,18 +45,18 @@ exports.signup = (req,res) => {
           user.roles = roles.map(role => role._id);
           user.save(err => {
             if(err) {
-              req.audit(_.defaults({
+              req.audit({
                 information: "Failed to create user",
                 outcome: false
-              },req.auditDefault));
+              });
               res.status(500).send({ message: err });
               return;
             }
 
-            req.audit(_.defaults({
+            req.audit({
               information: "Successfully created user",
               outcome: true
-            },req.auditDefault));
+            });
             res.send({ message: "User was registered successfully!" });
           });
         }
@@ -72,10 +66,10 @@ exports.signup = (req,res) => {
         name: "user"
       },(err, role) => {
         if(err) {
-          req.audit(_.defaults({
+          req.audit({
             information: "Failed to create user",
             outcome: false
-          },req.auditDefault));
+          });
           res.status(500).send({ message: err });
           return;
         }
@@ -83,18 +77,18 @@ exports.signup = (req,res) => {
         user.roles = [role._id];
         user.save(err => {
           if(err) {
-            req.audit(_.defaults({
+            req.audit({
               information: "Failed to create user",
               outcome: false
-            },req.auditDefault));
+            });
             res.status(500).send({ message: err });
             return;
           }
 
-          req.audit(_.defaults({
+          req.audit({
             information: "Successfully created user",
             outcome: true
-          },req.auditDefault));
+          });
           res.send({ message: "User was registered successfully!" });
         });
       });
@@ -110,11 +104,17 @@ exports.signin = (req,res) => {
     "-__v"
   ).exec((err,user) => {
     if(err) {
-      res.status(500).send({ message: err });
-      return;
+      req.audit({
+        information: "Unable to retrieve a user of that name"
+      });
+      return res.status(500).send({ message: err });;
     }
 
     if(!user) {
+      req.audit({
+        information: "Unable to retrieve a user of that name",
+        outcome: false
+      });
       return res.status(404).send({ message: "User Not Found." });
     }
 
@@ -124,6 +124,10 @@ exports.signin = (req,res) => {
     );
 
     if(!passwordIsValid) {
+      req.audit({
+        information: "Invalid password entered",
+        outcome: false
+      });
       return res.status(401).send({
         accessToken: null,
         message: "Invalid Password!"
@@ -139,6 +143,11 @@ exports.signin = (req,res) => {
     for(let i = 0;i < user.roles.length;i++) {
       authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
     }
+
+    req.audit({
+      information: "User has been authenticated",
+      ouctome: true
+    });
 
     res.status(200).send({
       id: user._id,

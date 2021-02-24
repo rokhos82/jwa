@@ -33,10 +33,19 @@ exports.nameDetail = (req,res) => {
       // Check for an error
       if(err) {
         // Print the error
+        req.audit({
+          information: queryString,
+          outcome: false
+        });
         console.log(err);
       }
       else {
         // Query was succesful.  Process and return to front-end
+        // Log the success first
+        req.audit({
+          information: `Retrieved name record: ${filenumber}`,
+          outcome: true
+        });
         let r = [{
           detail: result.recordsets[0][0],
           contacts: result.recordsets[1]
@@ -81,11 +90,22 @@ exports.nameFetch = (req,res) => {
     let request = p.request();
 
     request.query(query).then((recordset) => {
-      res.send(recordset);
+      req.audit({
+        information: `Successful search: ${query}`,
+        outcome: true
+      });
+      res.status(200).send(recordset);
+    },(err) => {
+      console.log(err);
+      req.audit({
+        information: `Name search error see logs`,
+        outcome: false
+      });
+      res.status(500).send(err);
+    }).finally(() => {
+      console.log(`Name search query complete.`);
     });
   });
-
-  console.log(query);
 };
 
 /**

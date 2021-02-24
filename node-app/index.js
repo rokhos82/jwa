@@ -181,7 +181,7 @@ require("./names/name.routes.js")(appApi,dbWare);
 require("./incidents/incident.routes.js")(appApi,dbWare);
 require("./test/test.routes.js")(appApi);
 
-appApi.post('/names/contacts',(req,res) => {
+/*appApi.post('/names/contacts',(req,res) => {
   console.log('Querying Master Names Contacts');
   console.log(req.body);
   let params = req.body;
@@ -198,77 +198,7 @@ appApi.post('/names/contacts',(req,res) => {
   });
 
   console.log(query);
-});
-
-/**
- * This handler expects a POST request with two parameters.
- * The first parameter is the offset into the select.
- * The second parameter is the fetch size of the select.
- * The third parameter are the search terms.
- */
-appApi.post('/incidents/fetch',(req,res) => {
-  console.log('Fetching Incidents');
-  console.log(req.body);
-  let params = req.body.terms;
-
-  let whereClause = "";
-
-  //params.incident = sqlString.escape(params.incident);
-
-  // Check to see if there is an incident number in the search terms
-  let whereClauseBuilder = "";
-  if(_.has(params,"incident") && _.isString(params.incident) && params.incident !== "") {
-    whereClauseBuilder += sqlString.format(" Incident like ? and",[params.incident]);
-  }
-
-  // Check to see if there is an officer ID in the search terms
-  if(_.has(params,"officer") && _.isString(params.officer) && params.officer !== "") {
-    whereClauseBuilder += sqlString.format(" ID like ? and",[params.officer]);
-  }
-
-  // Check to see if there is a reviwer ID in the search terms
-  if(_.has(params,"reviewer") && _.isString(params.reviewer) && params.reviewer !== "") {
-    whereClauseBuilder += sqlString.format(" Reviewer like ? and",[params.reviewer]);
-  }
-
-  // Check to see if there is an offense in the search terms
-  if(_.has(params,"offense") && _.isString(params.offense) && params.offense !== "") {
-    whereClauseBuilder += sqlString.format(" Offense like ? and",[params.offense]);
-  }
-
-  // Check to see if there is a date range in the search terms
-  if(_.has(params,"reportDateBegin") && _.isString(params.reportDateBegin) && params.reportDateBegin !== ""
-    && _.has(params,"reportDateEnd") && _.isString(params.reportDateEnd) && params.reportDateEnd !== "") {
-    whereClauseBuilder += sqlString.format(" RptDate between convert(datetime,?) and convert(datetime,?) and",[params.reportDateBegin,params.reportDateEnd]);
-  }
-
-  // Add an extra truthy statement to make the query work if the search terms are empty
-  whereClauseBuilder += " 1=1 and"
-
-  // Trim off the trailing `add`
-  whereClauseBuilder = whereClauseBuilder.slice(0,-4);
-
-  whereClause = ` where${whereClauseBuilder}`;
-
-  // Replace asterisks (*) with percent signs (%)
-  whereClause = whereClause.replace(/\*/g,'%');
-
-  let query = `select Incident,RptDate,RptTime,Offense,OffenseDesc,ID,Reviewer as ReviewerID from Incident${whereClause} order by RptDate,RptTime,BeginDate,BeginTime,EndDate,EndTime asc offset ${params.recordOffset} rows fetch next ${params.fetchSize} rows only; select count(*) as Count from Incident${whereClause};`;
-
-  dbWare.poolConnect.then((p) => {
-    let request = p.request();
-
-    request.query(query).then((recordset) => {
-      res.send(recordset);
-    },(err) => {
-      console.log(err.originalError.code,err.originalError.message);
-    }).finally(() => {
-      console.log(`Incident search query completed.`);
-    });
-  });
-
-  console.log(query);
-});
+});//*/
 
 ////////////////////////////////////////////////////////////////////////////////
 // Narrative related handlers

@@ -23,6 +23,7 @@ const infoDefaults = {
 
 function auditLog(info) {
   // Make sure the audit information has the required defaults
+  _.defaults(info,auditLog.defaults);
   _.defaults(info,infoDefaults);
 
   // Build the audit document and save it
@@ -57,15 +58,16 @@ module.exports = (app) => {
     // Inject the audit system into the request for other controllers to use
     req.audit = auditLog;
     req.auditInfo = info;
-    req.auditDefault = {
+
+    // Log the event to the database
+    auditLog.defaults = {
       user: info.username,
       remoteAddress: info.remoteAddress
     };
 
-    // Log the event to the database
-    auditLog(_.defaults({
+    auditLog({
       information: "URL Accessed: " + info.url
-    },req.auditDefault));
+    });
 
     next();
   });

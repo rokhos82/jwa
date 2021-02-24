@@ -13,5 +13,6 @@ module.exports = (app,db) => {
     next();
   });
 
-  app.get('/incidents/detail/:incidentnumber',[db.setup,authJwt.verifyToken],controller.incidentDetail);
+  app.get("/incidents/detail/:incidentnumber",[db.setup,authJwt.verifyToken],controller.incidentDetail);
+  app.post("/incidents/fetch",[db.setup,authJwt.verifyToken],controller.incidentFetch);
 };
