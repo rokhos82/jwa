@@ -1,6 +1,6 @@
 {
   "name": "jwa",
-  "version": "0.6.0",
+  "version": "0.6.3",
   "description": "Justice Web App",
   "private": true,
   "main": "index.js",

@@ -10,7 +10,7 @@ import {userService} from "./user.service.js";
 
 import {userLoginState,userLogoutState} from "./user.states.js";
 
-export const USER_MODULE = angular.module("jwa-user",["ui.router","ngResource","jwa-support","jwa-config","jwa-audit"]);
+export const USER_MODULE = angular.module("jwa-user",["ui.router","ngResource","jwa-support","jwa-config"]);
 
 USER_MODULE.config(["$uiRouterProvider",userController]);
 

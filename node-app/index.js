@@ -184,6 +184,7 @@ require("./admin/admin.routes.js")(appApi);
 require("./names/name.routes.js")(appApi,dbWare);
 require("./incidents/incident.routes.js")(appApi,dbWare);
 require("./test/test.routes.js")(appApi);
+require("./audit/audit.routes.js")(appApi);
 
 appApi.listen(8001,"0.0.0.0",() => {
   console.log(`Listening on port 8001`);

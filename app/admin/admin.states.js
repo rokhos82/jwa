@@ -35,11 +35,28 @@ export const adminUsersEditState = {
   url: "/edit/:userId",
   component: "adminUsersEdit",
   resolve: {
-    user: userResolve
+    user: userResolver
   }
 };
 
-userResolve.$inject = ["$stateParams","adminService"];
-function userResolve($stateParams,adminService) {
+userResolver.$inject = ["$stateParams","adminService"];
+function userResolver($stateParams,adminService) {
   return adminService.getUser($stateParams.userId);
+}
+
+export const auditListState = {
+  parent: "adminRoot",
+  name: "auditList",
+  url: "/audit",
+  component: "auditList",
+  resolve: {
+    events: eventsResolver
+  }
+};
+
+eventsResolver.$inject = ["auditService"];
+function eventsResolver(auditService) {
+  return auditService.getEvents().then((events) => {
+    return events
+  });
 }
