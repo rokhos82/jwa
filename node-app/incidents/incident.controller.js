@@ -126,3 +126,33 @@ exports.incidentFetch = (req,res) => {
 
   console.log(`Search query: ${query}`);
 };
+
+exports.narrativeGet = (req,res) => {
+  let db = req.db;
+  // Get the NarrativeKey from the URL
+  let key = sqlString.escape(decodeURIComponent(req.params.key));
+  console.log(`Narrative Key: ${key}`);
+
+  let query = `select * from vIncidentNarrative where NarrativeID = ${key}`;
+  console.log(`${query}`);
+
+  db.poolConnect.then((p) => {
+    let request = p.request();
+
+    request.query(query).then((result) => {
+      req.audit({
+        information: `Narrative Retrieval Success: ${key}`,
+        outcome: true
+      });
+      res.send(result.recordset);
+    },(err) => {
+      req.audit({
+        information: `Narrative Retrieval Failed: ${key}`,
+        outcome: false
+      });
+      console.log(err.originalError.code,err.originalError.message);
+    }).finally(() => {
+      console.log(`Narrative detail query completed.`);
+    });
+  });
+};

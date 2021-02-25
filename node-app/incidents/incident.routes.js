@@ -15,4 +15,5 @@ module.exports = (app,db) => {
 
   app.get("/incidents/detail/:incidentnumber",[db.setup,authJwt.verifyToken],controller.incidentDetail);
   app.post("/incidents/fetch",[db.setup,authJwt.verifyToken],controller.incidentFetch);
+  app.get("/narratives/:key",[db.setup,authJwt.verifyToken],controller.narrativeGet)
 };
