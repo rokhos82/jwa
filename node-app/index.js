@@ -169,6 +169,10 @@ app.listen(8000,"0.0.0.0",() => {
   console.log('JWA listening on port 8000!');
 });
 
+////////////////////////////////////////////////////////////////////////////////
+// API routes and controllers
+////////////////////////////////////////////////////////////////////////////////
+
 appApi.use(cors());
 appApi.use(bodyParser.json());
 appApi.use(bodyParser.urlencoded({ extended: true }));
@@ -180,25 +184,6 @@ require("./admin/admin.routes.js")(appApi);
 require("./names/name.routes.js")(appApi,dbWare);
 require("./incidents/incident.routes.js")(appApi,dbWare);
 require("./test/test.routes.js")(appApi);
-
-/*appApi.post('/names/contacts',(req,res) => {
-  console.log('Querying Master Names Contacts');
-  console.log(req.body);
-  let params = req.body;
-
-  let query = `select * from vNameContacts where FileNumber=${params.filenumber}`;
-
-  dbWare.poolConnect.then((p) => {
-    let request = p.request();
-
-    request.query(query).then((recordset) => {
-      console.log('Name Contact Query Complete');
-      res.send(recordset);
-    });
-  });
-
-  console.log(query);
-});//*/
 
 ////////////////////////////////////////////////////////////////////////////////
 // Narrative related handlers
