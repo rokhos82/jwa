@@ -28,7 +28,17 @@
     <ui-view></ui-view>
     <div class="row">
       <div class="col-lg-12">
-        <pre>{{$ctrl.userState | json}}</pre>
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">Debug Info</h3>
+          </div>
+          <div class="panel-body">
+            <fieldset>
+              <legend>User State</legend>
+              <pre>{{$ctrl.userState | json}}</pre>
+            </fieldset>
+          </div>
+        </div>
       </div>
     </div>
   </div>

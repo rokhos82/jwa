@@ -24,7 +24,7 @@
     </table>
   </div>
   <div ng-show="$ctrl.loading">
-    <h4>Loading names...</h4>
+    <uib-progressbar max="100" value="100" class="progress-striped active">Loading...</uib-progressbar>
   </div>
   <div class="row">
     <ul uib-pagination boundary-links="true" rotate="true" total-items="$ctrl.recordCount" items-per-page="$ctrl.fetchSize" max-size="10" ng-model="$ctrl.page" ng-change="$ctrl.changePage()"></ul>
