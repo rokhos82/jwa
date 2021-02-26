@@ -1,0 +1,49 @@
+<div class="well">
+  <form class="form-horizontal">
+    <fieldset>
+      <legend>{{$ctrl.user.fullName}}</legend>
+      <div class="form-group">
+        <label class="control-label col-lg-2" for="username">Username</label>
+        <div class="col-lg-10">
+          <input class="form-control" name="username" type="text" ng-model="$ctrl.user.username" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-lg-2" for="firstname">First Name</label>
+        <div class="col-lg-10">
+          <input class="form-control" name="firstname" type="text" ng-model="$ctrl.user.name.first" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-lg-2" for="lastname">Last Name</label>
+        <div class="col-lg-10">
+          <input class="form-control" name="lastname" type="text" ng-model="$ctrl.user.name.last" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-lg-2" for="agency">Agency</label>
+        <div class="col-lg-10">
+          <select class="form-control" name="agency" ng-options="agency as agency.name for agency in $ctrl.agencies track by agency._id" ng-model="$ctrl.agency"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <div class="checkbox" ng-repeat="role in $ctrl.roles track by $index">
+            <label>
+              <input type="checkbox" ng-model="$ctrl.roles[$index].active" /> {{role.name}}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <button class="btn btn-primary" type="button" ng-click="$ctrl.update()">Update</button>
+          <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+<pre>{{$ctrl.user | json}}</pre>
+<pre>{{$ctrl.roles | json}}</pre>
+<pre>{{$ctrl.agencies | json}}</pre>

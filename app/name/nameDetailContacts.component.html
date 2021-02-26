@@ -26,7 +26,7 @@
           <tr ng-repeat="contact in $ctrl.contacts">
             <td><a ui-sref="incidentDetail({incidentnumber:contact.Incident})">{{contact.Incident}}</a></td>
             <td>{{contact.Citation}}</td>
-            <td>{{contact.ContactDate | date}}</td>
+            <td>{{contact.ContactDate | jwaDate}}</td>
             <td>{{contact.Juvenile}}</td>
             <td>{{contact.Involvement}}</td>
             <td>{{contact.OffenseDesc}}</td>

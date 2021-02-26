@@ -4,16 +4,18 @@ class nameSearchController {
     this.$transitions = $transitions;
     this.$scope = $scope;
 
-    this.searchCount = 1;
     this.query = {};
+    this.ui = {};
+  }
+
+  $onInit() {
   }
 
   search() {
     console.log(`New Search`,this.ui);
 
     this.query = _.cloneDeep(this.ui);
-    this.query[this.searchCount] = this.searchCount;
-    this.searchCount++;
+    this.$scope.$broadcast("jwa-names-search",{terms: this.query});
   }
 }
 

@@ -1,0 +1,157 @@
+const _ = require("lodash");
+const db = require("../models/index.js");
+const bcrypt = require("bcryptjs");
+const User = db.user;
+const Role = db.role;
+const Agency = db.agency;
+
+exports.getUsers = (req,res) => {
+  // Get all of the users from the MongoDB.
+  User.find({}).exec((err,users) => {
+    if(err) {
+      console.log(err);
+      res.status(500).send("Unable to get Users from database");
+    }
+
+    if(users) {
+      let info = _.map(users,(user) => {
+        return {
+          _id: user._id,
+          name: user.name,
+          fullName: user.fullName,
+          username: user.username,
+          roles: user.roles,
+          agencyId: user.agencyId
+        };
+      });
+      res.status(200).send(info);
+    }
+    else {
+      res.status(500).send("I don't believe it...");
+    }
+  });
+};
+
+exports.getRoles = (req,res) => {
+  Role.find({}).exec((err,roles) => {
+    if(err) {
+      console.log(err);
+      res.status(500).send("Unable to get Roles from database");
+    }
+
+    if(roles) {
+      let info = _.map(roles,(role) => {
+        return {
+          _id: role._id,
+          name: role.name
+        };
+      });
+
+      res.status(200).send(info);
+    }
+    else {
+      res.status(500).send("How did you get here!?  You shouldn't be able to get here.");
+    }
+  });
+};
+
+exports.getAgencies = (req,res) => {
+  Agency.find({}).exec((err,agencies) => {
+    if(err) {
+      console.log(err);
+      res.status(500).send("Unable to get Agencies from database");
+    }
+
+    if(agencies) {
+      let info = _.map(agencies,(agency) => {
+        return {
+          _id: agency._id,
+          name: agency.name
+        };
+      });
+
+      res.status(200).send(info);
+    }
+    else {
+      res.status(500).send("What!? How!?");
+    }
+  });
+};
+
+exports.getUser = (req,res) => {
+  let _id = req.params.userId;
+  User.findOne({
+    _id: _id
+  }).exec((err,user) => {
+    if(err) {
+      console.log(err);
+      res.status(500).send("Unable to retrieve user information");
+    }
+
+    if(user) {
+      res.status(200).send({
+        _id: user._id,
+        name: {
+          first: user.name.first,
+          last: user.name.last
+        },
+        fullName: user.fullName,
+        username: user.username,
+        roles: user.roles,
+        agencyId: user.agencyId
+      });
+    }
+    else {
+      res.status(500).send("...unbelievable...");
+    }
+  });
+};
+
+exports.updateUser = (req,res) => {
+  console.log("Entering the user update controller...");
+
+  let updateInfo = {
+    name: {
+      first: req.body.name.first,
+      last: req.body.name.last
+    },
+    username: req.body.username,
+    roles: req.body.roles
+  };
+
+  User.findByIdAndUpdate(req.body._id,updateInfo,(err,result) => {
+    if(err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
+    console.log(result);
+  });
+};
+
+exports.deleteUser = (req,res) => {
+  console.log("Entering delete user controller...");
+  User.findByIdAndDelete(req.body._id,(err) => {
+    if(err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
+    else {
+      res.status(200).send("User deleted.");
+    }
+  });
+};
+
+exports.resetPassword = (req,res) => {
+  console.log("Entering password reset controller...");
+
+  let password = bcrypt.hashSync(req.body.password,8);
+
+  User.findByIdAndUpdate(req.body._id,{password: password},(err) => {
+    if(err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
+
+    res.status(200).send("Password reset successful");
+  });
+};

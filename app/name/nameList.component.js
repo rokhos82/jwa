@@ -17,15 +17,15 @@ class nameListController {
 
   $onInit() {
     this.loading = true;
-  }
 
-  $onChanges(changeObj) {
-    let terms = changeObj.query.currentValue;
-    console.log(`New Query`,terms);
-    this.terms = terms;
+    this.$scope.$on("jwa-names-search",(event,data) => {
+      this.terms = data.terms;
+      this.recordOffset = 0;
+      this.page = 1;
+      this.loading = true;
 
-    this.recordOffset = 0;
-    this.page = 1;
+      this.fetchRecords();
+    });
 
     this.fetchRecords();
   }
@@ -69,6 +69,8 @@ class nameListController {
       console.log(results);
       this.names = results.recordsets[0];
       this.recordCount = results.recordsets[1][0].Count;
+    }).catch(() => {
+      this.$state.go("userLogin");
     }).finally(() => {
       this.loading = false;
     });

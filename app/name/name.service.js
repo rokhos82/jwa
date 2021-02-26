@@ -1,21 +1,42 @@
-export function nameService($resource,server,port) {
+export function nameService($resource,server,port,userService) {
   let _service = {
     getNames: function(terms) {
-      let list = $resource(`http://${server}:${port}/names/fetch`,{});
+      let token = userService.getToken();
+      let username = userService.getUser();
 
-      let promise = list.save({},{terms: terms}).$promise;
+      let list = $resource(`http://${server}:${port}/names/fetch`,{},{
+        post: {
+          method: "POST",
+          headers: {
+            "x-access-token": token,
+            "username": username
+          },
+          isArray:false
+        }
+      });
+
+      let promise = list.post({},{terms: terms}).$promise;
 
       return promise;
     },
     getNameDetail: (filenumber) => {
-      console.log(`Name Service getNameDateil: ${filenumber}`);
-      let detail = $resource(`http://${server}:${port}/names/detail/:filenumber`,{
-        filenumber: encodeURIComponent(filenumber)
+      let token = userService.getToken();
+      let username = userService.getUser();
+      let detail = $resource(`http://${server}:${port}/names/detail/:filenumber`,{},{
+        get: {
+          method: "GET",
+          headers: {
+            "x-access-token": token,
+            "username": username
+          },
+          params: {
+            filenumber: encodeURIComponent(filenumber)
+          },
+          isArray: true
+        }
       });
 
-      let promise = detail.query().$promise;
-
-      // @todo I could add some audit logging here and capture the data returned with a .then()
+      let promise = detail.get().$promise;
 
       return promise;
     }
@@ -24,4 +45,4 @@ export function nameService($resource,server,port) {
   return _service;
 }
 
-nameService.$inject = ["$resource","jwa-config-serverIp","jwa-config-serverPort"];
+nameService.$inject = ["$resource","jwa-config-serverIp","jwa-config-serverPort","userService"];

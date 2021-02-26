@@ -1,0 +1,45 @@
+<div class="well well-sm">
+  <form class="form-horizontal" ng-submit="$ctrl.createUser()">
+    <div class="form-group">
+      <label class="control-label col-lg-2" for="firstName">First Name</label>
+      <div class="col-lg-10">
+        <input class="form-control" name="firstName" type="text" ng-model="$ctrl.info.firstName" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-lg-2" for="lastName">Last Name</label>
+      <div class="col-lg-10">
+        <input class="form-control" name="lastName" type="text" ng-model="$ctrl.info.lastName" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-lg-2" for="userName">Username</label>
+      <div class="col-lg-10">
+        <input class="form-control" name="userName" type="text" ng-model="$ctrl.info.username" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-lg-2" for="password">Password</label>
+      <div class="col-lg-10">
+        <input class="form-control" name="password" type="password" ng-model="$ctrl.info.password" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-lg-2" for="role">Role</label>
+      <div class="col-lg-10">
+        <select class="form-control" ng-options="role as role.name for role in $ctrl.roles track by role._id" ng-model="$ctrl.info.role"></select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-lg-2" for="agency">Agency</label>
+      <div class="col-lg-10">
+        <select class="form-control" name="agency" ng-options="agency as agency.name for agency in $ctrl.agencies track by agency._id" ng-model="$ctrl.info.agency"></select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
