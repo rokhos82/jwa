@@ -112,10 +112,10 @@ exports.signin = (req,res) => {
 
     if(!user) {
       req.audit({
-        information: "Unable to retrieve a user of that name",
+        information: "User not found",
         outcome: false
       });
-      return res.status(404).send({ message: "User Not Found." });
+      return res.status(401).send({ message: "Invalid username or password." });
     }
 
     let passwordIsValid = bcrypt.compareSync(
@@ -130,7 +130,7 @@ exports.signin = (req,res) => {
       });
       return res.status(401).send({
         accessToken: null,
-        message: "Invalid Password!"
+        message: "Invalid username or password."
       });
     }
 

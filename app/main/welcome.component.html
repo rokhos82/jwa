@@ -1,4 +1,4 @@
-<div class="jumbotron">
-  <p class="lead">Welcome to the Justice Web App.</p>
-  <p class="text-warning">This program is currently under development and will be buggy.</p>
+<div class="well well-lg">
+  <p class="lead text-primary">{{$ctrl.leadIn}}</p>
+  <p ng-repeat="msg in $ctrl.motd">{{msg}}</p>
 </div>

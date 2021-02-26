@@ -23,13 +23,13 @@ export function userService($resource,server,port,$state,appState) {
       let userState = appState.getUserState();
       _service.saveUser(response.username);
       _service.saveToken(response.accessToken);
-      
+
       userState.authenticated = true;
       userState.isUser = _.includes(response.roles,"ROLE_USER");
       userState.isManager = _.includes(response.roles,"ROLE_MANAGER");
       userState.isAdmin = _.includes(response.roles,"ROLE_ADMIN");
       userState.username = response.username;
-    });
+    }).catch((err) => {});
 
     return promise;
   };

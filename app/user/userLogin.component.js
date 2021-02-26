@@ -8,6 +8,7 @@ class userLoginController {
     this.$scope = $scope;
     this.service = userService;
     this.$state = $state;
+    this.alerts = [];
   }
 
   $onInit() {
@@ -15,6 +16,7 @@ class userLoginController {
     this.password = "";
     this.authenticating = false;
     this.errorMessage = false;
+    this.alerts = [];
   }
 
   doUserLogin() {
@@ -28,7 +30,12 @@ class userLoginController {
     };
 
     const showError = (error) => {
-      console.error(error);
+      let message = error.data.message;
+      this.alerts.push({
+        type: "danger",
+        message: message
+      });
+      console.error(message);
     };
 
     this.service.authenticateUser(this.username,this.password)
@@ -37,6 +44,11 @@ class userLoginController {
       .finally(() => {
         this.authenticating = false;
       });
+  }
+
+  closeAlert(index) {
+    // Remove the alert from the array
+    this.alerts.splice(index,1);
   }
 }
 
