@@ -11,16 +11,11 @@ class nameDetailController {
   }
 
   $onInit() {
-    console.log(this.filenumber);
+    this.name = this.info[0].detail;
+    this.contacts = this.info[0].contacts;
+    this.cleanupDateTime();
 
-    this.nameService.getNameDetail(this.filenumber).then((result) => {
-      console.log('Detail',result);
-      this.name = result[0].detail;
-      this.contacts = result[0].contacts;
-      this.cleanupDateTime();
-    }).finally(() => {
-      this.loading = false;
-    });
+    this.loading = false;
   }
 
   cleanupDateTime() {
@@ -30,17 +25,9 @@ class nameDetailController {
 
 nameDetailController.$inject = ['$scope','nameService','$state','$transitions',"dateFilter","timeFilter"];
 
-/**
- * nameDetail state definition
- * @type {object}
- */
 export const nameDetail = {
-  /**
-   * The ui-router state binding information
-   * @type {object}
-   */
   bindings: {
-    filenumber: '<'
+    info: '<'
   },
   controller: nameDetailController,
   template: require('./nameDetail.component.html')

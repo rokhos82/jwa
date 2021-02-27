@@ -13,7 +13,7 @@
             <div class="form-group jwa-form-group-sm">
               <label class="control-label col-sm-1 text-right jwa-col-inline" for="fileNumber">File Number</label>
               <div class="col-sm-2 jwa-col-inline">
-                <input class="form-control" readonly="readonly" type="text" id="fileNumber" ng-model="$ctrl.name.fileNumber" />
+                <input class="form-control" readonly="readonly" type="text" id="fileNumber" ng-model="$ctrl.name.FileNumber" />
               </div>
               <label class="control-label col-sm-1 text-right jwa-col-inline" for="phone">Phone</label>
               <div class="col-sm-2 jwa-col-inline">
@@ -203,5 +203,15 @@
         </div>
       </div>
     </fieldset>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="panel panel-info">
+      <div class="panel-heading">Name Detail Debug Info</div>
+      <div class="panel-body">
+        <pre>{{$ctrl.name | json}}</pre>
+      </div>
+    </div>
   </div>
 </div>

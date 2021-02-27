@@ -29,16 +29,16 @@ export const nameDetailState = {
     'nameDetail@name': 'nameDetail'
   },
   resolve: {
-    filenumber: function($stateParams) {
-      return $stateParams.filenumber;
-    },
-    search: function($stateParams) {
-      console.log($stateParams);
-      return $stateParams.search;
-    }
+    info: NameDetailResolver
   },
   params: {
     search: null
   },
   data: {}
 };
+
+NameDetailResolver.$inject = ["$stateParams","nameService"];
+function NameDetailResolver($stateParams,nameService) {
+  let filenumber = $stateParams.filenumber;
+  return nameService.getNameDetail(filenumber);
+}
