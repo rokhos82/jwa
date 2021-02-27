@@ -2,6 +2,8 @@ class otherInfoController {
   constructor($scope) {
     this.$scope = $scope;
   }
+
+  $onInit() {}
 }
 
 otherInfoController.$inject = ["$scope"];

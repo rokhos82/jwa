@@ -57,6 +57,6 @@ export const auditListState = {
 eventsResolver.$inject = ["auditService"];
 function eventsResolver(auditService) {
   return auditService.getEvents().then((events) => {
-    return events
+    return events;
   });
 }
