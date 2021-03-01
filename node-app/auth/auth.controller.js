@@ -107,7 +107,7 @@ exports.signin = (req,res) => {
       req.audit({
         information: "Unable to retrieve a user of that name"
       });
-      return res.status(500).send({ message: err });;
+      return res.status(500).send({ message: err });
     }
 
     if(!user) {

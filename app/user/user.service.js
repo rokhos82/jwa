@@ -29,6 +29,7 @@ export function userService($resource,server,port,$state,appState) {
       userState.isManager = _.includes(response.roles,"ROLE_MANAGER");
       userState.isAdmin = _.includes(response.roles,"ROLE_ADMIN");
       userState.username = response.username;
+      userState.userId = response.id;
     }).catch((err) => {});
 
     return promise;

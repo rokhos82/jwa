@@ -134,6 +134,29 @@ export function adminService($resource,server,port,userService) {
     return promise;
   };
 
+  _service.resetPassword = (userId,authPassword,newPassword) => {
+    let token = userService.getToken();
+    let username = userService.getUser();
+
+    let reset = $resource(`http://${server}:${port}/api/admin/password`,{},{
+      post: {
+        method: "POST",
+        headers: {
+          "x-access-token": token,
+          "username": username
+        }
+      }
+    });
+
+    let promise = reset.post({},{
+      "userId": userId,
+      "authPassword": authPassword,
+      "newPassword": newPassword
+    }).$promise;
+
+    return promise;
+  };
+
   return _service;
 }
 
