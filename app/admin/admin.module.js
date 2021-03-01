@@ -10,6 +10,8 @@ import {adminUsersEdit} from "./users/adminUsersEdit.component.js";
 
 import {auditList} from "./audit/auditList.component.js";
 
+import {passwordReset} from "./password/passwordReset.component.js";
+
 import {adminService} from "./admin.service.js";
 import {auditService} from "./audit/audit.service.js";
 
@@ -41,6 +43,8 @@ ADMIN_MODULE.component("adminUsersCreate",adminUsersCreate);
 ADMIN_MODULE.component("adminUsersEdit",adminUsersEdit);
 
 ADMIN_MODULE.component("auditList",auditList);
+
+ADMIN_MODULE.component("passwordReset",passwordReset);
 
 ADMIN_MODULE.factory("adminService",adminService);
 ADMIN_MODULE.factory("auditService",auditService);

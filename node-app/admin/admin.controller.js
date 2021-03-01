@@ -144,14 +144,56 @@ exports.deleteUser = (req,res) => {
 exports.resetPassword = (req,res) => {
   console.log("Entering password reset controller...");
 
-  let password = bcrypt.hashSync(req.body.password,8);
+  let authPassword = req.body.authPassword;
+  let username = req.headers.username;
 
-  User.findByIdAndUpdate(req.body._id,{password: password},(err) => {
+  // Find the logged in user and authenticate them
+  User.findOne({
+    username: username
+  }).exec((err,user) => {
     if(err) {
+      // Something went wrong.
+      req.audit({
+        information: "Server error"
+      });
       console.log(err);
-      res.status(500).send(err);
+      return res.status(500).send({ message: "Server error" });
     }
 
-    res.status(200).send("Password reset successful");
+    if(!user) {
+      req.audit({
+        information: "User not found",
+        outcome: false
+      });
+      console.log("Unable to find user");
+      return res.status(401).send({ message: "Invalid username or password" });
+    }
+
+    let passwordIsValid = bcrypt.compareSync(authPassword,user.password);
+
+    if(!passwordIsValid) {
+      req.audit({
+        information: "Invalid password entered",
+        outcome: false
+      });
+      console.log("Invalid password entered");
+      return res.status(401).send({
+        accessToken: null,
+        message: "Invalid username or password"
+      });
+    }
+
+    let newPassword = bcrypt.hashSync(req.body.newPassword,8);
+    let userId = req.body.userId;
+
+    User.findByIdAndUpdate(userId,{ password: newPassword },(err) => {
+      if(err) {
+        // Something went wrong
+        console.log(err);
+        res.status(500).send({ message: "Server Error" });
+      }
+
+      res.status(200).send({ message: "Password reset successful" });
+    });
   });
 };

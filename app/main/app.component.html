@@ -16,6 +16,7 @@
             <li uib-dropdown ng-show="$ctrl.userState.authenticated">
               <a uib-dropdown-toggle href="#">{{$ctrl.userState.username}}<span class="caret"></span></a>
               <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                <li class="menuitem"><a ng-click="$ctrl.resetPassword()" href="#">Reset Password</a></li>
                 <li class="menuitem"><a ui-sref="userLogout">Logout</a></li>
               </ul>
             </li>
@@ -25,6 +26,7 @@
       </div>
   </nav>
   <div class="container buffer">
+    <div uib-alert ng-repeat="alert in $ctrl.alerts track by index" ng-class="'alert-' + (alert.type || 'warning')" close="$ctrl.closeAlert($index)">{{alert.message}}</div>
     <ui-view></ui-view>
     <div class="row">
       <div class="col-lg-12">
