@@ -18,6 +18,8 @@ class appController {
       this.date = new Date();
     },1000);
 
+    this.alerts = [];
+
     this.greeting = "Justice Web App v" + APP_VERSION;
   }
 
@@ -31,6 +33,7 @@ class appController {
 
   resetPassword() {
     console.log("Resetting password");
+
     let instance = this.$uibModal.open({
       animate: false,
       component: "passwordReset",
@@ -39,6 +42,16 @@ class appController {
         userId: userIdResolver
       }
     });
+
+    instance.result.then((result) => {
+      this.alerts.push(result);
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+
+  closeAlert(index) {
+    this.alerts.splice(index,1);
   }
 };
 
@@ -54,5 +67,6 @@ export const app = {
 ////////////////////////////////////////////////////////////////////////////////
 userIdResolver.$inject = ["jwa-app-state-service"];
 function userIdResolver(stateService) {
+  // Get the user id from the user state.
   return stateService.getUserState().userId;
 }

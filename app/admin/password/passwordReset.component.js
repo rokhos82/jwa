@@ -23,6 +23,8 @@ class passwordResetController {
     else {
       console.log("Password's don't match");
     }
+
+    this.modalInstance.close({ type: "success", message: "Password Reset Successfully" });
   }
 }
 
