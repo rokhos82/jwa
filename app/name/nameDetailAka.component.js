@@ -8,7 +8,8 @@ akaController.$inject = ["$scope"];
 
 export const nameDetailAka = {
   bindings: {
-    name: "<"
+    name: "<",
+    aliases: "<"
   },
   controller: akaController,
   template: require('./nameDetailAka.component.html')

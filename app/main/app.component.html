@@ -14,7 +14,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a>{{$ctrl.date | date:'yyyy-MM-dd HH:mm:ss':'-0700'}}</a></li>
             <li uib-dropdown ng-show="$ctrl.userState.authenticated">
-              <a uib-dropdown-toggle href="#">{{$ctrl.userState.username}}<span class="caret"></span></a>
+              <a uib-dropdown-toggle href="#">{{$ctrl.userState.username}} <span class="caret"></span></a>
               <ul class="dropdown-menu" uib-dropdown-menu role="menu">
                 <li class="menuitem"><a ng-click="$ctrl.resetPassword()" href="#">Reset Password</a></li>
                 <li class="menuitem"><a ui-sref="userLogout">Logout</a></li>

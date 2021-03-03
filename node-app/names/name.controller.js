@@ -29,6 +29,13 @@ exports.nameDetail = (req,res) => {
 
     let queryString = `select * from Name where FileNumber = ${filenumber}; select * from vNameContacts where FileNumber=${filenumber};`;
 
+    // Need to add logic for handling if a record is an alias.  AKAYN='Y'
+
+    // Otherwise, search for aliases of this name record
+    queryString += ` select FileNumber,LastName,First,Addr_Concat,SSN from Name where RelatedFileNumber LIKE ${filenumber};`;
+
+    console.log("Query: ",queryString);
+
     request.query(queryString,function(err,result) {
       // Check for an error
       if(err) {
@@ -48,7 +55,8 @@ exports.nameDetail = (req,res) => {
         });
         let r = [{
           detail: result.recordsets[0][0],
-          contacts: result.recordsets[1]
+          contacts: result.recordsets[1],
+          aliases: result.recordsets[2]
         }];
         req.cache.set(req.originalUrl,JSON.stringify(r),'EX',req.cacheExpire,() => {
           console.log("Information saved to cache");
@@ -112,7 +120,7 @@ exports.nameFetch = (req,res) => {
  * Name search controller
  */
 exports.nameSearch = (req,res) => {
-  console.log(req.body);
+  console.log("Name Search Controller...");
   let params = req.body;
   const db = req.db;
 

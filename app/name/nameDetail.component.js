@@ -13,6 +13,7 @@ class nameDetailController {
   $onInit() {
     this.name = this.info[0].detail;
     this.contacts = this.info[0].contacts;
+    this.aliases = this.info[0].aliases;
     this.cleanupDateTime();
 
     this.loading = false;

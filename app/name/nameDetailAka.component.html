@@ -10,6 +10,7 @@
           <div class="form-group">
             <label class="control-label" for="realFileNumber">REAL Name File Number:</label>
             <input class="form-control" readonly type="text" id="realFileNumber" ng-model="$ctrl.name.RelatedFileNumber" />
+            <a ui-sref="nameDetail({filenumber:realFileNumber})">Go to REAL name file</a>
           </div>
         </div>
       </div>
@@ -21,6 +22,12 @@
             <tr><td>File#</td><td>Name</td><td>Address</td><td>SSN</td></tr>
           </thead>
           <tbody>
+            <tr ng-repeat="alias in $ctrl.aliases">
+              <td><a ui-sref="nameDetail({filenumber:alias.FileNumber})">{{alias.FileNumber}}</a></td>
+              <td>{{alias.LastName}}, {{alias.First}}</td>
+              <td>{{alias.Addr_Concat}}</td>
+              <td>{{alias.SSN}}</td>
+            </tr>
           </tbody>
         </table>
       </div>
