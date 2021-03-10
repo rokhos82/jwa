@@ -167,7 +167,7 @@
       <div class="row">
         <div class="col-lg-12">
           <uib-tabset active="active">
-            <uib-tab index="0" heading="Contacts">
+            <uib-tab index="0" heading="Contacts ({{$ctrl.contacts.length}})">
               <!-- Contacts Pane -->
               <name-detail-contacts contacts="$ctrl.contacts"></name-detail-contacts>
             </uib-tab>
@@ -191,11 +191,11 @@
               <!-- Intel Pane -->
               <name-detail-intel name="$ctrl.name"></name-detail-intel>
             </uib-tab>
-            <uib-tab index="6" heading="Comments">
+            <uib-tab index="6" heading="Comments{{$ctrl.name.Comments.length > 0 ? ' *' : ''}}">
               <!-- Comments Pane -->
               <name-detail-comments name="$ctrl.name"></name-detail-comments>
             </uib-tab>
-            <uib-tab index="7" heading="Associates">
+            <uib-tab index="7" heading="Associates{{$ctrl.associates.length > 0 ? ' *' : ''}}">
               <!-- Associates Pane -->
               <name-detail-associates associates="$ctrl.associates"></name-detail-associates>
             </uib-tab>
@@ -208,9 +208,18 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="panel panel-info">
-      <div class="panel-heading">Name Detail Debug Info</div>
-      <div class="panel-body">
-        <pre>{{$ctrl.name | json}}</pre>
+      <div class="panel-heading" ng-click="showDebug = !showDebug">Name Detail Debug Info</div>
+      <div class="panel-body" ng-if="showDebug">
+        <fieldset>
+          <legend>Name</legend>
+          <pre>{{$ctrl.name | json}}</pre>
+        </fieldset>
+        <fieldset>
+          <legend>Contacts</legend>
+          <pre>{{$ctrl.contacts | json}}</pre>
+        </fieldset>
+        <pre>{{$ctrl.aliases | json}}</pre>
+        <pre>{{$ctrl.associates | json}}</pre>
       </div>
     </div>
   </div>

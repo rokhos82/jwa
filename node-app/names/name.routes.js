@@ -17,4 +17,5 @@ module.exports = (app,db) => {
   app.get("/names/detail/:filenumber",[authJwt.verifyToken,db.setup],controller.nameDetail);
   app.post("/names/fetch",[authJwt.verifyToken,db.setup],controller.nameFetch);
   //app.post("/names/search",[authJwt.verifyToken,db.setup],controller.nameSearch);
+  //app.get("/names/associates/:filenumber",[authJwt.verifyToken,db.setup],controller.nameAssociates);
 };

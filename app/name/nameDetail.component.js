@@ -14,13 +14,20 @@ class nameDetailController {
     this.name = this.info[0].detail;
     this.contacts = this.info[0].contacts;
     this.aliases = this.info[0].aliases;
+    this.associates = this.info[0].associates;
     this.cleanupDateTime();
 
     this.loading = false;
+
+    this.$scope.showDebug = false;
   }
 
   cleanupDateTime() {
     this.name.DOB = this.dateFilter(this.name.DOB);
+    _.forEach(this.associates,(associate) => {
+      associate.DOB = this.dateFilter(associate.DOB);
+      associate.Date = this.dateFilter(associate.Date);
+    });
   }
 }
 

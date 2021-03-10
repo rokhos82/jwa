@@ -15,7 +15,18 @@
               <th>Location</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            <tr ng-repeat="associate in $ctrl.associates track by $index">
+              <td>{{associate.FileNumber}}</td>
+              <td>{{associate.LastName + ", " + associate.FirstName + " " + associate.MiddleName}}</td>
+              <td>{{associate.DOB}}</td>
+              <td>{{associate.Incident}}</td>
+              <td>{{associate.Date}}</td>
+              <td>{{associate.Involvement}}</td>
+              <td>{{associate.OffenseDesc}}</td>
+              <td>{{associate.Location}}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>

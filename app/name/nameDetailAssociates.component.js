@@ -2,6 +2,8 @@ class associatesController {
   constructor($scope) {
     this.$scope = $scope;
   }
+
+  $onInit() {}
 }
 
 associatesController.$inject = ["$scope"];

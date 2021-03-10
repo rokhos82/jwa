@@ -34,6 +34,8 @@ exports.nameDetail = (req,res) => {
     // Otherwise, search for aliases of this name record
     queryString += ` select FileNumber,LastName,First,Addr_Concat,SSN from Name where RelatedFileNumber LIKE ${filenumber};`;
 
+    queryString += ` SELECT n1.FileNumber as FileNumber,c1.Incident as Incident,n1.DOB as DOB,n1.First as FirstName,n1.Middle as MiddleName,n1.LastName as LastName,c1.ContactDate as Date,c1.Involvement as Involvement,c1.OffenseDesc as OffenseDesc,c1.Loc_Concat as Location FROM Name as n1 INNER JOIN Contacts as c1 ON n1.FileNumber = c1.FileNumber WHERE n1.FileNumber <> ${filenumber} AND c1.Incident <> '' AND c1.Incident IN (SELECT Incident FROM Name as n INNER JOIN Contacts as c ON n.FileNumber = c.FileNumber WHERE n.FileNumber = ${filenumber}) ORDER BY c1.Incident;`;
+
     console.log("Query: ",queryString);
 
     request.query(queryString,function(err,result) {
@@ -56,7 +58,8 @@ exports.nameDetail = (req,res) => {
         let r = [{
           detail: result.recordsets[0][0],
           contacts: result.recordsets[1],
-          aliases: result.recordsets[2]
+          aliases: result.recordsets[2],
+          associates: result.recordsets[3]
         }];
         req.cache.set(req.originalUrl,JSON.stringify(r),'EX',req.cacheExpire,() => {
           console.log("Information saved to cache");
@@ -158,4 +161,29 @@ exports.nameSearch = (req,res) => {
       });
     });
   }
+};
+
+/**
+ * Name File Associates Controller
+ *  This controller will get name files associated with the
+ *  incidents associated with the specified name FileNumber.
+ */
+exports.nameAssociates = (req,res) => {
+  console.log("Name Associates Controller...");
+
+  let incidents = [];
+  let associates = [];
+
+  // Step 0 - Get the FileNumber from the GET params.
+
+  // Step 1 - Get the incidents associated with the supplied FileNumber
+
+  // Step 2 - For each incident, get the list of FileNumbers associated with
+  // that Incident
+
+  // Step 3 - ????
+
+  // Step 4 - Profit
+
+  // Step 5 - Compile results and send in response
 };
