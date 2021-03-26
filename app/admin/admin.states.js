@@ -60,3 +60,10 @@ function eventsResolver(auditService) {
     return events;
   });
 }
+
+export const testState = {
+  parent: "adminRoot",
+  name: "test",
+  url: "/test",
+  component: "testComponent"
+};

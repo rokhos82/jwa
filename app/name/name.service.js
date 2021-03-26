@@ -11,7 +11,7 @@ export function nameService($resource,server,port,userService) {
             "x-access-token": token,
             "username": username
           },
-          isArray:false
+          isArray: false
         }
       });
 

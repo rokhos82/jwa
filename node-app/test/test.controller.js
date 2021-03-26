@@ -1,6 +1,13 @@
 exports.allAccess = (req, res) => {
   console.log("All Access");
-  res.status(200).send("Public Content.");
+
+  if(!req.session.views) {
+    req.session.views = {};
+  }
+
+  req.session.views['/test/all'] = (req.session.views['/test/all'] || 0) + 1;
+
+  res.status(200).send(`Public Content. Viewed ${req.session.views['/test/all']} times.`);
 };
 
 exports.userAccess = (req, res) => {

@@ -11,4 +11,5 @@ import ngResource from 'angular-resource';
 import uiBootstrap from "angular-ui-bootstrap";
 import ngTouch from "angular-touch";
 import ngAnimate from "angular-animate";
+import ngCookies from "angular-cookies";
 //import ocLazyLoad from 'oclazyload';
