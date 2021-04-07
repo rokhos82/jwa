@@ -7,6 +7,8 @@ import {incidentDetailContacts} from "./incidentDetailContacts.component.js";
 import {incidentDetailProperty} from "./incidentDetailProperty.component.js";
 import {incidentDetailVehicle} from "./incidentDetailVehicle.component.js";
 import {incidentDetailNarratives} from "./incidentDetailNarratives.component.js";
+import {incidentDetailBlotter} from "./incidentDetailBlotter.component.js";
+import {incidentDetailScratchPad} from "./incidentDetailScratchPad.component.js";
 
 import {narrativeDetail} from "./narrativeDetail.component.js";
 
@@ -42,6 +44,8 @@ INCIDENT_MODULE.component('incidentDetailContacts',incidentDetailContacts);
 INCIDENT_MODULE.component('incidentDetailProperty',incidentDetailProperty);
 INCIDENT_MODULE.component('incidentDetailVehicle',incidentDetailVehicle);
 INCIDENT_MODULE.component('incidentDetailNarratives',incidentDetailNarratives);
+INCIDENT_MODULE.component('incidentDetailBlotter',incidentDetailBlotter);
+INCIDENT_MODULE.component('incidentDetailScratchPad',incidentDetailScratchPad);
 
 INCIDENT_MODULE.component('narrativeDetail',narrativeDetail);
 

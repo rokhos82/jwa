@@ -18,7 +18,8 @@ exports.incidentDetail = (req,res) => {
     let queryString = `select * from vIncidents where Incident = ${incidentnumber};
 select * from vIncidentContacts_CCIT where Incident = ${incidentnumber} order by ContactsKey;
 select * from vIncidentProperty where Incident = ${incidentnumber};
-select IncidentNumber,Date,Time,ID,Narrative1,NarrativeKey from Narrative134 where IncidentNumber = ${incidentnumber} order by NarrativeKey;`;
+select IncidentNumber,Date,Time,ID,Narrative1,NarrativeKey from Narrative134 where IncidentNumber = ${incidentnumber} order by NarrativeKey;
+select ScratchPad from Incident where Incident = ${incidentnumber}`;
 
     request.query(queryString,function(err,result) {
       if(err) {
@@ -37,7 +38,8 @@ select IncidentNumber,Date,Time,ID,Narrative1,NarrativeKey from Narrative134 whe
           detail: result.recordsets[0][0],
           contacts: result.recordsets[1],
           property: result.recordsets[2],
-          narratives: result.recordsets[3]
+          narratives: result.recordsets[3],
+          scratchpad: result.recordsets[4]
         }];
         req.cache.set(req.originalUrl,JSON.stringify(r),'EX',req.cacheExpire,() => {
           console.log("Information saved to cache");

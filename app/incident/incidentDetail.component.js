@@ -16,6 +16,7 @@ class incidentDetailController {
       this.contacts = result[0].contacts;
       this.property = result[0].property;
       this.narratives = result[0].narratives;
+      this.scratchpad = result[0].scratchpad[0].ScratchPad;
       this.cleanupDateTime();
     }).finally(() => {
       this.loading = false;

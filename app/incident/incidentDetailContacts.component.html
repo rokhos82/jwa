@@ -1,84 +1,86 @@
 <div class="row">
-  <fieldset>
-    <legend>{{$ctrl.contacts.length}} Contacts</legend>
-    <!-- Need a table for the contacts returned here -->
-    <div class="table-responsive">
-      <table class="table table-condensed table-bordered table-striped table-hover">
-        <thead>
-          <tr>
-            <th class="col-sm-1">File</th>
-            <th class="col-sm-2">Last Name</th>
-            <th class="col-sm-1">First</th>
-            <th class="col-sm-1">M</th>
-            <th class="col-sm-1">DOB</th>
-            <th class="col-sm-1">Inv</th>
-            <th class="col-sm-1">Date</th>
-            <th class="col-sm-1">Offense</th>
-            <th class="col-sm-1">Arrest Date</th>
-            <th class="col-sm-1">Cit/ Warrant</th>
-            <!-- @todo Need to add PCN -->
-            <th class="col-sm-1">Charge</th>
-            <th class="col-sm-1">Charge Desc</th>
-            <!-- @todo Need to add Addr Apt -->
-            <th class="col-sm-1">Addr City</th>
-            <!-- @todo Need to add Addr Zip -->
-            <th class="col-sm-2">Address</th>
-            <th class="col-sm-1">Phone</th>
-            <th class="col-sm-1">Alt Phone</th>
-            <th class="col-sm-1">OLN</th>
-            <th class="col-sm-1">OLN State</th>
-            <th class="col-sm-1">SSN</th>
-            <th class="col-sm-1">Eth</th>
-            <th class="col-sm-1">Race</th>
-            <th class="col-sm-1">Sex</th>
-            <!-- @todo Need to add EyeColor -->
-            <!-- @todo Need to add HairColor -->
-            <th class="col-sm-1">Wt</th>
-            <th class="col-sm-1">Ht</th>
-            <th class="col-sm-1">Caution</th>
-            <!-- @todo Need to add ContactKey -->
-            <!-- @todo Need to add ContactFileNumber -->
-            <!-- @todo Need to add ContactIncidentNumber -->
-            <th class="col-sm-2">Contact Comments</th>
-            <th class="col-sm-1">Felony</th>
-            <th class="col-sm-1">ID</th>
-            <th class="col-sm-1">Disclose</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="contact in $ctrl.contacts">
-            <td><a ui-sref="nameDetail({filenumber:contact.FileNumber})">{{contact.FileNumber}}</a></td>
-            <td>{{contact.LastName}}</td>
-            <td>{{contact.FirstName}}</td>
-            <td>{{contact.Middle}}</td>
-            <td>{{contact.DOB | jwaDate}}</td>
-            <td>{{contact.Involvement}}</td>
-            <td>{{contact.ContactDate | jwaDate}}</td>
-            <td>{{contact.OffenseCode}}  {{contact.OffenseDesc}}</td>
-            <td>{{contact.ArrestDate | jwaDate}}</td>
-            <td>{{contact.CitationNumber}}</td>
-            <td>{{contact.Charge}}</td>
-            <td>{{contact.ChargeDesc}}</td>
-            <td>{{contact.Addr_City}}</td><!-- Does this need to be contact.Contact_LocationConcat? -->
-            <td>{{contact.Addr_Concat}}</td>
-            <td>{{contact.Phone}}</td>
-            <td>{{contact.AltPhone}}</td>
-            <td>{{contact.DriversLicense}}</td>
-            <td>{{contact.DriversLicenseState}}</td>
-            <td>{{contact.SSN}}</td>
-            <td>{{contact.Eth}}</td>
-            <td>{{contact.Race}}</td>
-            <td>{{contact.Sex}}</td>
-            <td>{{contact.Wt}}</td>
-            <td>{{contact.Ht}}</td>
-            <td>{{contact.OfficerSafety}}</td>
-            <td>{{contact.Contact_Comment}}</td>
-            <td>{{contact.Felony}}</td>
-            <td tooltip-popup-close-delay="500" tooltip-popup-delay="200" tooltip-placement="top" uib-tooltip="{{contact.OfficerName}}">{{contact.OfficerID}}</td>
-            <td>{{contact.Disclose}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </fieldset>
+  <div class="col-lg-12">
+    <fieldset>
+      <legend>{{$ctrl.contacts.length}} Contacts</legend>
+      <!-- Need a table for the contacts returned here -->
+      <div class="table-responsive">
+        <table class="table table-condensed table-bordered table-striped table-hover">
+          <thead>
+            <tr>
+              <th class="col-sm-1">File</th>
+              <th class="col-sm-2">Last Name</th>
+              <th class="col-sm-1">First</th>
+              <th class="col-sm-1">M</th>
+              <th class="col-sm-1">DOB</th>
+              <th class="col-sm-1">Inv</th>
+              <th class="col-sm-1">Date</th>
+              <th class="col-sm-1">Offense</th>
+              <th class="col-sm-1">Arrest Date</th>
+              <th class="col-sm-1">Cit/ Warrant</th>
+              <!-- @todo Need to add PCN -->
+              <th class="col-sm-1">Charge</th>
+              <th class="col-sm-1">Charge Desc</th>
+              <!-- @todo Need to add Addr Apt -->
+              <th class="col-sm-1">Addr City</th>
+              <!-- @todo Need to add Addr Zip -->
+              <th class="col-sm-2">Address</th>
+              <th class="col-sm-1">Phone</th>
+              <th class="col-sm-1">Alt Phone</th>
+              <th class="col-sm-1">OLN</th>
+              <th class="col-sm-1">OLN State</th>
+              <th class="col-sm-1">SSN</th>
+              <th class="col-sm-1">Eth</th>
+              <th class="col-sm-1">Race</th>
+              <th class="col-sm-1">Sex</th>
+              <!-- @todo Need to add EyeColor -->
+              <!-- @todo Need to add HairColor -->
+              <th class="col-sm-1">Wt</th>
+              <th class="col-sm-1">Ht</th>
+              <th class="col-sm-1">Caution</th>
+              <!-- @todo Need to add ContactKey -->
+              <!-- @todo Need to add ContactFileNumber -->
+              <!-- @todo Need to add ContactIncidentNumber -->
+              <th class="col-sm-2">Contact Comments</th>
+              <th class="col-sm-1">Felony</th>
+              <th class="col-sm-1">ID</th>
+              <th class="col-sm-1">Disclose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="contact in $ctrl.contacts">
+              <td><a ui-sref="nameDetail({filenumber:contact.FileNumber})">{{contact.FileNumber}}</a></td>
+              <td>{{contact.LastName}}</td>
+              <td>{{contact.FirstName}}</td>
+              <td>{{contact.Middle}}</td>
+              <td>{{contact.DOB | jwaDate}}</td>
+              <td>{{contact.Involvement}}</td>
+              <td>{{contact.ContactDate | jwaDate}}</td>
+              <td>{{contact.OffenseCode}}  {{contact.OffenseDesc}}</td>
+              <td>{{contact.ArrestDate | jwaDate}}</td>
+              <td>{{contact.CitationNumber}}</td>
+              <td>{{contact.Charge}}</td>
+              <td>{{contact.ChargeDesc}}</td>
+              <td>{{contact.Addr_City}}</td><!-- Does this need to be contact.Contact_LocationConcat? -->
+              <td>{{contact.Addr_Concat}}</td>
+              <td>{{contact.Phone}}</td>
+              <td>{{contact.AltPhone}}</td>
+              <td>{{contact.DriversLicense}}</td>
+              <td>{{contact.DriversLicenseState}}</td>
+              <td>{{contact.SSN}}</td>
+              <td>{{contact.Eth}}</td>
+              <td>{{contact.Race}}</td>
+              <td>{{contact.Sex}}</td>
+              <td>{{contact.Wt}}</td>
+              <td>{{contact.Ht}}</td>
+              <td>{{contact.OfficerSafety}}</td>
+              <td>{{contact.Contact_Comment}}</td>
+              <td>{{contact.Felony}}</td>
+              <td tooltip-popup-close-delay="500" tooltip-popup-delay="200" tooltip-placement="top" uib-tooltip="{{contact.OfficerName}}">{{contact.OfficerID}}</td>
+              <td>{{contact.Disclose}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </fieldset>
+  </div>
 </div>
