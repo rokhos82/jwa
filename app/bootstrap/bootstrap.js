@@ -19,3 +19,4 @@ import "../user/user.module.js";
 import "../admin/admin.module.js";
 import "../name/name.module.js";
 import "../incident/incident.module.js";
+import "../vehicle/vehicle.module.js";
