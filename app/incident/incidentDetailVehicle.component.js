@@ -12,7 +12,9 @@ class incidentDetailVehicleController {
 incidentDetailVehicleController.$inject = ["$scope"];
 
 export const incidentDetailVehicle = {
-  bindings: {},
+  bindings: {
+    vehicles: "<"
+  },
   controller: incidentDetailVehicleController,
   template: require('./incidentDetailVehicle.component.html')
 };

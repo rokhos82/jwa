@@ -19,7 +19,8 @@ exports.incidentDetail = (req,res) => {
 select * from vIncidentContacts_CCIT where Incident = ${incidentnumber} order by ContactsKey;
 select * from vIncidentProperty where Incident = ${incidentnumber};
 select IncidentNumber,Date,Time,ID,Narrative1,NarrativeKey from Narrative134 where IncidentNumber = ${incidentnumber} order by NarrativeKey;
-select ScratchPad from Incident where Incident = ${incidentnumber}`;
+select ScratchPad from Incident where Incident = ${incidentnumber};
+select * from Vehicles where IncidentNumber = ${incidentnumber};`;
 
     request.query(queryString,function(err,result) {
       if(err) {
@@ -39,7 +40,8 @@ select ScratchPad from Incident where Incident = ${incidentnumber}`;
           contacts: result.recordsets[1],
           property: result.recordsets[2],
           narratives: result.recordsets[3],
-          scratchpad: result.recordsets[4]
+          scratchpad: result.recordsets[4],
+          vehicles: result.recordsets[5]
         }];
         req.cache.set(req.originalUrl,JSON.stringify(r),'EX',req.cacheExpire,() => {
           console.log("Information saved to cache");

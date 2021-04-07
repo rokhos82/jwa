@@ -17,6 +17,7 @@ class incidentDetailController {
       this.property = result[0].property;
       this.narratives = result[0].narratives;
       this.scratchpad = result[0].scratchpad[0].ScratchPad;
+      this.vehicles = result[0].vehicles;
       this.cleanupDateTime();
     }).finally(() => {
       this.loading = false;

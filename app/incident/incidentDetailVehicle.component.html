@@ -1,9 +1,53 @@
 <div class="row">
   <div class="col-lg-12">
-    <fieldset>
-      <legend>Vehicle</legend>
-      <!-- table for the property to be displayed goes here -->
-      <h1>This form is not finished yet!</h1>
-    </fieldset>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <td>Incident</td>
+            <td>File</td>
+            <td>Contact Date</td>
+            <td>Year</td>
+            <td>Make</td>
+            <td>Model</td>
+            <td>Style</td>
+            <td>Color</td>
+            <td>License</td>
+            <td>Lic State</td>
+            <td>Lic Year</td>
+            <td>ID</td>
+            <td>Involvement</td>
+            <td>Location</td>
+            <td>Comments</td>
+            <td>Towed By</td>
+            <td>Fee</td>
+            <td>Released</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="vehicle in $ctrl.vehicles track by $index">
+            <td>{{vehicle.IncidentNumber}}</td>
+            <td>{{vehicle.FileNumber}}</td>
+            <td>{{vehicle.ContactDate | jwaDate}}</td>
+            <td>{{vehicle.VehicleYear}}</td>
+            <td>{{vehicle.VehicleMake}}</td>
+            <td>{{vehicle.VehicleModel}}</td>
+            <td>{{vehicle.VehicleStyle}}</td>
+            <td>{{vehicle.VehicleColor}}</td>
+            <td>{{vehicle.TagNumber}}</td>
+            <td>{{vehicle.TagState}}</td>
+            <td>{{vehicle.TagYear}}</td>
+            <td>{{vehicle.ID}}</td>
+            <td>{{vehicle.VehInvolvement}}</td>
+            <td>{{vehicle.Location}}</td>
+            <td>{{vehicle.VIN}}</td>
+            <td>{{vehicle.Comments}}</td>
+            <td>{{vehicle.TowedBy}}</td>
+            <td>{{vehicle.Fee}}</td>
+            <td>{{vehicle.ReleaseDate}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
