@@ -136,7 +136,7 @@ exports.signin = (req,res) => {
 
     // Build the jwt and set the expiration time (currently 8 minutes for testing).
     let token = jwt.sign({ id: user.id },config.secret,{
-      expiresIn: 480 // 8 Hours
+      expiresIn: 1800 // 8 Hours
     });
 
     let authorities = [];
