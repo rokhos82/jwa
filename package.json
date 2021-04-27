@@ -35,7 +35,7 @@
     "mssql": "^6.3.1",
     "normalize.css": "^8.0.1",
     "oclazyload": "^1.1.0",
-    "redis": "^3.0.2",
+    "redis": "^3.1.1",
     "tsqlstring": "^1.0.1",
     "webpack": "^5.4.0",
     "webpack-cli": "^4.2.0"
