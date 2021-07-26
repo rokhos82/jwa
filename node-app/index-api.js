@@ -166,6 +166,6 @@ require("./audit/audit.routes.js")(app);
 
 // Start the app listening on port 8001
 // @TODO - Configure environment variables for port and bind address
-app.listen(8001,"0.0.0.0",() => {
+app.listen(8082,"0.0.0.0",() => {
   console.log(`JWA API listening on port 8001`);
 });

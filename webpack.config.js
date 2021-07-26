@@ -16,8 +16,8 @@ module.exports = {
       template: './app/layout/index.html'
     }),
     new webpack.DefinePlugin({
-      'SERVER_IP': `'ubuntu2004.wsl'`,
-      'SERVER_PORT': `'8001'`,
+      'SERVER_IP': `'localhost'`,
+      'SERVER_PORT': `'8082'`,
       'APP_VERSION': `"${package.version}"`
     })
   ],

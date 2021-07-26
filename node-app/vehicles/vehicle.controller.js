@@ -28,7 +28,7 @@ function escapeParams(params) {
 /**
  * Vehicle Search Controller
  */
-exports.vehicleFeath = (req,res) => {
+exports.vehicleFecth = (req,res) => {
   console.log("Vehicle Search Controller");
   // Escape all of the search parameters sent in the API call.
   let params = escapeParams(req.body.params);

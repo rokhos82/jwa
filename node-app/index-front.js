@@ -24,6 +24,6 @@ app.use(express.static(staticPath));
 
 // Start the app listening on port 8000
 // @TODO - Configure environment variables for port and bind address
-app.listen(8000,"0.0.0.0",() => {
+app.listen(8081,"0.0.0.0",() => {
   console.log("JWA static listening on port 8000!");
 });
