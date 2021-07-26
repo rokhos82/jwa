@@ -160,6 +160,7 @@ require("./cache/cache.index.js")(app);
 require("./admin/admin.routes.js")(app);
 require("./names/name.routes.js")(app,dbWare);
 require("./incidents/incident.routes.js")(app,dbWare);
+require("./vehicles/vehicle.routes.js")(app,dbWare);
 require("./test/test.routes.js")(app);
 require("./audit/audit.routes.js")(app);
 
