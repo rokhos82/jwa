@@ -5,6 +5,7 @@ const authJwt = require("../authJwt.js");
 const controller = require("./vehicle.controller.js");
 
 module.exports = (app,db) => {
+  console.info(`Setting up vehicle routes`);
   app.use((req,res,next) => {
     res.header(
       "Access-Control-Allow-Headers",
@@ -13,5 +14,5 @@ module.exports = (app,db) => {
     next();
   });
 
-  app.get("/vehicles/fetch",[db.setup],controller.vehicleFecth);
+  app.post("/vehicles/fetch",[authJwt.verifyToken,db.setup],controller.vehicleFecth);
 };

@@ -5,6 +5,7 @@ const authJwt = require("../authJwt.js");
 const controller = require("./name.controller.js");
 
 module.exports = (app,db) => {
+  console.info(`Setting up name routes`);
   app.use((req,res,next) => {
     res.header(
       "Access-Control-Allow-Headers",

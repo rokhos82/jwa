@@ -165,8 +165,8 @@ let staticPath = path.join(__dirname,"../dist");
 console.log("Serving static path:",staticPath);
 app.use(express.static(staticPath));
 
-app.listen(8000,"0.0.0.0",() => {
-  console.log('JWA listening on port 8000!');
+app.listen(8081,"0.0.0.0",() => {
+  console.log('JWA listening on port 8081!');
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -182,10 +182,11 @@ require("./auth/auth.routes.js")(appApi);
 require("./cache/cache.index.js")(appApi);
 require("./admin/admin.routes.js")(appApi);
 require("./names/name.routes.js")(appApi,dbWare);
+require("./vehicles/vehicle.routes.js")(appApi,dbWare);
 require("./incidents/incident.routes.js")(appApi,dbWare);
 require("./test/test.routes.js")(appApi);
 require("./audit/audit.routes.js")(appApi);
 
-appApi.listen(8001,"0.0.0.0",() => {
-  console.log(`Listening on port 8001`);
+appApi.listen(8082,"0.0.0.0",() => {
+  console.log(`Listening on port 8082`);
 });

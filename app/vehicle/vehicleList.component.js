@@ -4,12 +4,53 @@
  * @desc Search query return list
  */
 class vehicleListController {
-  constructor($scope) {
+  constructor($scope,service) {
     this.$scope = $scope;
+    this.service = service;
+
+    this.loading = true;
+    this.terms = null;
+
+    this.page = 1;
+
+    this.recordOffset = 0;
+    this.fetchSize = 100;
+    this.recordCount = 0;
+  }
+
+  $onInit() {
+    this.loading = true;
+
+    this.$scope.$on("jwa-vehicle-search",(event,data) => {
+      this.terms = data.terms;
+      this.recordOffset = 0;
+      this.page = 1;
+      this.loading = true;
+
+      this.fetchRecords();
+    });
+
+    this.fetchRecords();
+  }
+
+  fetchRecords() {
+    let terms = this.terms || {};
+    console.log("Vehicle search terms",terms);
+
+    terms.recordOffset = this.recordOffset;
+    terms.fetchSize = this.fetchSize;
+
+    this.service.getVehicles(terms).then((results) => {
+      console.log(results);
+    }).catch(() => {
+      console.log('Some error');
+    }).finally(() => {
+      this.loading = false;
+    });
   }
 }
 
-vehicleListController.$inject = ["$scope"];
+vehicleListController.$inject = ["$scope","vehicleService"];
 
 export const vehicleList = {
   bindings: {},

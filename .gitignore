@@ -170,3 +170,5 @@ node-app/secret.js
 node-app/mongodb.config.js
 
 node-app/auth.config.js
+
+*.rdb
