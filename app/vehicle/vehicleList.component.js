@@ -42,11 +42,19 @@ class vehicleListController {
 
     this.service.getVehicles(terms).then((results) => {
       console.log(results);
+      this.rows = results.rows;
+      this.recordCount = results.count;
     }).catch(() => {
       console.log('Some error');
     }).finally(() => {
       this.loading = false;
     });
+  }
+
+  changePage() {
+    this.loading = true;
+    this.recordOffset = (this.page-1)*this.fetchSize;
+    this.fetchRecords();
   }
 }
 
