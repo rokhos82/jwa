@@ -26,18 +26,19 @@
             <div class="form-group">
               <label class="control-label col-sm-3" for="makeSearch">Make</label>
               <div class="col-sm-9">
-                <input class="form-control" name="makeSearch" type="text" ng-model="$ctrl.ui.make" />
+                <select class="form-control" name="makeSearch" ng-options="make.value as make.description for make in $ctrl.lookups.makes" ng-model="$ctrl.ui.make"></select>
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-sm-3" for="modelSearch">Model</label>
               <div class="col-sm-9">
-                <input class="form-control" name="modelSearch" type="text" ng-model="$ctrl.ui.model" />
+                <select class="form-control" name="modelSearch" ng-options="model.value as model.description for model in $ctrl.lookups.models | filter: { make:$ctrl.ui.make }" ng-model="$ctrl.ui.model"></select>
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-offset-3 col-sm-9">
                 <button class="btn btn-default" type="submit" ng-click="$ctrl.doSearch()">Search</button>
+                <button class="btn btn-default" type="button" ng-click="$ctrl.clearSearch()">Reset</button>
               </div>
             </div>
           </div>
@@ -45,13 +46,13 @@
             <div class="form-group">
               <label class="control-label col-sm-3" for="styleSearch">Style</label>
               <div class="col-sm-9">
-                <input class="form-control" name="styleSearch" type="text" ng-model="$ctrl.ui.style" />
+                <select class="form-control" name="styleSearch" ng-options="style.value as style.description for style in $ctrl.lookups.styles" ng-model="$ctrl.ui.style"></select>
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-sm-3" for="colorSearch">Color</label>
               <div class="col-sm-9">
-                <input class="form-control" name="colorSearch" type="text" ng-model="$ctrl.ui.color" />
+                <select class="form-control" name="colorSearch" ng-options="color.value as color.description for color in $ctrl.lookups.colors" ng-model="$ctrl.ui.color"></select>
               </div>
             </div>
             <div class="form-group">

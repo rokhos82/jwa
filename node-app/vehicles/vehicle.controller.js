@@ -69,9 +69,31 @@ exports.vehicleFecth = (req,res) => {
     whereClause += ` VehicleModel like '` + params.model + `' and`;
   }
 
+  // Is there a VehicleStyle in the search terms?
+  if(params.style) {
+    // Yes!  Add vehicle style to the WHERE clause.
+    whereClause += ` VehicleStyle like '${params.style}' AND`;
+  }
+
+  // Is there a VehicleColor in the search terms?
+  if(params.color) {
+    // Yes!  Add vehicle color to the WHERE clause.
+    whereClause += ` VehicleColor like '${params.color}' AND`;
+  }
+
   // Is there TagNumber in the search terms?
   if(params.license) {
     whereClause += ` TagNumber like '` + params.license + `' and`;
+  }
+
+  // Is there a TagYear in the search terms?
+  if(params.licenseYear) {
+    whereClause += ` TagYear like '${params.licenseYear}' and`;
+  }
+
+  // Is there a TagState in the search terms?
+  if(params.licenseState) {
+    whereClause += ` TagState like '${params.licenseState}' and`;
   }
 
   // Add something to the WHERE clause so that the SQL query doesn't break.
@@ -141,19 +163,19 @@ exports.vehicleLookups = (req,res) => {
   let queries = ``;
 
   // 0 - Query the vehicle make values
-  queries += `SELECT Name,Value,Description FROM Lookup WHERE Name='VehicleMake';`;
+  queries += `SELECT Name,Value,ISNULL(Description,Value) AS Description FROM Lookup WHERE Name='VehicleMake' ORDER BY Description ASC;`;
 
   // 1 - Query the vehicle model values
-  queries += ` SELECT Name,Value,Description,Description2 FROM Lookup WHERE Name='VehicleModel';`;
+  queries += ` SELECT Name,Value,ISNULL(Description,Value) AS Description,Description2 FROM Lookup WHERE Name='VehicleModel' ORDER BY Description ASC;`;
 
   // 2 - Query the vehicle style values
-  queries += ` SELECT Name,Value,Description FROM Lookup WHERE Name='VehicleStyle';`;
+  queries += ` SELECT Name,Value,ISNULL(Description,Value) AS Description FROM Lookup WHERE Name='VehicleStyle' ORDER BY Description ASC;`;
 
   // 3 - Query the vehicle color values
-  queries += ` SELECT Name,Value,Description FROM Lookup WHERE Name='VehicleColor';`;
+  queries += ` SELECT Name,Value,ISNULL(Description,Value) AS Description FROM Lookup WHERE Name='VehicleColor' ORDER BY Description ASC;`;
 
   // 4 - Query the vehicle involvement values
-  queries += ` SELECT Name,Value,Description FROM Lookup WHERE Name='VehInvolvement';`;
+  queries += ` SELECT Name,Value,ISNULL(Description,Value) AS Description FROM Lookup WHERE Name='VehInvolvement' ORDER BY Description ASC;`;
 
   console.log("Query",queries);
 
@@ -183,6 +205,7 @@ exports.vehicleLookups = (req,res) => {
       });
 
       // Process the record sets into the results object
+      lookups.raw = recordsets.recordsets;
       // Process the makes
       _.forEach(recordsets.recordsets[0],(make) => {
         lookups.makes.push({
@@ -195,7 +218,7 @@ exports.vehicleLookups = (req,res) => {
       _.forEach(recordsets.recordsets[1],(model) => {
         lookups.models.push({
           value: model.Value,
-          description: model.Description,
+          description: model.Description || model.Value,
           make: model.Description2
         });
       });

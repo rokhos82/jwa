@@ -1,5 +1,7 @@
-export function vehicleService($resource,server,port,userService) {
+export function vehicleService($resource,server,port,userService,$q) {
   let _service = {};
+
+  let _cache = {};
 
   _service.getVehicles = (terms) => {
     let token = userService.getToken();
@@ -24,19 +26,34 @@ export function vehicleService($resource,server,port,userService) {
   _service.getVehicleLookups = () => {
     let token = userService.getToken();
     let username = userService.getUser();
+    let promise = null;
 
-    let lookups = $resource(`http://${server}:${port}/vehicles/lookups`,{},{
-      get: {
-        method: "GET",
-        headers: {
-          "x-access-token": token,
-          "username": username
-        },
-        isArray: false
-      }
-    });
+    // Do we already have the results cached?
+    if(_.has(_cache,'lookups')) {
+      // Yes
+      promise = $q((resolve,reject) => {
+        resolve(_cache.lookups);
+      });
+    }
+    else {
+      // No
+      let lookups = $resource(`http://${server}:${port}/vehicles/lookups`,{},{
+        get: {
+          method: "GET",
+          headers: {
+            "x-access-token": token,
+            "username": username
+          },
+          isArray: false
+        }
+      });
 
-    let promise = lookups.get().$promise;
+      promise = lookups.get().$promise;
+
+      promise.then((results) => {
+        _cache.lookups = results;
+      });
+    }
 
     return promise;
   };
@@ -44,6 +61,6 @@ export function vehicleService($resource,server,port,userService) {
   return _service;
 }
 
-vehicleService.$inject = ["$resource","jwa-config-serverIp","jwa-config-serverPort","userService"];
+vehicleService.$inject = ["$resource","jwa-config-serverIp","jwa-config-serverPort","userService","$q"];
 
 // Service Function Definitions Below
