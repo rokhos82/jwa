@@ -10,16 +10,22 @@ class vehicleSearchController {
 
     this.ui = {};
     this.query = {};
+    this.lookups = {};
   }
 
   $onInit() {
+    this.service.getVehicleLookups().then((results) => {
+      console.log(results);
+      this.lookups = results;
+    }).catch(() => {
+      console.log("Error in vehicle lookup GET request");
+    });
   }
 
   doSearch() {
     console.log(`New Vehicle Search`,this.ui);
     this.query = _.cloneDeep(this.ui);
     this.$scope.$broadcast("jwa-vehicle-search",{terms: this.query});
-    //this.service.getVehicles(this.ui);
   }
 }
 

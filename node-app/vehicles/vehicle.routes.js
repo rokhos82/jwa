@@ -15,4 +15,5 @@ module.exports = (app,db) => {
   });
 
   app.post("/vehicles/fetch",[authJwt.verifyToken,db.setup],controller.vehicleFecth);
+  app.get("/vehicles/lookups",[authJwt.verifyToken,db.setup],controller.vehicleLookups);
 };

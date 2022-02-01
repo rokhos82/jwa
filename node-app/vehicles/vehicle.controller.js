@@ -127,3 +127,106 @@ exports.vehicleFecth = (req,res) => {
     });
   });
 };
+
+exports.vehicleLookups = (req,res) => {
+  console.log("Vehicle Lookups Controller");
+  // This controller queries the Justice lookup table for values related to vehicle entries.
+  // Specifically:
+  // - VehicleMake values
+  // - VehicleModel values
+  // - VehicleStyle values
+  // - VehicleColor values
+  // - VehInvolvement values
+
+  let queries = ``;
+
+  // 0 - Query the vehicle make values
+  queries += `SELECT Name,Value,Description FROM Lookup WHERE Name='VehicleMake';`;
+
+  // 1 - Query the vehicle model values
+  queries += ` SELECT Name,Value,Description,Description2 FROM Lookup WHERE Name='VehicleModel';`;
+
+  // 2 - Query the vehicle style values
+  queries += ` SELECT Name,Value,Description FROM Lookup WHERE Name='VehicleStyle';`;
+
+  // 3 - Query the vehicle color values
+  queries += ` SELECT Name,Value,Description FROM Lookup WHERE Name='VehicleColor';`;
+
+  // 4 - Query the vehicle involvement values
+  queries += ` SELECT Name,Value,Description FROM Lookup WHERE Name='VehInvolvement';`;
+
+  console.log("Query",queries);
+
+  // Get the db helpers
+  const db = req.db;
+
+  // Setup the results object
+  let lookups = {
+    makes: [],
+    models: [],
+    styles: [],
+    colors: [],
+    involvements: []
+  };
+
+  // Query the database
+  db.poolConnect.then((p) => {
+    // Setup the request from the connection pool
+    let request = p.request();
+
+    // Send the query and wait for the reply
+    request.query(queries).then((recordsets) => {
+      // Log the search in the audit system
+      req.audit({
+        information: `Successful request for vehicle lookups`,
+        outcome: true
+      });
+
+      // Process the record sets into the results object
+      // Process the makes
+      _.forEach(recordsets.recordsets[0],(make) => {
+        lookups.makes.push({
+          value: make.Value,
+          description: make.Description
+        });
+      });
+
+      // Process the models
+      _.forEach(recordsets.recordsets[1],(model) => {
+        lookups.models.push({
+          value: model.Value,
+          description: model.Description,
+          make: model.Description2
+        });
+      });
+
+      // Process the styles
+      _.forEach(recordsets.recordsets[2],(style) => {
+        lookups.styles.push({
+          value: style.Value,
+          description: style.Description
+        });
+      });
+
+      // Process the colors
+      _.forEach(recordsets.recordsets[3],(color) => {
+        lookups.colors.push({
+          value: color.Value,
+          description: color.Description
+        });
+      });
+
+      // Process the involvements
+      _.forEach(recordsets.recordsets[4],(involvement) => {
+        lookups.involvements.push({
+          value: involvement.Value,
+          description: involvement.Description
+        });
+      });
+
+
+      // Send back the results
+      res.status(200).send(lookups);
+    });
+  })
+};
