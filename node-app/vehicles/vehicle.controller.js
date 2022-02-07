@@ -150,6 +150,11 @@ exports.vehicleFecth = (req,res) => {
   });
 };
 
+exports.vehicleDetail = (req,res) => {
+  let vehicleKey = sqlString.escape(decodeURIComponent(req.params.vehicle));
+  console.log("Vehicle Detail",vehicleKey);
+};
+
 exports.vehicleLookups = (req,res) => {
   console.log("Vehicle Lookups Controller");
   // This controller queries the Justice lookup table for values related to vehicle entries.
@@ -245,6 +250,11 @@ exports.vehicleLookups = (req,res) => {
           value: involvement.Value,
           description: involvement.Description
         });
+      });
+
+      // Cache the results
+      req.cache.set(req.originalUrl,JSON.stringify(lookups),'EX',req.cacheExpire,() => {
+        console.log("Vehicle Lookups Save to Cache");
       });
 
 
