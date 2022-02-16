@@ -105,7 +105,7 @@ exports.vehicleFecth = (req,res) => {
   console.log(whereClause);
 
   // Construct the SQL query from the where clause and paging information in the `params` object
-  let query = `SELECT IncidentNumber,FileNumber,ContactDate,VehicleYear,VehicleMake,VehicleModel,VehicleStyle,VehicleColor,TagNumber,TagState,TagYear,ID,VehInvolvement,Location,Comments FROM Vehicles WHERE${whereClause} ORDER BY VehiclesKey ASC OFFSET ${params.recordOffset} ROWS FETCH NEXT ${params.fetchSize} ROWS ONLY; select count(*) as Count from Vehicles where${whereClause};`;
+  let query = `SELECT IncidentNumber,FileNumber,ContactDate,VehicleYear,VehicleMake,VehicleModel,VehicleStyle,VehicleColor,TagNumber,TagState,TagYear,ID,VehInvolvement,Location,Comments,VehiclesKey FROM Vehicles WHERE${whereClause} ORDER BY VehiclesKey ASC OFFSET ${params.recordOffset} ROWS FETCH NEXT ${params.fetchSize} ROWS ONLY; select count(*) as Count from Vehicles where${whereClause};`;
   console.log(query);
 
   db.poolConnect.then((p) => {
@@ -138,7 +138,8 @@ exports.vehicleFecth = (req,res) => {
           id: record.ID,
           involvement: record.VehInvolvement,
           location: record.Location,
-          comments: record.Comments
+          comments: record.Comments,
+          vehiclesKey: record.VehiclesKey
         });
       });
 
@@ -151,8 +152,51 @@ exports.vehicleFecth = (req,res) => {
 };
 
 exports.vehicleDetail = (req,res) => {
-  let vehicleKey = sqlString.escape(decodeURIComponent(req.params.vehicle));
+  let vehicleKey = sqlString.escape(decodeURIComponent(req.params.vehiclekey));
   console.log("Vehicle Detail",vehicleKey);
+  const db = req.db;
+
+  // Build the query for the vehicle details
+  let query = `SELECT V.FileNumber,CONCAT(N.LastName,', ',N.First,' ',N.Middle) AS operatorName,V.IncidentNumber,V.ContactDate,V.VehicleYear,V.VehicleMake,V.VehicleModel,V.VehicleStyle,V.VehicleColor,V.VehInvolvement,V.TagNumber,V.TagState,V.TagYear,V.ID,V.Location,V.VIN,V.ReleaseDate,V.Comments FROM Vehicles AS V INNER JOIN Name AS N ON V.FileNumber=N.FileNumber WHERE V.VehiclesKey=${vehicleKey}`;
+
+  console.log("Query: ",query);
+
+  db.poolConnect.then((p) => {
+    let request = db.pool.request();
+
+    request.query(query,function(err,result) {
+      // Check for an error
+      if(err) {
+        // Print the error
+        req.audit({
+          information: queryString,
+          outcome: false
+        });
+        console.log(err);
+      }
+      else {
+        // Query was Successful.  Process and return to front-end
+        // Log the success first
+        req.audit({
+          information: `Retrieved vehicle record: ${vehicleKey}`,
+          outcome: true
+        });
+
+        let vehicle = result.recordset[0];
+
+        let info = {
+          vehicle: {
+            fileNumber: vehicle.FileNumber,
+            operatorName: vehicle.operatorName,
+            incidentNumber: vehicle.IncidentNumber,
+            contactDate: vehicle.ContactDate
+          }
+        };
+
+        res.status(200).send(info);
+      }
+    });
+  });
 };
 
 exports.vehicleLookups = (req,res) => {

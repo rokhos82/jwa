@@ -23,6 +23,29 @@ export function vehicleService($resource,server,port,userService,$q) {
     return promise;
   };
 
+  _service.getVehicleDetail = (vehicleKey) => {
+    let token = userService.getToken();
+    let username = userService.getUser();
+
+    let detail = $resource(`http://${server}:${port}/vehicles/detail/:vehicleKey`,{},{
+      get: {
+        method: "GET",
+        headers: {
+          "x-access-token": token,
+          "username": username
+        },
+        params: {
+          vehicleKey: encodeURIComponent(vehicleKey)
+        },
+        isArray: false
+      }
+    });
+
+    let promise = detail.get().$promise;
+
+    return promise;
+  };
+
   _service.getVehicleLookups = () => {
     let token = userService.getToken();
     let username = userService.getUser();

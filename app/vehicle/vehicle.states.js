@@ -20,3 +20,25 @@ export const vehicleSearchState = {
   },
   sticky: true
 };
+
+export const vehicleDetailState = {
+  parent: 'vehicle',
+  name: 'vehicleDetail',
+  url: '/{vehicleKey}',
+  views: {
+    'vehicleDetail@vehicle': 'vehicleDetail'
+  },
+  resolve: {
+    info: VehicleDetailResolver
+  },
+  params: {
+    search: null
+  },
+  data: {}
+};
+
+VehicleDetailResolver.$inject = ["$stateParams","vehicleService"];
+function VehicleDetailResolver($stateParams,vehicleService) {
+  let vehicleKey = $stateParams.vehicleKey;
+  return vehicleService.getVehicleDetail(vehicleKey);
+}

@@ -6,8 +6,9 @@
 import {vehicleRoot} from "./vehicleRoot.component.js";
 import {vehicleSearch} from "./vehicleSearch.component.js";
 import {vehicleList} from "./vehicleList.component.js";
+import {vehicleDetail} from "./vehicleDetail.component.js";
 
-import {vehicleState,vehicleSearchState} from "./vehicle.states.js";
+import {vehicleState,vehicleSearchState,vehicleDetailState} from "./vehicle.states.js";
 
 import {vehicleService} from "./vehicle.service.js";
 
@@ -26,10 +27,12 @@ function moduleController($uiRouter) {
   const $stateRegistry = $uiRouter.stateRegistry;
   $stateRegistry.register(vehicleState);
   $stateRegistry.register(vehicleSearchState);
+  $stateRegistry.register(vehicleDetailState);
 }
 
 VEHICLE_MODULE.component('vehicleRoot',vehicleRoot);
 VEHICLE_MODULE.component('vehicleSearch',vehicleSearch);
 VEHICLE_MODULE.component('vehicleList',vehicleList);
+VEHICLE_MODULE.component('vehicleDetail',vehicleDetail);
 
 VEHICLE_MODULE.factory('vehicleService',vehicleService);
