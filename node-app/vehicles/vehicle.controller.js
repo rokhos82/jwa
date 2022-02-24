@@ -189,7 +189,23 @@ exports.vehicleDetail = (req,res) => {
             fileNumber: vehicle.FileNumber,
             operatorName: vehicle.operatorName,
             incidentNumber: vehicle.IncidentNumber,
-            contactDate: vehicle.ContactDate
+            contactDate: vehicle.ContactDate,
+            year: vehicle.VehicleYear,
+            make: vehicle.VehicleMake,
+            model: vehicle.VehicleModel,
+            style: vehicle.VehicleStyle,
+            color: vehicle.VehicleColor,
+            involvement: vehicle.VehInvolvement,
+            tag: vehicle.TagNumber,
+            tagState: vehicle.TagState,
+            tagYear: vehicle.TagYear,
+            officerId: vehicle.ID,
+            location: vehicle.Location,
+            vin: vehicle.VIN,
+            releaseDate: vehicle.ReleaseDate,
+            recoveredValue: vehicle.RecoveredValue,
+            recoveredDate: vehicle.RecoveredDate,
+            towedBy: vehicle.TowedBy
           }
         };
 
@@ -212,7 +228,7 @@ exports.vehicleLookups = (req,res) => {
   let queries = ``;
 
   // 0 - Query the vehicle make values
-  queries += `SELECT Name,Value,ISNULL(Description,Value) AS Description FROM Lookup WHERE Name='VehicleMake' ORDER BY Description ASC;`;
+  queries += `SELECT DISTINCT L.Value,L.Description FROM Vehicles AS V LEFT OUTER JOIN [Lookup] AS L ON V.VehicleMake = L.Value WHERE L.Name='VehicleMake' ORDER BY L.Description ASC;`;
 
   // 1 - Query the vehicle model values
   queries += ` SELECT Name,Value,ISNULL(Description,Value) AS Description,Description2 FROM Lookup WHERE Name='VehicleModel' ORDER BY Description ASC;`;
