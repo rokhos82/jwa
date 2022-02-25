@@ -157,7 +157,9 @@ exports.vehicleDetail = (req,res) => {
   const db = req.db;
 
   // Build the query for the vehicle details
-  let query = `SELECT V.FileNumber,CONCAT(N.LastName,', ',N.First,' ',N.Middle) AS operatorName,V.IncidentNumber,V.ContactDate,V.VehicleYear,V.VehicleMake,V.VehicleModel,V.VehicleStyle,V.VehicleColor,V.VehInvolvement,V.TagNumber,V.TagState,V.TagYear,V.ID,V.Location,V.VIN,V.ReleaseDate,V.Comments FROM Vehicles AS V INNER JOIN Name AS N ON V.FileNumber=N.FileNumber WHERE V.VehiclesKey=${vehicleKey}`;
+  //let query = `SELECT V.FileNumber,CONCAT(N.LastName,', ',N.First,' ',N.Middle) AS operatorName,V.IncidentNumber,V.ContactDate,V.VehicleYear,V.VehicleMake,V.VehicleModel,V.VehicleStyle,V.VehicleColor,V.VehInvolvement,V.TagNumber,V.TagState,V.TagYear,V.ID,V.Location,V.VIN,V.ReleaseDate,V.Comments FROM Vehicles AS V INNER JOIN Name AS N ON V.FileNumber=N.FileNumber WHERE V.VehiclesKey=${vehicleKey}`;
+  let query = `SELECT * FROM Vehicles WHERE VehiclesKey=${vehicleKey};
+SELECT LastName,First,Middle FROM Name WHERE FileNumber IN (SELECT FileNumber FROM Vehicles WHERE VehiclesKey=${vehicleKey});`;
 
   console.log("Query: ",query);
 
@@ -183,11 +185,17 @@ exports.vehicleDetail = (req,res) => {
         });
 
         let vehicle = result.recordset[0];
+        let name = result.recordset[1];
+
+        let operatorName = ``;
+        if(name) {
+          operatorName = `${name.LastName}, ${name.First} ${name.Middle}`;
+        }
 
         let info = {
           vehicle: {
             fileNumber: vehicle.FileNumber,
-            operatorName: vehicle.operatorName,
+            operatorName: operatorName,
             incidentNumber: vehicle.IncidentNumber,
             contactDate: vehicle.ContactDate,
             year: vehicle.VehicleYear,
