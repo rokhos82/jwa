@@ -184,8 +184,10 @@ SELECT LastName,First,Middle FROM Name WHERE FileNumber IN (SELECT FileNumber FR
           outcome: true
         });
 
-        let vehicle = result.recordset[0];
-        let name = result.recordset[1];
+        console.log(result);
+        let vehicle = result.recordsets[0][0];
+        let name = result.recordsets[1][0];
+        console.log(name)
 
         let operatorName = ``;
         if(name) {

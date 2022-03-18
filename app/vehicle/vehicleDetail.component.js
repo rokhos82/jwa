@@ -22,6 +22,7 @@ class vehicleDetailController {
 
   cleanupDateTime() {
     this.vehicle.contactDate = this.dateFilter(this.vehicle.contactDate);
+    this.vehicle.releaseDate = this.dateFilter(this.vehicle.releaseDate);
   }
 }
 
